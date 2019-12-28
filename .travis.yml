@@ -25,4 +25,4 @@ deploy:    # 部署阶段
     branch: master    # 仅监听 master 分支的变化，才执行构建
   target-branch: gh-pages   # 用于存放静态资源的分支
   local-dir: public   # `hexo generate` 命令生成的静态资源所在路径
-  fqdn: zhaojuntao.com    # 自定义域名
+  fqdn: murphy.tech    # 自定义域名

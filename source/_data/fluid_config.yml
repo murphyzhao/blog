@@ -16,7 +16,7 @@ favicon: https://zhaojuntao.gitee.io/picturebed/logo/Murphy-logo.png # 网站标
 apple_touch_icon: https://zhaojuntao.gitee.io/picturebed/logo/apple-touch-icon.png # 用于苹果设备的 icon
 
 title_join_string: ' ~ '  # 浏览器标签页中的标题分隔符，效果： 文章名 ~ 站点名
-force_https: false  # 强制所有链接升级为 HTTPS（适用于图片等资源出现 HTTP 混入报错）
+force_https: true  # 强制所有链接升级为 HTTPS（适用于图片等资源出现 HTTP 混入报错）
 
 highlight: # 代码高亮
   enable: true
@@ -27,7 +27,7 @@ fun_features: # 一些好玩的功能
     enable: true
     typeSpeed: 70 # 打印速度
     cursorChar: "_" # 游标字符
-    loop: false # 是否循环播放效果
+    loop: true # 是否循环播放效果
   anchorjs: # 为文章内容中的标题添加锚图标
     enable: true
     element: h1,h2,h3,h4,h5,h6
@@ -35,8 +35,8 @@ fun_features: # 一些好玩的功能
     visible: false # true：一直可见，false：鼠标悬停时出现
     icon: "" # 例如：§ | # | ❡ 等，留空则为默认效果
   mouse_click:  # 鼠标点击动效
-    enable: false
-    style: values # 目前设置两个值：values（价值观词汇） | love（爱心）
+    enable: true
+    style: love # 目前设置两个值：values（价值观词汇） | love（爱心）
 
 color:  # 主体颜色配置，可以从这里寻找启发： https://www.webdesignrankings.com/resources/lolcolors/
   body_bg_color: "#eee"
@@ -49,7 +49,7 @@ color:  # 主体颜色配置，可以从这里寻找启发： https://www.webdes
 
 web_analytics:  # 网页访问统计
   enable: true
-  baidu: 71b7545620e02500466a745a031d2f46 # 百度统计的Key，参见 https://tongji.baidu.com/sc-web/10000033910/home/site/getjs?siteId=13751376 代码获取中 hm.js? 后边的字符串
+  baidu: e26f756fa7cff496d917beccbb716890 # 百度统计的Key，参见 https://tongji.baidu.com/sc-web/10000033910/home/site/getjs?siteId=13751376 代码获取中 hm.js? 后边的字符串
   google:  # Google统计的Tracking ID，参见 https://analytics.google.com/analytics/web/
   tencent:  # 腾讯统计的H5 App id，参见 https://mta.qq.com/h5/manage/ctr_app_manage
   woyaola:  # 51.la站点统计ID，参见 https://www.51.la/user/site/index
