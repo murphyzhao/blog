@@ -161,7 +161,7 @@ post:
     content: '本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" rel="nofollow noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！'
   custom:  # 文章底部自定义内容
     enable: true
-    content: '<script type="text/javascript">document.write(unescape("%3Cdiv id="reward" %3E%3C/div%3E%3Cscript src="https://gitee.com/zhaojuntao/PictureBed/raw/master/Script/js/reward.min.js" type="text/javascript"%3E%3C/script%3E"));</script>'
+    content: <script type="text/javascript">document.write(unescape("%3Cdiv id='reward' %3E%3C/div%3E%3Cscript src='https://gitee.com/zhaojuntao/PictureBed/raw/master/Script/js/reward.min.js' type='text/javascript'%3E%3C/script%3E"));</script>
   comments:  # 评论
     enable: true  # 开启评论
     type: utterances  # 指定使用的评论模块  available: disqus | valine | gitalk | utterances | changyan | livere
