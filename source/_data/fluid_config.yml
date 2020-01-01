@@ -253,7 +253,7 @@ livere:
 # Archive Page
 #---------------------------
 archive:
-  banner_img: https://zhaojuntao.gitee.io/picturebed/blog/IndexPicture/index-20191224-1.png
+  banner_img: https://zhaojuntao.gitee.io/picturebed/blog/IndexPicture/books-1281581.jpg
   banner_img_height: 80  # available: 0 - 100
 
 
@@ -262,7 +262,7 @@ archive:
 # Categories Page
 #---------------------------
 category:
-  banner_img: https://zhaojuntao.gitee.io/picturebed/blog/IndexPicture/index-20191224-1.png
+  banner_img: https://zhaojuntao.gitee.io/picturebed/blog/IndexPicture/new-york-4725115.jpg
   banner_img_height: 80  # available: 0 - 100
 
 
@@ -271,7 +271,7 @@ category:
 # Tags Page
 #---------------------------
 tag:
-  banner_img: https://zhaojuntao.gitee.io/picturebed/blog/IndexPicture/index-20191224-1.png
+  banner_img: https://zhaojuntao.gitee.io/picturebed/blog/IndexPicture/panorama-2646143.jpg
   banner_img_height: 80  # available: 0 - 100
   tagcloud: # 标签云
     min_font: 15
@@ -287,7 +287,7 @@ tag:
 #---------------------------
 about:  # 以下仅为页面顶部的基本信息，更多内容请在 ./pages/about.md 中编辑，支持 markdown 和 HTML
   md_path: ../../source/about.md  # 关于页文档的相对路径，可以按相对文档设置主题之外的路径，从而避免更新冲突
-  banner_img: https://zhaojuntao.gitee.io/picturebed/blog/IndexPicture/index-20191224-1.png
+  banner_img: https://zhaojuntao.gitee.io/picturebed/blog/IndexPicture/panorama-2117310.jpg
   banner_img_height: 80  # available: 0 - 100
   avatar: https://zhaojuntao.gitee.io/picturebed/logo/Murphy-logo.png # 头像
   name: MurphyZhao
