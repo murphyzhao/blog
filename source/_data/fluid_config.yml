@@ -291,7 +291,7 @@ about:  # 以下仅为页面顶部的基本信息，更多内容请在 ./pages/a
   banner_img_height: 80  # available: 0 - 100
   avatar: https://zhaojuntao.gitee.io/picturebed/logo/Murphy-logo.png # 头像
   name: MurphyZhao
-  introduce: Coding | 自驾游 | 羽毛球 # 支持 HTML
+  introduce: 物联网 | 自驾游 | 羽毛球 # 支持 HTML
   icons: # 更多图标可从 https://fontawesome.com/icons 查找，并以 "图标名: url" 的格式添加在下方
     "fab fa-github": https://github.com/murphyzhao
     "fab fa-twitter": https://twitter.com
