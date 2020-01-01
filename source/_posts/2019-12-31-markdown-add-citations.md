@@ -5,7 +5,8 @@ tags:
   - 文献引用
 categories: Markdown
 abbrlink: 49cc9dcc
-date: 2019-12-31 18:50:00
+date: 2019-12-31
+index_img: https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/stack-of-books-1001655_640.jpg
 ---
 
 ## 增加引用的文献列表
