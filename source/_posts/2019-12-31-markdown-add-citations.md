@@ -1,7 +1,10 @@
 ---
 title: Markdown 添加文献引用
-tags: [Markdown, 文献引用]
+tags:
+  - Markdown
+  - 文献引用
 categories: Markdown
+abbrlink: 49cc9dcc
 date: 2019-12-31 18:50:00
 ---
 

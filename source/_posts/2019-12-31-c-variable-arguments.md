@@ -1,7 +1,10 @@
 ---
 title: 'C 语言 #、##、__VA_ARGS__、#__VA_ARGS__、##__VA_ARGS__'
-tags: [C语言, __VA_ARGS__]
+tags:
+  - C语言
+  - __VA_ARGS__
 categories: Programing
+abbrlink: '40137057'
 date: 2019-12-31 18:46:00
 ---
 

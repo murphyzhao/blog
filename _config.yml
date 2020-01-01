@@ -5,8 +5,8 @@
 # Site
 title: Murphy`s Blog
 subtitle: 'IoT Developer'
-description: 'Murphy's blog | 物联网技术分享 | 物联网学前班 | 物联网教程 | iot | aiot | 物联网全栈 | 嵌入式开发 | 智能硬件 | Linux | RT-Thread | FreeRTOS | TencentOS tiny'
-keywords:
+description: Murphy's blog | 物联网技术分享 | 物联网学前班 | 物联网教程 | iot | aiot | 物联网全栈 | 嵌入式开发 | 智能硬件 | Linux | RT-Thread | FreeRTOS | TencentOS tiny
+keywords: Murphy, MurphyZhao, iot, aiot, Linux, rt-thread, TencentOS tiny, 物联网, 物联网学前班, 物联网教程, 嵌入式, 智能硬件
 author: MurphyZhao
 language: zh-CN
 timezone: 'Asia/Shanghai'
@@ -15,8 +15,12 @@ timezone: 'Asia/Shanghai'
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: https://murphy.tech
 root: /
-permalink: :year/:month/:day/:title/
-permalink_defaults:
+#permalink: :year/:month/:day/:title/
+#permalink_defaults:
+permalink: posts/:abbrlink.html
+abbrlink:
+  alg: crc32
+  rep: hex
 pretty_urls:
   trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
   trailing_html: true # Set to false to remove trailing '.html' from permalinks
