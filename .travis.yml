@@ -26,3 +26,17 @@ deploy:    # 部署阶段
   target-branch: gh-pages   # 用于存放静态资源的分支
   local-dir: public   # `hexo generate` 命令生成的静态资源所在路径
   fqdn: murphy.tech    # 自定义域名
+
+after_deploy:
+  - pwd
+  - ls
+  - cd ..
+  - pwd
+  - git clone https://github.com/murphyzhao/blog.git blog_bak
+  - ls
+  - cd blog_bak
+  - pwd
+  - git branch -a
+  - git checkout -f -B gh-pages remotes/origin/gh-pages --
+  - git push https://zhaojuntao:$GITEE_BLOG_TOKEN@gitee.com/zhaojuntao/zhaojuntao.git --all --force
+  - curl -X POST --header 'Content-Type:application/json;charset=UTF-8' 'https://gitee.com/api/v5/repos/zhaojuntao/zhaojuntao/pages/builds' -d '{"access_token":"$GITEE_BLOG_TOKEN"}' 
