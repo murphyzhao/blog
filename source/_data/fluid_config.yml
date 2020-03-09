@@ -90,8 +90,8 @@ navbar:
     archive: /archives/
     category: /categories/
     tag: /tags/
-    about: /about/
     links: /links/  # 友链页，把前面#去掉即可展示
+    about: /about/
 
 search: # 搜索栏
   enable: true
@@ -345,3 +345,8 @@ links:
     Fluid Docs: [https://hexo.fluid-dev.com/docs/, 主题使用指南, /img/favicon.png]
     Fluid Repo: [https://github.com/fluid-dev/hexo-theme-fluid, 主题 GitHub 仓库, /img/favicon.png]
     Fluid Changelog: [https://github.com/fluid-dev/hexo-theme-fluid/blob/master/Changelog.md, 主题更新日志, /img/favicon.png]
+    Murphy's github: [https://github.com/murphyzhao/, Murphy GitHub 仓库, https://zhaojuntao.gitee.io/picturebed/logo/Murphy-logo.png]
+    ruru.eatrice.top: [https://ruru.eatrice.top/, 上屋顶看北斗七星, https://ruru.eatrice.top/img/avatar.jpg]
+    eatrice.top: [https://eatrice.top/, 吃白饭的休伯利安号, https://eatrice.top/img/avatar.jpg]
+    zkqiang.cn: [https://zkqiang.cn/, 张凯强的博客, https://static.zkqiang.cn/images/20190726002726.JPG-slim]
+    julydate.com: [http://www.julydate.com/, 七夏浅笑, https://ae01.alicdn.com/kf/U3f38a4228e434dfdb6681986c7232051a.jpg]
