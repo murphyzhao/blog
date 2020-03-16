@@ -314,7 +314,8 @@ tag:
 about:  # 以下仅为页面顶部的基本信息，更多内容请在 ./pages/about.md 中编辑，支持 markdown 和 HTML
   banner_img: https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/IndexPicture/panorama-2117310.jpg
   banner_img_height: 80  # available: 0 - 100
-  subtitle: About # 打字机内容
+  #subtitle: About # 打字机内容
+  #md_path: ../../source/about.md  # 关于页文档的相对路径，可以按相对文档设置主题之外的路径，从而避免更新冲突
   avatar: https://zhaojuntao.gitee.io/picturebed/logo/Murphy-logo.png # 头像
   name: MurphyZhao
   introduce: 物联网 | 自驾游 | 羽毛球 # 支持 HTML
