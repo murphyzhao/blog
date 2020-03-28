@@ -25,9 +25,13 @@ before_script:
   - pwd
   - ls -la
   - cd ..
-  - git clone https://github.com/murphyzhao/blog.git blog_bak_for_sync
+  - git clone https://github.com/murphyzhao/blog.git blog_old
   - git clone https://github.com/GopherRoad/tencent_cos_sync_for_blog.git tcos_blog_sync
   - ls -la
+  - cd blog_old
+  - git branch -a
+  - git checkout -f -B gh-pages remotes/origin/gh-pages --
+  - cd ..
   - cd blog
   - pwd
 
@@ -64,7 +68,19 @@ after_deploy:
   - pwd
   - git branch -a
   - git checkout -f -B gh-pages remotes/origin/gh-pages --
+  #推送到 gitee 托管平台
   - git push https://zhaojuntao:$GITEE_BLOG_TOKEN@gitee.com/zhaojuntao/zhaojuntao.git --all --force
+  # 推送到 coding 托管平台
   - git push https://mGpePgxuQt:$CODING_TOKEN@e.coding.net/murphyzhao/blog.git --all --force
+  # 触发 gitee 自动构建 pages
   - curl -X POST --header 'Content-Type:application/json;charset=UTF-8' 'https://gitee.com/api/v5/repos/zhaojuntao/zhaojuntao/pages/builds' -d '{"access_token":"$GITEE_BLOG_TOKEN"}' 
+  - pwd
+  - ls -la
+  - cp tools/cos_blog_sync-linux-amd64 ../cos_blog_sync-linux-amd64
+  - cd ..
+  - pwd
+  - chmod +x cos_blog_sync-linux-amd64
+  - ls -la
+  # 同步文件到腾讯 COS
+  - cos_blog_sync-linux-amd64 $TencentCOSSecretID $TencentCOSSecretKEY $TencentCOSREGION $TencentCOSBucketName /home/travis/build/murphyzhao/blog_old /home/travis/build/murphyzhao/blog_bak
   - echo "==== Finish! ===="
