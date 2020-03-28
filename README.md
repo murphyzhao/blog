@@ -56,3 +56,5 @@
 
 - [Fluid 使用指南](https://fluid-dev.github.io/hexo-fluid-docs/guide/)
 - [edsion 的博客](https://blog.i1hao.com/2018/09/01/hexo-and-githubpages-best-practices/)
+- [博客折腾记：主题更新、迁移博客到腾讯云COS以及解决百度收录](http://xiang578.com/post/use-cos-to-store-blog.html)
+- [Python 使用cos-python-sdk-v5 上传文件到腾讯云COS对象存储](https://www.cloudcared.cn/2338.html)
