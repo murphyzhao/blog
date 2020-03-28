@@ -82,5 +82,5 @@ after_deploy:
   - chmod +x cos_blog_sync-linux-amd64
   - ls -la
   # 同步文件到腾讯 COS
-  - cos_blog_sync-linux-amd64 $TencentCOSSecretID $TencentCOSSecretKEY $TencentCOSREGION $TencentCOSBucketName /home/travis/build/murphyzhao/blog_old /home/travis/build/murphyzhao/blog_bak
+  - ./cos_blog_sync-linux-amd64 $TencentCOSSecretID $TencentCOSSecretKEY $TencentCOSREGION $TencentCOSBucketName /home/travis/build/murphyzhao/blog_old /home/travis/build/murphyzhao/blog_bak
   - echo "==== Finish! ===="
