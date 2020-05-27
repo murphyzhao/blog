@@ -343,14 +343,9 @@ links:
   banner_img_height: 80  # available: 0 - 100
   subtitle:  # 打字机内容
   items:  # 键是友链标题、值的列表内容分别是 [链接, 简介, 头像]，头像可以省略
-    Fluid Docs: [https://hexo.fluid-dev.com/docs/, 主题使用指南, /img/favicon.png]
-    Fluid Repo: [https://github.com/fluid-dev/hexo-theme-fluid, 主题 GitHub 仓库, /img/favicon.png]
-    Fluid Changelog: [https://github.com/fluid-dev/hexo-theme-fluid/blob/master/Changelog.md, 主题更新日志, /img/favicon.png]
     Murphy's GitHub: [https://github.com/murphyzhao/, 我的 GitHub 仓库, https://zhaojuntao.gitee.io/picturebed/logo/Murphy-logo.png]
-    上屋顶看北斗七星: [https://ruru.eatrice.top/, 假如今天是生命的最后一天, https://ruru.eatrice.top/img/avatar.jpg]
-    吃白饭的休伯利安号: [https://eatrice.top/, 好哦好哦, https://eatrice.top/img/avatar.jpg]
-    zkqiang's space: [https://zkqiang.cn/, 张凯强的博客, https://static.zkqiang.cn/images/20190726002726.JPG-slim]
-    七夏浅笑: [http://www.julydate.com/, 七月之约，夏末浅笑, https://ae01.alicdn.com/kf/U3f38a4228e434dfdb6681986c7232051a.jpg]
+    物联网学前班公众号: [https://mp.weixin.qq.com/s/s-AuC_IDS5GEamRwX286MQ, 微信公众号, https://zhaojuntao.gitee.io/picturebed/blog/IoT-Preschool/WeChat-GongZhongHao.jpg]
+    物联网学前班知乎专栏: [https://zhuanlan.zhihu.com/murphyzhao, 知乎专栏, https://zhaojuntao.gitee.io/picturebed/blog/IoT-Preschool/WeChat-GongZhongHao.jpg]
     酷壳-COOLSHELL: [https://coolshell.cn/, 左耳朵耗子-陈皓, https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/ZuoErDuoHaoZi-ChenHao.jpg]
     极客时间: [https://time.geekbang.org/, 一种新的学习方式, https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/JiKeShiJian-20200520.jpg]
     Pexels: [https://www.pexels.com/zh-cn/, 无版权图片素材网站, https://gitee.com/zhaojuntao/PictureBed/raw/master/Icon/pexels-logo.png]
@@ -360,3 +355,9 @@ links:
     我爱音频网: [http://www.52audio.com/, 音频学习交流网站, https://gitee.com/zhaojuntao/PictureBed/raw/master/Icon/HeadPortrait20200525-01.png]
     在线绘图工具 Plantuml: [https://plantuml.com/, 在线绘图 UML 时序图等, https://gitee.com/zhaojuntao/PictureBed/raw/master/Icon/HeadPortrait20200525-01.png]
     在线绘图工具 mermaid: [https://mermaid-js.github.io/mermaid/#/, 在线绘图 UML 时序图 甘特图, https://gitee.com/zhaojuntao/PictureBed/raw/master/Icon/HeadPortrait20200525-01.png]
+    Fluid Docs: [https://hexo.fluid-dev.com/docs/, 主题使用指南, /img/favicon.png]
+    Fluid Repo: [https://github.com/fluid-dev/hexo-theme-fluid, 主题 GitHub 仓库, /img/favicon.png]
+    上屋顶看北斗七星: [https://ruru.eatrice.top/, 假如今天是生命的最后一天, https://ruru.eatrice.top/img/avatar.jpg]
+    吃白饭的休伯利安号: [https://eatrice.top/, 好哦好哦, https://eatrice.top/img/avatar.jpg]
+    zkqiang's space: [https://zkqiang.cn/, 张凯强的博客, https://static.zkqiang.cn/images/20190726002726.JPG-slim]
+    七夏浅笑: [http://www.julydate.com/, 七月之约，夏末浅笑, https://ae01.alicdn.com/kf/U3f38a4228e434dfdb6681986c7232051a.jpg]
