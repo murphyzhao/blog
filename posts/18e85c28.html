@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://zhaojuntao.gitee.io/picturebed/logo/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://zhaojuntao.gitee.io/picturebed/logo/Murphy-logo.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="description" content="Murphy&#39;s blog | 物联网技术分享 | 物联网学前班 | 物联网教程 | iot | aiot | 物联网全栈 | 嵌入式开发 | 智能硬件 | Linux | RT-Thread | FreeRTOS | TencentOS tiny">
+  <meta name="author" content="MurphyZhao">
+  <meta name="keywords" content="Murphy, MurphyZhao, iot, aiot, Linux, rt-thread, TencentOS tiny, 物联网, 物联网学前班, 物联网教程, 嵌入式, 智能硬件">
+  <title>技术手艺人如何更值钱 ~ Murphy&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Murphy's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/links/">友链</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('https://zhaojuntao.gitee.io/picturebed/blog/IndexPicture/index-20191224-1.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期日, 五月 24日 2020
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1.5k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      5 分钟
+                  </span>
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  <span id="busuanzi_container_page_pv" class="post-meta" style="display: none">
+                    <i class="far fa-eye" aria-hidden="true"></i>
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <blockquote>
+<p>程序员如何用技术变现笔记学习笔记。</p>
+</blockquote>
+<p>这篇文章是非常有用的经验之谈，都是干货，需要结合自己的情况，不断品味里面的道理，然后指导自己做正确的决定。</p>
+<p>引用浩哥文章的一段话：</p>
+<blockquote>
+<p>程序员用自己的技术变现，其实是一件天经地义的事儿。写程序是一门“手艺活儿”，那么作为手艺人，程序员当然可以做到靠自己的手艺和技能养活自己。当然，有手艺的人就能做出别人做不出来的东西，而付费也是一件很自然的事了。我们所要做的就是让自己的“手艺”更加值钱。</p>
+</blockquote>
+<h2 id="有意识，懂大道理"><a href="#有意识，懂大道理" class="headerlink" title="有意识，懂大道理"></a>有意识，懂大道理</h2><ol>
+<li>意识到自己的价值</li>
+<li>努力做到“我完全可以靠自己的手艺、不依赖任何人或公司去生活”</li>
+<li>我完全没有必要通过打工听人安排而活着，而是<strong>反过来通过在公司工作提高自己的技能，让自己可以更为独立和自由地生活</strong>；</li>
+<li>对于重复的工作，要想尽办法提高效率，节省自己的时间用在更重要的事情上</li>
+</ol>
+<p>如果想成为手艺人，让自己的手艺变现，需要明白一些道理，皓哥给出了自己的总结：</p>
+<ol>
+<li>要去经历大多数人经历不到的，要把学习时间花在那些比较难的地方。</li>
+<li>要写文章就要写没有人写过的，或是别人写过，但我能写得更好的。</li>
+<li>更重要的是，技术和知识完全是可以变现的。</li>
+<li>25~35 岁是每个人最宝贵的时光，应该用在刀刃上。</li>
+</ol>
+<blockquote>
+<p><strong>25~35 岁是每个人最宝贵的时光，应该用在刀刃上。</strong> 共勉。</p>
+</blockquote>
+<h2 id="技术手艺人的重点特性"><a href="#技术手艺人的重点特性" class="headerlink" title="技术手艺人的重点特性"></a>技术手艺人的重点特性</h2><p>作为技术手艺人，总结几点：</p>
+<ol>
+<li><p>技术和技能的领先</p>
+</li>
+<li><p>对技术本质和趋势的敏感度</p>
+</li>
+<li><p>多去前沿的公司经历和学习这些东西</p>
+</li>
+<li><p>多分享，多交流</p>
+<p> 不同思想，不同的思维方式，在一起碰撞能够更加丰富自己的认知，改善自己的思考方式，扩大思考的角度，提高认知的高度，开阔自己的视野。</p>
+</li>
+</ol>
+<blockquote>
+<p><strong>并不是社会不尊重程序员，只要你能帮上大忙，就一定会赢得别人的尊重。</strong></p>
+</blockquote>
+<h2 id="如何让自己的手艺更加值钱"><a href="#如何让自己的手艺更加值钱" class="headerlink" title="如何让自己的手艺更加值钱"></a>如何让自己的手艺更加值钱</h2><p>手艺更加值钱，变现也更加容易和自然，可能都不需要你自己张罗。</p>
+<ol>
+<li><p>千里之行，积于跬步。你得确保你有一个一个的小成功。</p>
+<p> 做到让别人有求于你，或者向别人推荐你。只有掌握大多数人不能掌握的技术，有更多别人没有的经验和经历，你的影响力和个人品牌才会发光发亮，这需要你更多地学习。</p>
+<p> 别人需要你的帮助，你的帮助有效果，那就会产生效益，会为你拓展更大的空间。</p>
+</li>
+<li><p>关注有价值的东西</p>
+<p> 调研技术市场，关注技术趋势，找到并掌握符合未来发展的技术，你就有了先发优势。符合未来发展趋势的技术，其背后一定会有大型商业公司的支持，这类公司越多，该技术就越需要关注。</p>
+</li>
+<li><p>找到能体现价值的地方。在一家高速发展的公司中，技术人员的价值可以达到最大化。</p>
+<p> 比较好的成长路径是，先进入大公司学习大公司的技术和成功的经验，然后再找到高速成长的公司，这样你就可以实现自己更多的价值。</p>
+</li>
+<li><p>动手能力很重要。理论和思考要能落地，要通过不断动手操作才能知晓技术细节，只有了解了细节，你才能提出更好或是更靠谱、可以落地的解决方案。</p>
+</li>
+<li><p>关注技术付费点。愿意技术付费有两个点：一个是，能帮别人“挣钱”的地方；另一个是，能帮别人“省钱”的地方。</p>
+</li>
+<li><p>提高自己的能力和经历。付费的前提是信任，只有不断提过自己的能力和经历，才会被人可以，被信任，被靠谱。</p>
+</li>
+<li><p>找到有价值的信息源，远离微信朋友圈的低质量信息。多从源头解决问题，善用 Google。</p>
+</li>
+<li><p>输出观点和价值观。唯有输出才能让更多的人注意到你，然后才会有影响力。</p>
+</li>
+<li><p>优质的朋友圈。</p>
+</li>
+</ol>
+<h2 id="优质的朋友圈共性"><a href="#优质的朋友圈共性" class="headerlink" title="优质的朋友圈共性"></a>优质的朋友圈共性</h2><ul>
+<li>这些人都比较有想法、有观点，经验也比较丰富；</li>
+<li>这些人涉猎的面比较广；这些人都有或多或少的成功；</li>
+<li>这些人都是喜欢折腾喜欢搞事的人；</li>
+<li>这些人都对现状有些不满，并想做一些改变；</li>
+<li>这些人都有一定的影响力。</li>
+</ul>
+<h2 id="有思想地学习技术"><a href="#有思想地学习技术" class="headerlink" title="有思想地学习技术"></a>有思想地学习技术</h2><ol>
+<li>这个技术解决什么问题？为什么同类技术做不到？</li>
+<li>为什么是这样解决的？有没有更好的方式？</li>
+</ol>
+<h2 id="皓哥总结"><a href="#皓哥总结" class="headerlink" title="皓哥总结"></a>皓哥总结</h2><p>总之，就一句话，<strong>会挣钱的人一定是会投资的人</strong>。我一直认为，最宝贵的财富并不是钱，而是你的时间，<strong>时间比钱更宝贵，因为钱你不用还在那里，而时间你不用就浪费掉了</strong>。你把你的时间投资在哪些地方，就意味着你未来会走什么样的路。所以，利用好你的时间，投到一些有意义的地方吧。</p>
+<hr>
+<p><strong>这篇文章干货超级多，建议读者直接去订阅陈皓在极客时间的专栏学习，反复品读，反复品读！</strong></p>
+<blockquote>
+<p>以上内容来自极客时间“左耳听风-陈皓”专栏的学习总结，该专栏内容非常专业实用，需要细品多遍，欢迎各位读者去陈皓专栏订阅，本篇笔记如有侵权，请联系删除，谢谢！</p>
+</blockquote>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%B7%A6%E8%80%B3%E6%9C%B5%E8%80%97%E5%AD%90/">左耳朵耗子</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E9%99%88%E7%9A%93/">陈皓</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%9E%81%E5%AE%A2%E6%97%B6%E9%97%B4/">极客时间</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                
+                
+  <script defer src="https://utteranc.es/client.js"
+          repo="murphyzhao/blog"
+          issue-term="pathname"
+  
+          label="utterances"
+    
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+  </script>
+
+
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-md">
+    <div class="container custom post-content mx-auto">
+      <div style="position:relative; z-index:999; top:0;"><script type="text/javascript">document.write(unescape("%3Cdiv id='reward' %3E%3C/div%3E%3Cscript src='/site-js/reward.min.js' type='text/javascript'%3E%3C/script%3E"));</script></div><div align="center"><img src="https://zhaojuntao.gitee.io/picturebed/logo/WeChat/ErWeiMaSouYiBiaoZhunSe.png" srcset="/img/loading.gif"  alt="微信公众号：物联网学前班" height=100px /></div>
+    </div>
+  </div>
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+  <div>
+    
+      <!-- 不蒜子统计PV -->
+      
+      <span id="busuanzi_container_site_pv" style="display: none">
+      总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    
+    
+      <!-- 不蒜子统计UV -->
+      
+      <span id="busuanzi_container_site_uv" style="display: none">
+      总访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
+    
+  </div>
+
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var post = $('#post');
+      var toc = $('#toc');
+      var tocLimMax = post.offset().top + post.height() - navHeight;
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = $('#board-ctn').css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/smoothscroll/1.4.10/SmoothScroll.min.js" ></script>
+
+
+
+  <script defer src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+<!-- Plugins -->
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e26f756fa7cff496d917beccbb716890";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  ');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "技术手艺人如何更值钱&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+  
+    <script>
+      !function (e, t, a) {
+        function r() {
+          for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
+          requestAnimationFrame(r)
+        }
+
+        function n() {
+          var t = "function" == typeof e.onclick && e.onclick;
+          e.onclick = function (e) {
+            t && t(), o(e)
+          }
+        }
+
+        function o(e) {
+          var a = t.createElement("div");
+          a.className = "heart", s.push({
+            el: a,
+            x: e.clientX - 5,
+            y: e.clientY - 5,
+            scale: 1,
+            alpha: 1,
+            color: c()
+          }), t.body.appendChild(a)
+        }
+
+        function i(e) {
+          var a = t.createElement("style");
+          a.type = "text/css";
+          try {
+            a.appendChild(t.createTextNode(e))
+          } catch (t) {
+            a.styleSheet.cssText = e
+          }
+          t.getElementsByTagName("head")[0].appendChild(a)
+        }
+
+        function c() {
+          return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+        }
+
+        var s = [];
+        e.requestAnimationFrame = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (e) {
+          setTimeout(e, 1e3 / 60)
+        }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
+      }(window, document);
+    </script>
+  
+
+
+
+
+
+
+
+
+</body>
+</html>

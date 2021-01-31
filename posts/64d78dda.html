@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://zhaojuntao.gitee.io/picturebed/logo/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://zhaojuntao.gitee.io/picturebed/logo/Murphy-logo.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="description" content="Murphy&#39;s blog | 物联网技术分享 | 物联网学前班 | 物联网教程 | iot | aiot | 物联网全栈 | 嵌入式开发 | 智能硬件 | Linux | RT-Thread | FreeRTOS | TencentOS tiny">
+  <meta name="author" content="MurphyZhao">
+  <meta name="keywords" content="Murphy, MurphyZhao, iot, aiot, Linux, rt-thread, TencentOS tiny, 物联网, 物联网学前班, 物联网教程, 嵌入式, 智能硬件">
+  <title>乐鑫 AT 固件初体验 ~ Murphy&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Murphy's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/links/">友链</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('https://zhaojuntao.gitee.io/picturebed/blog/IndexPicture/index-20191224-1.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期六, 一月 23日 2021
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1.3k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      5 分钟
+                  </span>
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  <span id="busuanzi_container_page_pv" class="post-meta" style="display: none">
+                    <i class="far fa-eye" aria-hidden="true"></i>
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <h1 id="乐鑫-AT-固件初体验"><a href="#乐鑫-AT-固件初体验" class="headerlink" title="乐鑫 AT 固件初体验"></a>乐鑫 AT 固件初体验</h1><blockquote>
+<p>查阅官方文档；硬件连接；获取 AT 固件；烧录 AT 固件；体验 AT 指令；</p>
+</blockquote>
+<blockquote>
+<p>前往<a href="https://www.espressif.com/" target="_blank" rel="noopener">乐鑫官网</a> 下载最新版本 AT 固件和 AT 指令集手册。</p>
+</blockquote>
+<h2 id="硬件准备"><a href="#硬件准备" class="headerlink" title="硬件准备"></a>硬件准备</h2><blockquote>
+<p>本文使用乐鑫的 ESP-WROOM-32（ESP-WROOM-32 是 ESP32-WROOM-32 的曾用名）模块，4MB Flash，无 PSRAM。ESP32 系列模组和开发板参考<a href="https://docs.espressif.com/projects/esp-idf/zh_CN/v4.2/esp32/hw-reference/modules-and-boards.html" target="_blank" rel="noopener">该链接</a>，这里有详细的对比介绍。</p>
+</blockquote>
+<p>模块接线示意图如下：（图片来自<a href="https://docs.espressif.com/projects/esp-at/en/latest/Get_Started/Hardware_connection.html" target="_blank" rel="noopener">乐鑫文档</a>）</p>
+<p><img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/AT/esp32-wroom-hw-connection.png" srcset="/img/loading.gif" alt="ESP32-WROOM-32 Series Hardware Connection"></p>
+<p>请在<a href="https://docs.espressif.com/projects/esp-at/en/latest/Get_Started/Hardware_connection.html" target="_blank" rel="noopener">该链接</a>里找到你的硬件对应的接线方式，连线必须准确无误！</p>
+<h2 id="选择-AT-固件"><a href="#选择-AT-固件" class="headerlink" title="选择 AT 固件"></a>选择 AT 固件</h2><p>乐鑫的 AT 固件自 V2.0 之后就开始使用 ESP-AT（基于 ESP-IDF 或 ESP8266_RTOS_SDK 实现的软件工程）了，不再使用 NonOS 版本。如果你使用的是 ESP8266 模块，那么可以考虑是否可以平滑升级到新的版本。</p>
+<p>各版本 AT 固件的差异参考该<a href="">链接</a>。</p>
+<p>从<a href="https://docs.espressif.com/projects/esp-at/en/latest/AT_Binary_Lists/index.html" target="_blank" rel="noopener">该链接</a>里选择对应你硬件的 AT 固件，这里我选择 <a href="http://download.espressif.com/esp_at/firmware/ESP32/ESP32_WROOM/ESP32-WROOM-32_AT_Bin_V2.1.0.0.zip" target="_blank" rel="noopener">ESP32 AT binaries / ESP32-WROOM-32 Series / v2.1.0.0 ESP32-WROOM-32_AT_Bin_V2.1.0.0.zip</a>。</p>
+<h2 id="烧录-AT-固件"><a href="#烧录-AT-固件" class="headerlink" title="烧录 AT 固件"></a>烧录 AT 固件</h2><blockquote>
+<p>烧录过程主要参考乐鑫的<a href="https://docs.espressif.com/projects/esp-at/en/latest/Get_Started/Downloading_guide.html" target="_blank" rel="noopener">官方文档</a>，针对我的这个 ESP-WROOM-32 模块，有以下几个步骤：</p>
+</blockquote>
+<ul>
+<li><p>下载 AT 固件到 PC 上（ESP32-WROOM-32_AT_Bin_V2.1.0.0.zip）</p>
+</li>
+<li><p>下载烧录工具</p>
+<p>  烧录工具支持 Windows 和 MAC/Linux 系统，在<a href="https://docs.espressif.com/projects/esp-at/en/latest/Get_Started/Downloading_guide.html" target="_blank" rel="noopener">该链接</a>里下载。</p>
+</li>
+<li><p>正确连接 ESP-WROOM-32 模块到 PC 上</p>
+<p>  ESP-WROOM-32 有两路串口，一路需要使用一个 USB-A 转 Micro-USB 的线，用于固件下载和日志查看；另外一路串口需要一个 USB 转 TTL 串口的模块，用于 AT 指令传输。</p>
+<p>  连线方式见前面的 <code>硬件准备</code> 章节。</p>
+</li>
+<li><p>打开烧录工具，烧录默认 AT 固件</p>
+<ul>
+<li><p>打开工具 <code>flash_download_tool_v3.8.5.exe</code></p>
+</li>
+<li><p>选择 Developer Mode</p>
+<p>  <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/AT/Download_tool.png" srcset="/img/loading.gif" alt=""></p>
+</li>
+<li><p>选择芯片型号（本文里，我使用 ESP32 DownloadTool）</p>
+<p>  <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/AT/esp32_wroom32_download_select.png" srcset="/img/loading.gif" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>选择默认 AT 固件，下载到 0x0 地址，并勾选 <code>DoNotChgBin</code></p>
+<p>  <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/AT/20210124143448.png" srcset="/img/loading.gif" alt=""></p>
+<p>  然后选择对应的 串口 号，波特率使用默认的即可。最后点击 <code>START</code> 开始烧录。</p>
+<p>  <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/AT/20210124144033.png" srcset="/img/loading.gif" alt=""></p>
+</li>
+<li><p>确认烧录成功（发送 AT 和 AT+GMR 命令确认）</p>
+<p>  <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/AT/20210124144225.png" srcset="/img/loading.gif" alt=""></p>
+<p>  发 <code>AT</code> 指令返回 OK 标识 AT 服务已经正常启动，发 <code>AT+GMR</code> 查看 AT 固件信息是否跟你烧录的一致。</p>
+</li>
+</ul>
+<h2 id="AT-指令测试-TCP-Server-连接"><a href="#AT-指令测试-TCP-Server-连接" class="headerlink" title="AT 指令测试 TCP Server 连接"></a>AT 指令测试 TCP Server 连接</h2><ol>
+<li><p>确定 WiFi 模块即将连接的路由器</p>
+</li>
+<li><p>将 PC 接入该路由器，保证 WiFi 模块与路由器在同一个局域网下</p>
+</li>
+<li><p>PC 机开启 TCP Server</p>
+<p> <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/AT/20210124152113.png" srcset="/img/loading.gif" alt=""></p>
+<p> 如上图所示，开启 TCP Server，ip：192.168.50.190 端口：8089。</p>
+</li>
+<li><p>AT 模块连接 AT 串口到 PC，并上电，确定 AT 功能正常</p>
+<p> 发送 AT 返回 OK。</p>
+</li>
+<li><p>设置 AT 模块为 STA 模式（STA 模式下才能连接路由器 AP 热点）</p>
+<p> 发送 <code>AT+CWMODE=1</code> 进入 STA 模式，1 为 STA，2 为 AP，3 为 AP+STA。</p>
+<pre><code> AT+CWMODE=1
+
+ OK</code></pre></li>
+<li><p>连接路由器</p>
+<p> 发送 <code>AT+CWJAP=&quot;SSID&quot;,&quot;PWD&quot;</code> 连接路由器，SSID 为路由器 AP 热点名称，PWD 为路由器热点密码。示例如下：</p>
+<pre><code> AT+CWJAP=&quot;murphy&quot;,&quot;pwd_12345678&quot;
+ WIFI CONNECTED
+ WIFI GOT IP
+
+ OK</code></pre></li>
+<li><p>查询模块 ip 地址，判断是否与 PC 在同一网段下</p>
+<pre><code> AT+CIFSR
+ +CIFSR:STAIP,&quot;192.168.50.15&quot;
+ +CIFSR:STAMAC,&quot;30:ae:a4:04:75:f0&quot;
+
+ OK</code></pre></li>
+<li><p>连接 TCP Server</p>
+<pre><code> AT+CIPSTART=&quot;TCP&quot;,&quot;192.168.50.190&quot;,8089
+ CONNECT
+
+ OK</code></pre><p> 如下图所示，连接成功：</p>
+<p> <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/AT/20210124153328.png" srcset="/img/loading.gif" alt=""></p>
+</li>
+<li><p>模块发数据给 TCP Server</p>
+<p> 先发送 AT 命令 <code>AT+CIPSEND=x</code>，其中 <code>x</code> 表示要发送的数据长度，告诉 AT 解析器，我要发 x 字节的数据，你准备好接收！</p>
+<p> AT 解析器成功识别之后返回下面信息：</p>
+<pre><code> OK
+
+ &gt;</code></pre><p> 当看到 <code>&gt;</code> 的时候，我们就可以发数据了，但一定要发送 <code>x</code> 字节数据，否则多余的数据会被丢掉，并返回 <code>busy p...</code>。</p>
+<p> <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/AT/20210124153703.png" srcset="/img/loading.gif" alt=""></p>
+</li>
+<li><p>TCP Server 发数据给模块</p>
+<p>TCP Server 直接发数据就可以，WiFi 模块收到后，显示 <code>+IPD,x:data</code> 格式的信息。其中 <code>+IPD</code> 表示 WiFi 模块收到了对端的数据，<code>x</code> 表示收到的数据长度，<code>data</code> 表示收到的数据内容。示例如下图所示：</p>
+<p><img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/AT/20210124154510.png" srcset="/img/loading.gif" alt=""></p>
+</li>
+<li><p>模块透传发送数据</p>
+<p>首先设置数传模式为透传模式，指令 <code>AT+CIPMODE=1</code>。1：透传模式；0：普通模式。他们的主要区别是在透传模式可以在 <code>AT+CIPSEND</code> 指令后一直发送数据（直到退出透传发送），而普通模式下每次发送数据必须使用 <code>AT+CIPSEND=x</code> 来指定数据长度。</p>
+<pre><code>AT+CIPMODE=1
+
+OK
+AT+CIPSEND
+
+OK
+
+&gt;</code></pre><p>这个时候就可以发送数据直达模块了。</p>
+</li>
+<li><p>模块退出透传发送</p>
+<p>发送 <code>+++</code> 后停顿 1 秒。使用串口工具一次性发送 <code>+++</code> 而不是手动一个个发送，否则会导致误检测成数据。</p>
+<p>这是 AT 指令的一个标准约定。</p>
+<p>如果此时想切换成 <em>普通数传模式</em>，发送 <code>AT+CIPMODE=0</code> 指令。</p>
+</li>
+</ol>
+<p>把整个收发过程录了一个视频：</p>
+<iframe src="//player.bilibili.com/player.html?aid=971276668&bvid=BV1hp4y1W7a7&cid=286914407&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><blockquote>
+<p>这里给出了乐鑫官网的参考链接，需要阅读原始文档的童鞋移步这里。</p>
+</blockquote>
+<ul>
+<li><p><a href="https://docs.espressif.com/projects/esp-at/zh_CN/latest/Get_Started/index.html" target="_blank" rel="noopener">乐鑫官方 ESP-AT 用户指南</a></p>
+<p>  包括 AT 固件下载，AT 指令集介绍，编译与开发。</p>
+</li>
+<li><p><a href="https://docs.espressif.com/projects/esp-at/en/latest/AT_Binary_Lists/ESP8266_AT_binaries.html" target="_blank" rel="noopener">乐鑫官方 ESP8266 AT 固件</a></p>
+</li>
+<li><p><a href="https://www.espressif.com/zh-hans/support/download/other-tools" target="_blank" rel="noopener">乐鑫工具下载</a></p>
+</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/AT-%E6%8C%87%E4%BB%A4/">AT 指令</a>
+                    
+                      <a class="hover-with-bg" href="/tags/ESP32/">ESP32</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E4%B9%90%E9%91%AB/">乐鑫</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                
+                
+  <script defer src="https://utteranc.es/client.js"
+          repo="murphyzhao/blog"
+          issue-term="pathname"
+  
+          label="utterances"
+    
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+  </script>
+
+
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-md">
+    <div class="container custom post-content mx-auto">
+      <div style="position:relative; z-index:999; top:0;"><script type="text/javascript">document.write(unescape("%3Cdiv id='reward' %3E%3C/div%3E%3Cscript src='/site-js/reward.min.js' type='text/javascript'%3E%3C/script%3E"));</script></div><div align="center"><img src="https://zhaojuntao.gitee.io/picturebed/logo/WeChat/ErWeiMaSouYiBiaoZhunSe.png" srcset="/img/loading.gif"  alt="微信公众号：物联网学前班" height=100px /></div>
+    </div>
+  </div>
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+  <div>
+    
+      <!-- 不蒜子统计PV -->
+      
+      <span id="busuanzi_container_site_pv" style="display: none">
+      总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    
+    
+      <!-- 不蒜子统计UV -->
+      
+      <span id="busuanzi_container_site_uv" style="display: none">
+      总访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
+    
+  </div>
+
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var post = $('#post');
+      var toc = $('#toc');
+      var tocLimMax = post.offset().top + post.height() - navHeight;
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = $('#board-ctn').css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/smoothscroll/1.4.10/SmoothScroll.min.js" ></script>
+
+
+
+  <script defer src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+<!-- Plugins -->
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e26f756fa7cff496d917beccbb716890";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  ');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "乐鑫 AT 固件初体验&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+  
+    <script>
+      !function (e, t, a) {
+        function r() {
+          for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
+          requestAnimationFrame(r)
+        }
+
+        function n() {
+          var t = "function" == typeof e.onclick && e.onclick;
+          e.onclick = function (e) {
+            t && t(), o(e)
+          }
+        }
+
+        function o(e) {
+          var a = t.createElement("div");
+          a.className = "heart", s.push({
+            el: a,
+            x: e.clientX - 5,
+            y: e.clientY - 5,
+            scale: 1,
+            alpha: 1,
+            color: c()
+          }), t.body.appendChild(a)
+        }
+
+        function i(e) {
+          var a = t.createElement("style");
+          a.type = "text/css";
+          try {
+            a.appendChild(t.createTextNode(e))
+          } catch (t) {
+            a.styleSheet.cssText = e
+          }
+          t.getElementsByTagName("head")[0].appendChild(a)
+        }
+
+        function c() {
+          return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+        }
+
+        var s = [];
+        e.requestAnimationFrame = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (e) {
+          setTimeout(e, 1e3 / 60)
+        }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
+      }(window, document);
+    </script>
+  
+
+
+
+
+
+
+
+
+</body>
+</html>

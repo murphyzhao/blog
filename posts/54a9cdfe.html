@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://zhaojuntao.gitee.io/picturebed/logo/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://zhaojuntao.gitee.io/picturebed/logo/Murphy-logo.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="description" content="Murphy&#39;s blog | 物联网技术分享 | 物联网学前班 | 物联网教程 | iot | aiot | 物联网全栈 | 嵌入式开发 | 智能硬件 | Linux | RT-Thread | FreeRTOS | TencentOS tiny">
+  <meta name="author" content="MurphyZhao">
+  <meta name="keywords" content="Murphy, MurphyZhao, iot, aiot, Linux, rt-thread, TencentOS tiny, 物联网, 物联网学前班, 物联网教程, 嵌入式, 智能硬件">
+  <title>奋斗了四年的 NB-IOT 怎么让 Cat.1 成了最靓的仔？ ~ Murphy&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Murphy's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/links/">友链</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('https://zhaojuntao.gitee.io/picturebed/blog/IndexPicture/index-20191224-1.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期四, 五月 14日 2020
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    2.4k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      8 分钟
+                  </span>
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  <span id="busuanzi_container_page_pv" class="post-meta" style="display: none">
+                    <i class="far fa-eye" aria-hidden="true"></i>
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <pre><code>奋斗了四年的 NB-IOT 怎么让 Cat.1 成了最靓的仔？
+NB-IOT 和 eMTC 怎么样了？</code></pre><p><img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/WeChatGongZhongHao/2020/05/DaGang-1.png" srcset="/img/loading.gif" alt=""></p>
+<h2 id="Cat-1-是什么"><a href="#Cat-1-是什么" class="headerlink" title="Cat.1 是什么"></a>Cat.1 是什么</h2><p>首先 Cat 是 Category 的缩写，中文意思是“类别，种类”，在 3GPP 中指 UE-Category（UE: User Equipment，用户设备）。</p>
+<p>另外，Cat 后面的数字即代表不同的种类，3GPP 将不同种类的网络用 “Cat.X” 格式命名。根据 3GPP Release 定义，Cat.X 这个值是用来标识设备无线性能等级的，根据终端通讯速率来划分。</p>
+<p>各种 “UE-Category” 和支持速率的对应关系见下表：</p>
+<p><img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/WeChatGongZhongHao/2020/05/20200513225028.png" srcset="/img/loading.gif" alt=""></p>
+<p>手机 4G 网络用的是哪个类别？</p>
+<p>目前手机用的 4G 网络基本上才普及到 Cat.6，大多还停留在 Cat.4，这要看运营商和射频终端的支持情况。</p>
+<p>划重点：</p>
+<ul>
+<li>Cat.X 是用来描述用户终端的能力等级</li>
+<li>Cat.1 是 4G LTE 网络的一个类别，可以称为“低配版”的 4G 终端</li>
+<li>Cat.1 属于蜂窝物联网，是广域网</li>
+<li>Cat.1 通讯速率，上行 5.2Mbps，下行 10.3Mbps</li>
+</ul>
+<h2 id="Cat-1-为什么火了"><a href="#Cat-1-为什么火了" class="headerlink" title="Cat.1 为什么火了"></a>Cat.1 为什么火了</h2><p>NB-IOT 大张旗鼓推了这么多年，为什么 Cat1 成了最亮的仔？eMTC 又怎么样了？</p>
+<p>这得从一张蜂窝物联网金字塔图开始说起：</p>
+<p><img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/WeChatGongZhongHao/2020/05/12aae1a59e99610a58f4909764f4c3b2.jpeg" srcset="/img/loading.gif" alt=""></p>
+<p>在蜂窝物联网应用场景中，只有 10% 的高速业务需求，确有 60% 的超低速业务需求。在高速场景中，LTE Cat.4 以上级别的蜂窝模块可以满足需求；在超低速场景中，2G 蜂窝模块可以满足需求；在中低速场景中，有 2G/3G 蜂窝模块可以满足需求。</p>
+<p>如上三种速率的应用场景都有对应的蜂窝模块满足要求，那为什么还需要 NB-IOT、Cat.1、eMTC 来支撑呢？主要有以下几个原因：</p>
+<ul>
+<li><p>2G/3G 退网的必然</p>
+<p>  随着2G、3G的退网成为必然选择，基于4G/5G（NB-IoT+4G+5GNR）的物联网技术将担当起开启万物互联的大任。</p>
+</li>
+<li><p>5G 的建设，以及更好地利用频带</p>
+<p>  手机等移动终端最终会迁移到 4G/5G 及以上网络，2G/3G 频带被闲置，4G 频带被 5G 分担，为了更好的利用频谱资源，那么需要将网络接入能力开发给有网络需求的众多物联网设备。</p>
+</li>
+<li><p>NB-IOT 无法满足中速率及移动特性需求</p>
+</li>
+<li><p>Cat.4 大材小用，成本高</p>
+</li>
+<li><p>政策</p>
+<p>  近日，工信部办公厅发布了 <strong>《关于深入推进移动物联网全面发展的通知》</strong> （以下简称《通知》）也明确表示，<strong>以 NB-IoT 与 Cat.1 协同承接 2G/3G 物联连接，提升频谱利用效率</strong>。</p>
+</li>
+<li><p>物联网特性的需求</p>
+<ul>
+<li><p>小尺寸</p>
+</li>
+<li><p>超低功耗</p>
+</li>
+<li><p>成本敏感</p>
+</li>
+<li><p>所处网络环境差</p>
+</li>
+<li><p>广覆盖和超大规模接入需求</p>
+<p>  百亿规模的物联网设备。</p>
+</li>
+</ul>
+</li>
+<li><p>Cat.1 优势</p>
+<ul>
+<li>无缝接入现有 3G/4G 网络</li>
+<li>拥有跟 Cat.4 相同的毫秒级传输时延，以及支持 100KM/H 以上的移动速度。</li>
+</ul>
+</li>
+</ul>
+<p>由于物联网特性，3GPP 定义了 Cat.NB-1 级别的 NB-IOT 来承载超低速率应用场景的需求，主要是替代 2G 终端。另外，为了满足中低速物联网设备的网络需求，使用 3GPP 定义的 Cat.1 和 Cat.M1（eMTC）来替代 Cat.4 级别的 3G/4G 终端。</p>
+<p>2G/3G 退网，已经建设多年的 NB-IOT 又无法满足中低速率场景的网络需求，而且 NB-IOT 又无法满足高速移动场景，所以 Cat.1 很快就火了起来，未来很有可能成为蜂窝物联网的主要通信制式。</p>
+<h2 id="NB-IOT、eMTC-啥情况"><a href="#NB-IOT、eMTC-啥情况" class="headerlink" title="NB-IOT、eMTC 啥情况"></a>NB-IOT、eMTC 啥情况</h2><h3 id="NB-IOT-和-eMTC-在-3GPP-中的级别定义"><a href="#NB-IOT-和-eMTC-在-3GPP-中的级别定义" class="headerlink" title="NB-IOT 和 eMTC 在 3GPP 中的级别定义"></a>NB-IOT 和 eMTC 在 3GPP 中的级别定义</h3><p>3GPP 在 Release12/Release13 中增加了 Cat0、Cat.M1、Cat.NB-1 三个等级。</p>
+<ul>
+<li><p>Cat.0 放弃了对多天线的支持，简化为半双工，峰值速率降低为 1Mbit/s，终端复杂度降低为普通 LTE 终端的 40%，初步达到了物联网的成本要求；</p>
+</li>
+<li><p>Cat.M1 等级的终端信道带宽和射频接收带宽均为 1.4MHz，也就是我们常说的 eMTC（enhanced Machine-Type Communication，增强型机器类型通信）；</p>
+</li>
+<li><p>Cat.NB-1 接收带宽仅 180kHz，就是我们的 NB-IoT（Narrow Band Internet of Things，窄带物联网）。</p>
+</li>
+</ul>
+<p>Cat.1、Cat.M1（eMTC）和 Cat.NB-1（NB-IoT）全都是用于蜂窝物联网的。其中，NB-IoT的速率最慢（200Kbps），eMTC 次之（1Mbps），Cat.1 最快（也就上行 5Mbps）。</p>
+<p>划重点：</p>
+<ul>
+<li>NB-IOT 属于 Cat.NB-1 类别</li>
+<li>eMTC 属于 Cat.M1 类别</li>
+<li>速率：Cat.1 &gt; eMTC &gt; NB-IOT</li>
+</ul>
+<h3 id="为什么-eMTC-没有火"><a href="#为什么-eMTC-没有火" class="headerlink" title="为什么 eMTC 没有火"></a>为什么 eMTC 没有火</h3><p>从上文中可以看到 eMTC 和 Cat.1 共同承载中低速率的物联网设备网络需求，但 eMTC 为什么没有火？</p>
+<p>上海域格信息技术有限公司市场总监朱凯分析说，eMTC 在国内的发展并不乐观，eMTC 需要基础设施建设，而运营商现在正将更多的资源投入到 5G 建设中，很难有多余的资金投入到 eMTC 建设中，另外国内应用案例有限，可借鉴度不高，开发难度大。</p>
+<p>而近日工信部的《关于深入推进移动物联网全面发展的通知》也没有过多提到 eMTC，估计凉凉。</p>
+<h3 id="NB-IOT-还香吗"><a href="#NB-IOT-还香吗" class="headerlink" title="NB-IOT 还香吗"></a>NB-IOT 还香吗</h3><p>目前市场上有两种声音：</p>
+<ul>
+<li>Cat.1 挤占 NB-IOT 市场，NB-IOT 应用场景狭窄，资费不能平衡网络运营成本，会淡出市场</li>
+<li>NB-IOT 与 Cat.1 属于互补关系，且 NB-IOT 是未来 5G 非常重要的一个超大规模低速接入的切片</li>
+</ul>
+<p>当然，我更认可后者，NB-IOT 在 5G 中扮演着非常重要的角色。5G 三大场景中的海量机器通信（mMTC）、超高可靠低时延通信（uRLLC）均和物联网相关。其中 mMTC 将随着 NB-IoT 技术率先成熟，以及不涉及新空口技术等优势，会作为运营商 5G 优先发展的应用场景。</p>
+<p>并且在近日工信部《关于深入推进移动物联网全面发展的通知》也 <strong>明确了建立 NB-IoT/4G(含 Cat.1)/5G 协同发展的移动物联网综合生态体系为总体目标，在深化 4G 网络覆盖、加快 5G 网络建设的基础上，以 NB-IoT 满足大部分低速率场景需求，以 Cat.1 满足中等速率物联需求和话音需求，以 5G 技术满足更高速率、低时延联网需求</strong>。</p>
+<p>在工信部通知中明确提出 <strong>“推动 NB-IoT 标准纳入 ITU IMT-2020 5G 标准”</strong>，这无疑给 NB-IoT 技术产业吃了一颗定心丸。不用担心 NB-IoT 只是一个过渡性技术，做 NB-IoT 在 5G 时代将其长期存在。</p>
+<p>此次工信部同时为 NB-IOT 和 Cat.1 站台做背书，足以表明 <strong>NB-IOT 依旧很香</strong>，Cat.1 前途大好。</p>
+<p>NB-IOT 主要特点：</p>
+<ul>
+<li>广覆盖</li>
+<li>超低功耗</li>
+<li>低成本</li>
+<li>大连接</li>
+<li>低资费</li>
+<li>支持基站定位</li>
+<li>R14 支持 80KM/H 移动速度</li>
+</ul>
+<p>NBIOT 的主要应用场景：</p>
+<ul>
+<li>智能表计（水表、电表、燃气表）</li>
+<li>智慧井盖</li>
+<li>智慧烟感</li>
+<li>智能环卫（智能垃圾桶）</li>
+<li>智能门锁</li>
+</ul>
+<h2 id="Cat-1-现状"><a href="#Cat-1-现状" class="headerlink" title="Cat.1 现状"></a>Cat.1 现状</h2><p>随着紫光展锐、ASR 等芯片厂商发布性价比更高的 Cat.1 芯片之后，Cat.1 模组厂商扎堆发布了自家的模组，使得市场上的 Cat.1 模组价格已经迅速降至 45-60 元，玩家众多，竞争惨烈，基本重走 NB-IOT 的老路 —— 量未起，价已跌。</p>
+<p>Cat.1 芯片原厂：</p>
+<ul>
+<li>高通 MDM9207-1(2016 年发布)</li>
+<li>紫光展锐春藤 8910DM（28nm工艺，集成蓝牙和WiFi 室内定位）</li>
+<li>翱捷 ASR3601</li>
+<li><a href="https://altair-semi.com/products/alt1160/" target="_blank" rel="noopener">Sony Altair</a> ALT1160（2019 年发布）</li>
+</ul>
+<p>Cat.1 模组厂商（不完全统计）：</p>
+<ul>
+<li>中移物联网</li>
+<li>移远通信</li>
+<li>合宙电子</li>
+<li>移柯通信</li>
+<li>域格信息</li>
+<li>广和通</li>
+<li>芯讯通</li>
+<li>高新兴物联</li>
+<li>美格智能</li>
+<li>有方科技</li>
+<li>有人信息</li>
+<li>信位通讯</li>
+<li>锐骐(厦门)电子</li>
+<li>深圳信可通讯</li>
+<li>龙尚科技</li>
+</ul>
+<p>Cat.1 优势：</p>
+<ul>
+<li>相对 NB-IOT，其通信速率优势明显</li>
+<li>相对 eMTC，其网络成本低</li>
+<li>相对 Cat.4，其具有一定的成本优势</li>
+</ul>
+<p>Cat.1 劣势：</p>
+<ul>
+<li><p>现阶段芯片厂家少</p>
+<p>  国外以高通为主，辅以 Sequans、Altair。</p>
+<p>  国内主要是展锐和翱捷。</p>
+</li>
+<li><p>现阶段价格偏高</p>
+<p>  NB-IoT、Cat.1、Cat.4 模组价格：</p>
+<p>  <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/WeChatGongZhongHao/2020/05/20200514113756.png" srcset="/img/loading.gif" alt=""></p>
+</li>
+</ul>
+<p>cat1 的主要市场和应用场景：</p>
+<p>Cat.1 仍处于商用初期，落地的应用场景和案例还较少，一些明确的场景包括了共享、金融支付、工业控制、车载支付、公网对讲、POS 等等。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>工信部办公厅发布了《关于深入推进移动物联网全面发展的通知》（以下简称《通知》）同时为 NB-IOT 和 Cat.1 站台，未来 NB-IOT 依旧很香，Cat.1 则前途大好。</p>
+<p>随着新基建的启动，5G 打头，未来将是 NB-IOT、4G（包括 Cat.1）、5G 共同承载蜂窝物联网的连接，以应对不同层次的物联网业务需求。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://www.3gpp.org/DynaReport/36306.htm" target="_blank" rel="noopener">UE Category 速率</a></li>
+<li><a href="https://www.3gpp.org/ftp/Information/WORK_PLAN/Description_Releases/" target="_blank" rel="noopener">3GPP Release</a></li>
+<li><a href="https://mp.weixin.qq.com/s/4ej2iDrv-rsVYCN8qT0O8g" target="_blank" rel="noopener">物联传媒-12亿连接数、NB-IoT+Cat.1+5G深度覆盖，奔涌吧，物联网后浪！</a></li>
+</ul>
+<blockquote>
+<p>本文基于互联网及微信公众号文章进行汇总总结，如有侵权请联系删除，谢谢。</p>
+</blockquote>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/NB-IOT/">NB-IOT</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Cat-1/">Cat.1</a>
+                    
+                      <a class="hover-with-bg" href="/tags/eMTC/">eMTC</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                
+                
+  <script defer src="https://utteranc.es/client.js"
+          repo="murphyzhao/blog"
+          issue-term="pathname"
+  
+          label="utterances"
+    
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+  </script>
+
+
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-md">
+    <div class="container custom post-content mx-auto">
+      <div style="position:relative; z-index:999; top:0;"><script type="text/javascript">document.write(unescape("%3Cdiv id='reward' %3E%3C/div%3E%3Cscript src='/site-js/reward.min.js' type='text/javascript'%3E%3C/script%3E"));</script></div><div align="center"><img src="https://zhaojuntao.gitee.io/picturebed/logo/WeChat/ErWeiMaSouYiBiaoZhunSe.png" srcset="/img/loading.gif"  alt="微信公众号：物联网学前班" height=100px /></div>
+    </div>
+  </div>
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+  <div>
+    
+      <!-- 不蒜子统计PV -->
+      
+      <span id="busuanzi_container_site_pv" style="display: none">
+      总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    
+    
+      <!-- 不蒜子统计UV -->
+      
+      <span id="busuanzi_container_site_uv" style="display: none">
+      总访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
+    
+  </div>
+
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var post = $('#post');
+      var toc = $('#toc');
+      var tocLimMax = post.offset().top + post.height() - navHeight;
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = $('#board-ctn').css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/smoothscroll/1.4.10/SmoothScroll.min.js" ></script>
+
+
+
+  <script defer src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+<!-- Plugins -->
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e26f756fa7cff496d917beccbb716890";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  ');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "奋斗了四年的 NB-IOT 怎么让 Cat.1 成了最靓的仔？&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+  
+    <script>
+      !function (e, t, a) {
+        function r() {
+          for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
+          requestAnimationFrame(r)
+        }
+
+        function n() {
+          var t = "function" == typeof e.onclick && e.onclick;
+          e.onclick = function (e) {
+            t && t(), o(e)
+          }
+        }
+
+        function o(e) {
+          var a = t.createElement("div");
+          a.className = "heart", s.push({
+            el: a,
+            x: e.clientX - 5,
+            y: e.clientY - 5,
+            scale: 1,
+            alpha: 1,
+            color: c()
+          }), t.body.appendChild(a)
+        }
+
+        function i(e) {
+          var a = t.createElement("style");
+          a.type = "text/css";
+          try {
+            a.appendChild(t.createTextNode(e))
+          } catch (t) {
+            a.styleSheet.cssText = e
+          }
+          t.getElementsByTagName("head")[0].appendChild(a)
+        }
+
+        function c() {
+          return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+        }
+
+        var s = [];
+        e.requestAnimationFrame = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (e) {
+          setTimeout(e, 1e3 / 60)
+        }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
+      }(window, document);
+    </script>
+  
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://zhaojuntao.gitee.io/picturebed/logo/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://zhaojuntao.gitee.io/picturebed/logo/Murphy-logo.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="description" content="Murphy&#39;s blog | 物联网技术分享 | 物联网学前班 | 物联网教程 | iot | aiot | 物联网全栈 | 嵌入式开发 | 智能硬件 | Linux | RT-Thread | FreeRTOS | TencentOS tiny">
+  <meta name="author" content="MurphyZhao">
+  <meta name="keywords" content="Murphy, MurphyZhao, iot, aiot, Linux, rt-thread, TencentOS tiny, 物联网, 物联网学前班, 物联网教程, 嵌入式, 智能硬件">
+  <title>Murphy&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Murphy's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/links/">友链</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('https://zhaojuntao.gitee.io/picturebed/blog/IndexPicture/index-20191224-1.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="fas fa-angle-down scroll-down-arrow"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-md">
+        <div class="py-5 z-depth-3" id="board"
+          style=margin-top:0>
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/a1efac9d.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/AT/at-banner-image.png" srcset="/img/loading.gif" alt="解读乐鑫 AT 指令解析器，解锁你不知道的用法"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/a1efac9d.html">
+        <p class="h4 index-header">解读乐鑫 AT 指令解析器，解锁你不知道的用法</p>
+      </a>
+
+      <a href="/posts/a1efac9d.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">解读乐鑫 AT 指令解析器，解锁你不知道的用法（全网唯一）欢迎关注、星标 🌟 物联网学前班 公众号，畅享精彩内容
+
+
+由于近期正好在做这个事情，所以今天就以乐鑫的 AT 指令为例，讲讲 AT 解析器设计有哪些事情，也算是个自己近期的学习总结了。
+
+往期文章回顾
+1、AT 指令介绍
+2、初体验乐鑫 ESP32 AT 指令
+
+少有人关注的 AT 解析器互联网上很多 xxx AT 指令使用教程，为何少有人关注 AT 解析器呢？
+情况是这样的，绝大部分开发者是拿 AT 固件来开发产品的，只有很少一部分人是开发 AT 固件的。AT 固件通常是由芯片原厂、模组厂商来提供的，并且大多模组厂商也仅基于芯片原</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2021-01-31&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/AT-%E6%8C%87%E4%BB%A4/">AT 指令</a>&nbsp;
+          
+            <a href="/tags/%E4%B9%90%E9%91%AB/">乐鑫</a>&nbsp;
+          
+            <a href="/tags/AT-%E8%A7%A3%E6%9E%90%E5%99%A8/">AT 解析器</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/64d78dda.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/AT/at_esp32_test_banner.png" srcset="/img/loading.gif" alt="乐鑫 AT 固件初体验"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/64d78dda.html">
+        <p class="h4 index-header">乐鑫 AT 固件初体验</p>
+      </a>
+
+      <a href="/posts/64d78dda.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">乐鑫 AT 固件初体验
+查阅官方文档；硬件连接；获取 AT 固件；烧录 AT 固件；体验 AT 指令；
+
+
+前往乐鑫官网 下载最新版本 AT 固件和 AT 指令集手册。
+
+硬件准备
+本文使用乐鑫的 ESP-WROOM-32（ESP-WROOM-32 是 ESP32-WROOM-32 的曾用名）模块，4MB Flash，无 PSRAM。ESP32 系列模组和开发板参考该链接，这里有详细的对比介绍。
+
+模块接线示意图如下：（图片来自乐鑫文档）
+
+请在该链接里找到你的硬件对应的接线方式，连线必须准确无误！
+选择 AT 固件乐鑫的 AT 固件自 V2.0 之后就开始使用 ESP-AT（基于 ESP-I</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2021-01-23&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/AT-%E6%8C%87%E4%BB%A4/">AT 指令</a>&nbsp;
+          
+            <a href="/tags/ESP32/">ESP32</a>&nbsp;
+          
+            <a href="/tags/%E4%B9%90%E9%91%AB/">乐鑫</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/402d4d22.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/AT/at-banner-image.png" srcset="/img/loading.gif" alt="AT 指令介绍"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/402d4d22.html">
+        <p class="h4 index-header">AT 指令介绍</p>
+      </a>
+
+      <a href="/posts/402d4d22.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">AT 指令介绍AT（Attention）指令是由 Dennis Hayes 发明的，所以也称为 Hayes command set。AT 指令最初是用来指导 modem 工作的，后面随着技术的发展，低速 modem 已经退出了市场，但 AT 指令却不断发展，并且在今天 AT 指令依旧扮演这非常重要的角色。
+虽然在 PC 端、手机上已经没有了 AT 的使用，但其却在嵌入式行业里各类联网模块中发挥着重要的作用，而且不仅仅只应用在蜂窝模块，还应用到了 WiFi、BLE 等模块中。
+相关标准随着技术的发展，目前 AT 指令发展过程中形成两个重要标准：
+
+V.250：该标准于 1995 年建立，1998</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2021-01-12&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/AT-%E6%8C%87%E4%BB%A4/">AT 指令</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/f55a6415.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/2021-0101-C.png" srcset="/img/loading.gif" alt="C 语言编程规范"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/f55a6415.html">
+        <p class="h4 index-header">C 语言编程规范</p>
+      </a>
+
+      <a href="/posts/f55a6415.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">C 语言编程约定
+此文为约定，并非完全遵守某个规范，而是由自己的编程习惯总结而来。
+
+文件字符编码
+一切的前提。
+
+强烈建议使用 UTF-8 编码格式。UTF-8 编码已经广泛应用在 WEB 中，是首选的编码格式。
+UTF-8 编码是 Unicode 标准中的变长编码方式，可以表示 Unicode 中任意一个字符，使用1~4个字节表示字符，且字节顺序无关。统一使用 UTF-8 字符编码可以避免各种乱码问题的出现。
+但是使用 UTF-8 编码格式的目的并不是为了解决乱码问题，而是为了格式的统一，避免在国际化过程中出现乱码而已。另外，不建议在代码里使用中文（除非是协议特殊需要传输非 UTF-8 中</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2021-01-01&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E8%A7%84%E8%8C%83/">规范</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/">编程规范</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/75c2b6d7.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/20200913195715.png" srcset="/img/loading.gif" alt="同一客户端下使用多个 Git 账户"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/75c2b6d7.html">
+        <p class="h4 index-header">同一客户端下使用多个 Git 账户</p>
+      </a>
+
+      <a href="/posts/75c2b6d7.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">问题由来为什么会有多个 Git 账户当下环境做软件开发或多或少都离不开资源丰富的 GitHub，它并誉为程序员的天堂，几乎每一个软件开发人员都会有一个自己的 GitHub 账户。
+另一方面，软件公司也在不断进化代码的管理方式，大多数软件公司开始独立部署私有的 Gitlab 来托管公司代码，进而进行工程管理和代码审查，以及后续的自动化部署、自动化测试、持续集成。所以，你至少还会有一个公司的 Git 账户。
+再者，由于 GitHub 属于外网，经常被 Q 而无法高效率地使用，所以我们还经常会用到国内越来越好的 Git 托管平台 码云 Gitee，而且很多国内优秀的开源软件会将同步托管到 GitHu</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-09-13&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E5%B7%A5%E5%85%B7/">工具</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/TortoiseGit/">TortoiseGit</a>&nbsp;
+          
+            <a href="/tags/%E5%B0%8F%E4%B9%8C%E9%BE%9F/">小乌龟</a>&nbsp;
+          
+            <a href="/tags/Git/">Git</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/eaf5273.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/20200528-Markdown.jpg" srcset="/img/loading.gif" alt="基于 Markdown 的中文文档排版规范"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/eaf5273.html">
+        <p class="h4 index-header">基于 Markdown 的中文文档排版规范</p>
+      </a>
+
+      <a href="/posts/eaf5273.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">本篇文章先介绍 Markdown 的背景信息，然后着重介绍 Markdown 中文文档的排版规范，不介绍 Markdown 的入门使用。
+0 前言相信阅读本文的读者一定有被 Markdown 灵活的写作风格搞懵过，不知道怎么写更优雅、更规范，那么本文就是来帮您梳理 Markdown 写作过程中常见的一些问题，然后给出一个建议的应用规范。
+通过阅读本文，相信你一定可以基于 Markdown 写出更加优雅的中文文档。
+1 关于 MarkdownMarkdown 是由 John Gruber 于 2004 年创建的一种文本标记语言，目的是让人们使用“直观的、便于阅读的纯文本格式”书写文档。
+与类似于</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-05-28&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E8%A7%84%E8%8C%83/">规范</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Markdown/">Markdown</a>&nbsp;
+          
+            <a href="/tags/%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3%E6%8E%92%E7%89%88%E8%A7%84%E8%8C%83/">中文文档排版规范</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/dc4756e2.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/ZuoErDuoHaoZi-ChenHao.jpg" srcset="/img/loading.gif" alt="Equifax 信息泄露始末笔记"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/dc4756e2.html">
+        <p class="h4 index-header">Equifax 信息泄露始末笔记</p>
+      </a>
+
+      <a href="/posts/dc4756e2.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">Equifax 信息泄露始末笔记
+代码设计的时候就应该将安全考虑进去
+
+接口设计应符合安全规范，慎重设计使用能够执行系统命令的接口
+
+使用开源软件必须密切关注开源软件动态，尤其留意 bug 的暴露与修复
+
+开源软件选择需谨慎，安全因素需考虑
+
+培养安全意识，定义安全规范，建立安全理论知识体系
+ 一定要培养员工的安全意识，员工计算机水平参差不齐，很有可能成为钓鱼入口。
+
+注重代码审查，以及代码入库审查
+ 很多已经入库的代码竟然存在服务器的账户名和密码！GitHub 上现在也还有很多这样的仓库。
+
+留意日志组件可能泄露隐私数据
+
+谨防钓鱼攻击
+ 陌生邮件、可疑邮件不要轻易打开其中的附件，更不要轻易</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-05-24&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E5%B7%A6%E8%80%B3%E6%9C%B5%E8%80%97%E5%AD%90/">左耳朵耗子</a>&nbsp;
+          
+            <a href="/tags/%E9%99%88%E7%9A%93/">陈皓</a>&nbsp;
+          
+            <a href="/tags/%E6%9E%81%E5%AE%A2%E6%97%B6%E9%97%B4/">极客时间</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/18e85c28.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/ZuoErDuoHaoZi-ChenHao.jpg" srcset="/img/loading.gif" alt="技术手艺人如何更值钱"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/18e85c28.html">
+        <p class="h4 index-header">技术手艺人如何更值钱</p>
+      </a>
+
+      <a href="/posts/18e85c28.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+程序员如何用技术变现笔记学习笔记。
+
+这篇文章是非常有用的经验之谈，都是干货，需要结合自己的情况，不断品味里面的道理，然后指导自己做正确的决定。
+引用浩哥文章的一段话：
+
+程序员用自己的技术变现，其实是一件天经地义的事儿。写程序是一门“手艺活儿”，那么作为手艺人，程序员当然可以做到靠自己的手艺和技能养活自己。当然，有手艺的人就能做出别人做不出来的东西，而付费也是一件很自然的事了。我们所要做的就是让自己的“手艺”更加值钱。
+
+有意识，懂大道理
+意识到自己的价值
+努力做到“我完全可以靠自己的手艺、不依赖任何人或公司去生活”
+我完全没有必要通过打工听人安排而活着，而是反过来通过在公司工作提高自己的</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-05-24&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E5%B7%A6%E8%80%B3%E6%9C%B5%E8%80%97%E5%AD%90/">左耳朵耗子</a>&nbsp;
+          
+            <a href="/tags/%E9%99%88%E7%9A%93/">陈皓</a>&nbsp;
+          
+            <a href="/tags/%E6%9E%81%E5%AE%A2%E6%97%B6%E9%97%B4/">极客时间</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/b8d3ebe5.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/ZuoErDuoHaoZi-ChenHao.jpg" srcset="/img/loading.gif" alt="面向优秀-左耳朵耗子（陈皓）"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/b8d3ebe5.html">
+        <p class="h4 index-header">面向优秀-左耳朵耗子（陈皓）</p>
+      </a>
+
+      <a href="/posts/b8d3ebe5.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">向优秀的人学习从朋友圈了解到极客时间“左耳听风”专栏的活动。专栏里覆盖了陈皓 20 年的技术和管理经验以及学习总结，还有《程序员技术练级攻略》的重新阐述，这些经验都是学校或者工作中很难学到，作者不断学习、思考、总结所得的宝贵经验。看了陈皓的分享，我深深地震撼了，不管做技术还是管理，不管是工作还是生活，都可以尝试陈皓这种学习法则、对事情的态度、积极向上的心态。于是乎，我花了 69.9￥ 来学习陈皓的经验，希望能窥得一招半式，往后职业生涯中少走些弯路。
+尤其是在自己迷茫的时候，更需要寻找一个目标，寻找一个自己想成为的那个人，然后制定计划，努力追赶。
+
+邀请一起研读陈皓专栏里随处都是非常高价值的经验</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-05-20&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E4%BA%BA%E7%89%A9/">人物</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E5%A4%A7%E4%BD%AC/">大佬</a>&nbsp;
+          
+            <a href="/tags/%E5%B7%A6%E8%80%B3%E6%9C%B5%E8%80%97%E5%AD%90/">左耳朵耗子</a>&nbsp;
+          
+            <a href="/tags/%E9%99%88%E7%9A%93/">陈皓</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/54a9cdfe.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/internet-of-things-4129218_1920.jpg" srcset="/img/loading.gif" alt="奋斗了四年的 NB-IOT 怎么让 Cat.1 成了最靓的仔？"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/54a9cdfe.html">
+        <p class="h4 index-header">奋斗了四年的 NB-IOT 怎么让 Cat.1 成了最靓的仔？</p>
+      </a>
+
+      <a href="/posts/54a9cdfe.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">奋斗了四年的 NB-IOT 怎么让 Cat.1 成了最靓的仔？
+NB-IOT 和 eMTC 怎么样了？
+Cat.1 是什么首先 Cat 是 Category 的缩写，中文意思是“类别，种类”，在 3GPP 中指 UE-Category（UE: User Equipment，用户设备）。
+另外，Cat 后面的数字即代表不同的种类，3GPP 将不同种类的网络用 “Cat.X” 格式命名。根据 3GPP Release 定义，Cat.X 这个值是用来标识设备无线性能等级的，根据终端通讯速率来划分。
+各种 “UE-Category” 和支持速率的对应关系见下表：
+
+手机 4G 网络用的是哪个类别？
+目</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-05-14&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/NB-IOT/">NB-IOT</a>&nbsp;
+          
+            <a href="/tags/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>&nbsp;
+          
+            <a href="/tags/Cat-1/">Cat.1</a>&nbsp;
+          
+            <a href="/tags/eMTC/">eMTC</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+
+
+  <nav aria-label="index posts navigation">
+    <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-angle-double-right"></i></a>
+    </span>
+  </nav>
+  
+  <script>
+    for (ele of document.getElementById("pagination").getElementsByClassName("page-number")) {
+      ele.href += '#board';
+    }
+  </script>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+  <div>
+    
+      <!-- 不蒜子统计PV -->
+      
+      <span id="busuanzi_container_site_pv" style="display: none">
+      总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    
+    
+      <!-- 不蒜子统计UV -->
+      
+      <span id="busuanzi_container_site_uv" style="display: none">
+      总访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
+    
+  </div>
+
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/smoothscroll/1.4.10/SmoothScroll.min.js" ></script>
+
+
+
+  <script defer src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+<!-- Plugins -->
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e26f756fa7cff496d917beccbb716890";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  ');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Better and Better&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+  
+    <script>
+      !function (e, t, a) {
+        function r() {
+          for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
+          requestAnimationFrame(r)
+        }
+
+        function n() {
+          var t = "function" == typeof e.onclick && e.onclick;
+          e.onclick = function (e) {
+            t && t(), o(e)
+          }
+        }
+
+        function o(e) {
+          var a = t.createElement("div");
+          a.className = "heart", s.push({
+            el: a,
+            x: e.clientX - 5,
+            y: e.clientY - 5,
+            scale: 1,
+            alpha: 1,
+            color: c()
+          }), t.body.appendChild(a)
+        }
+
+        function i(e) {
+          var a = t.createElement("style");
+          a.type = "text/css";
+          try {
+            a.appendChild(t.createTextNode(e))
+          } catch (t) {
+            a.styleSheet.cssText = e
+          }
+          t.getElementsByTagName("head")[0].appendChild(a)
+        }
+
+        function c() {
+          return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+        }
+
+        var s = [];
+        e.requestAnimationFrame = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (e) {
+          setTimeout(e, 1e3 / 60)
+        }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
+      }(window, document);
+    </script>
+  
+
+
+
+
+
+
+
+
+</body>
+</html>

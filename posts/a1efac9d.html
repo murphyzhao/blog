@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://zhaojuntao.gitee.io/picturebed/logo/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://zhaojuntao.gitee.io/picturebed/logo/Murphy-logo.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="description" content="Murphy&#39;s blog | 物联网技术分享 | 物联网学前班 | 物联网教程 | iot | aiot | 物联网全栈 | 嵌入式开发 | 智能硬件 | Linux | RT-Thread | FreeRTOS | TencentOS tiny">
+  <meta name="author" content="MurphyZhao">
+  <meta name="keywords" content="Murphy, MurphyZhao, iot, aiot, Linux, rt-thread, TencentOS tiny, 物联网, 物联网学前班, 物联网教程, 嵌入式, 智能硬件">
+  <title>解读乐鑫 AT 指令解析器，解锁你不知道的用法 ~ Murphy&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Murphy's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/links/">友链</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('https://zhaojuntao.gitee.io/picturebed/blog/IndexPicture/index-20191224-1.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期日, 一月 31日 2021
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    2.3k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      8 分钟
+                  </span>
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  <span id="busuanzi_container_page_pv" class="post-meta" style="display: none">
+                    <i class="far fa-eye" aria-hidden="true"></i>
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <h1 id="解读乐鑫-AT-指令解析器，解锁你不知道的用法（全网唯一）"><a href="#解读乐鑫-AT-指令解析器，解锁你不知道的用法（全网唯一）" class="headerlink" title="解读乐鑫 AT 指令解析器，解锁你不知道的用法（全网唯一）"></a>解读乐鑫 AT 指令解析器，解锁你不知道的用法（全网唯一）</h1><p>欢迎关注、星标 🌟 <strong>物联网学前班</strong> 公众号，畅享精彩内容</p>
+<p><img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/logo/WeChat/ErWeiMaSouYiSouBaiSe.png" srcset="/img/loading.gif" alt=""></p>
+<blockquote>
+<p>由于近期正好在做这个事情，所以今天就以乐鑫的 AT 指令为例，讲讲 AT 解析器设计有哪些事情，也算是个自己近期的学习总结了。</p>
+</blockquote>
+<h2 id="往期文章回顾"><a href="#往期文章回顾" class="headerlink" title="往期文章回顾"></a>往期文章回顾</h2><ul>
+<li>1、<a href="https://mp.weixin.qq.com/s/nd4NzSVX_7dhQ-gkJlVfiQ" target="_blank" rel="noopener">AT 指令介绍</a></li>
+<li>2、<a href="https://mp.weixin.qq.com/s/yfQbjSo80oD16mIXpeBlsg" target="_blank" rel="noopener">初体验乐鑫 ESP32 AT 指令</a></li>
+</ul>
+<h2 id="少有人关注的-AT-解析器"><a href="#少有人关注的-AT-解析器" class="headerlink" title="少有人关注的 AT 解析器"></a>少有人关注的 AT 解析器</h2><p>互联网上很多 xxx AT 指令使用教程，为何少有人关注 AT 解析器呢？</p>
+<p>情况是这样的，绝大部分开发者是拿 AT 固件来开发产品的，只有很少一部分人是开发 AT 固件的。AT 固件通常是由芯片原厂、模组厂商来提供的，并且大多模组厂商也仅基于芯片原厂提供的 AT 解析器自定义 AT 指令。所以设计 AT 解析器的人就更少了，由于芯片原厂通常又不会提供 SDK 源码到互联网上，因此也基本上看不到 AT 解析器分析的文章。所以，互联网上关于 AT 的文章大都是某某模块都 AT 指令如何使用、怎么使用 MCU 控制 AT 指令模块。</p>
+<p>总结：用 AT 固件都多，开发 AT 固件的少，设计 AT 解析器的人更少。</p>
+<h2 id="玩得好规则，才做得好产品"><a href="#玩得好规则，才做得好产品" class="headerlink" title="玩得好规则，才做得好产品"></a>玩得好规则，才做得好产品</h2><p>想要写一个好的 AT 解析器，或者你想解析 AT 指令的响应，你首先得知道 AT 指令的规则，清楚不同指令共性的地方和差异的地方。</p>
+<p>关于 AT 指令语法格式可以参考我的这篇文章 <a href="https://mp.weixin.qq.com/s/nd4NzSVX_7dhQ-gkJlVfiQ" target="_blank" rel="noopener">AT 指令介绍</a>。</p>
+<h2 id="标准晦涩难懂，寻个实际产品"><a href="#标准晦涩难懂，寻个实际产品" class="headerlink" title="标准晦涩难懂，寻个实际产品"></a>标准晦涩难懂，寻个实际产品</h2><p>以乐鑫的 AT 解析器 <a href="https://github.com/espressif/esp-at" target="_blank" rel="noopener">esp-at</a> 为例，说说 AT 解析器涉及的内容。</p>
+<p>乐鑫的 AT 指令语法也是遵循 <a href="http://www.arib.or.jp/english/html/overview/doc/STD-T63v9_30/5_Appendix/Rel10/27/27007-a70.pdf" target="_blank" rel="noopener">3GPP TS 27.007</a> 语法规范。</p>
+<h3 id="AT-指令共性的内容"><a href="#AT-指令共性的内容" class="headerlink" title="AT 指令共性的内容"></a>AT 指令共性的内容</h3><ol>
+<li>遵循 AT 规范，AT 开头，CRLF 结尾（考虑到有些平台只用 LF 的情况，CRLF 结尾还需要容错）；</li>
+<li>有五类 AT 指令（TEST, GET, SET, EXEC），这里不带加号算作是 basic 指令；</li>
+<li>字符串类型使用双引号（”string”）括起来；</li>
+<li>整数类型不实使用双引号；</li>
+<li>特殊字符需要转译；</li>
+<li>等号后面必须有一个参数（当然你的解析器也可以容忍等号后面无参数，作为默认参数填充，这样的话跟执行命令又有什么不同呢）；</li>
+<li>支持省略参数。</li>
+</ol>
+<p>以上这些都是需要基于 AT 解析器实现。</p>
+<h3 id="AT-指令差异的内容"><a href="#AT-指令差异的内容" class="headerlink" title="AT 指令差异的内容"></a>AT 指令差异的内容</h3><ol>
+<li><p>参数数量不定</p>
+</li>
+<li><p>参数类型不定</p>
+</li>
+<li><p>是否有 <strong>省略参数</strong></p>
+</li>
+<li><p>参数内容不同</p>
+<ul>
+<li>是否使用来非 ascii 文本</li>
+<li>是否使用来特殊符号</li>
+<li>各种可能性的 AT 指令格式错误（人为原因）</li>
+<li>是否有需要 <strong>转译</strong> 的字符，转译规则是怎么样的</li>
+</ul>
+</li>
+</ol>
+<p>由于这些都是跟用户输入紧密相关的，解析器事先并不知道，要想解析这些情况下的文本，我们需要先定好规则，告诉解析器支持什么、不支持什么、特殊特性如何支持等，然后用户按照既定的规则输入正确的指令，同时解析器也应该能检测到错误格式的指令并报告错误。</p>
+<p>以上 4 条里，最麻烦的就是第四条——用户可能使用任何可打印文本，另外最复杂的还是处理 <strong>待转译的字符</strong>。</p>
+<h3 id="转译字符语法"><a href="#转译字符语法" class="headerlink" title="转译字符语法"></a>转译字符语法</h3><p>乐鑫给出里下面几个需要转译的字符：</p>
+<ul>
+<li>反斜杠本身 <code>\</code>，转译用法 <code>\\</code></li>
+<li>逗号 <code>,</code>，转译用法 <code>\,</code></li>
+<li>双引号 <code>&quot;</code>，转译用法 <code>\&quot;</code></li>
+<li><code>\&lt;any&gt;</code>，意思是使用 <code>\</code> 后面的所有字符 <code>&lt;any&gt;</code> 替代这里的 <code>\</code></li>
+</ul>
+<p>用 <code>AT+CWSAP=&lt;ssid&gt;,&lt;pwd&gt;,&lt;channel&gt;,&lt;ecn&gt;</code> 指令举例，改指令用于启动一个 AP 热点，举例如下：</p>
+<pre><code>AT+CWJAP=&quot;ssid_\\\&quot;\,\&quot;\&lt;any&gt;\&lt;\&quot;\,\\\123中文&gt;&quot;, &quot;12345678&quot;,6,0</code></pre><p>上面这条指令会启动一个 AP 热点，ssid 名称将是 <code>ssid_\&quot;,&quot;&lt;any&gt;&lt;&quot;,\123中文&gt;</code>，密码是 <code>12345678</code>，信道是 6，加密方式是 open。有硬件条件的用户可以验证下。</p>
+<p><img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/AT/WX20210131-145705_ssid.png" srcset="/img/loading.gif" alt="转译字符测试"></p>
+<h3 id="关于中文等非-ascii-字符的支持"><a href="#关于中文等非-ascii-字符的支持" class="headerlink" title="关于中文等非 ascii 字符的支持"></a>关于中文等非 ascii 字符的支持</h3><p>中文及其他非 ascii 字符的其他国家字符所使用的编码格式通常都是兼容 ascii 的，换句话说 ascii 的编码范围 0x0-0x7f 在 GBK、GB232、UTF-8 等编码里依旧是这个范围，不会有其他字符占用这个范围里的编号。因此，只要支持 ascii 字符的解析器，理论上是可以直接支持其他编码格式的文本的。</p>
+<p>虽然解析器可以解析，但是你输入的 ssid 和 pwd 不一定被路由器正确识别！！！</p>
+<p>为什么会这样？原因如下：</p>
+<ol>
+<li><p>用户不知道 路由器 的 ssid 是什么编码格式，通常是 utf-8 编码</p>
+</li>
+<li><p>用户输入的 ssid 编码格式在不同的终端上也不一样，用户自己也不知道</p>
+</li>
+<li><p>如果用户输入的 ssid 编码和 路由器保存的 ssid 编码不一样，那么就连不上了嘛！</p>
+<p> 如果你能连上，说明 Wi-Fi 模块帮你做连转码！</p>
+</li>
+</ol>
+<p>Wi-Fi 模块又是怎么匹配用户输入的 ssid 和 路由器保存的 ssid 编码呢？</p>
+<p>这就要靠 Wi-Fi scan 了，Wi-Fi 扫描的时候会拿到 Wi-Fi 的 ssid 和加密类型等信息，模块就可以通过拿到的 ssid 探测到路由器 ssid 使用的编码格式，然后将用户输入的编码格式转成路由器格式，这样双方的编码格式就匹配了。</p>
+<p><img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/AT/Wi-Fi-ssid-encode-format.png" srcset="/img/loading.gif" alt="编码格式转化演示图"></p>
+<h3 id="另外一个难点——指令和数据混合传输"><a href="#另外一个难点——指令和数据混合传输" class="headerlink" title="另外一个难点——指令和数据混合传输"></a>另外一个难点——指令和数据混合传输</h3><p>除了对特殊格式的 AT 指令解析外，还有一个难点，就是使用 AT 串口进行数据传输（后面简称数传）。AT 指令模块串口的另外一端通常连接着一个 MCU，MCU 通过 AT 串口发送数据给 Wi-Fi 模块，Wi-Fi 模块再发送到网络上；Wi-Fi 模块收到数据后，也是通过 AT 串口发送数据到 MCU。通常，还不仅仅存在一路数据传输，还会有多路数据传输（比如两路 TCP），这个时候怎么管控他们使用 AT 串口呢，以及什么时候发送数据，又什么时候发送 AT 指令呢？</p>
+<p>在 MCU 通过 AT 串口给 Wi-Fi 模块发送数据的时候，乐鑫有两种数传模式：normal 模式 和 passthrough 透传模式。透传模式只支持单个连接。</p>
+<ul>
+<li><p>在 normal 模式下，MCU 需要先告诉对端 Wi-Fi 模块我要发多少数据，然后再发送数据；</p>
+<p>  在 normal 模式下 MCU 使用 <code>AT+CIPSEND=&lt;len&gt;</code> 指令，告诉 Wi-Fi 模块我要发 len 字节数据，请进入 <strong>数据传输模式</strong>，我这个指令后就发数据了。</p>
+</li>
+<li><p>在 透传 模式下，每 20ms 或者每 2048 字节发送一次，哪个方式先到用哪个方式。</p>
+<p>  在透传模式下 MCU 使用 <code>AT+CIPSEND</code> 执行指令，告诉 Wi-Fi 模块我要发数据了，请进入 <strong>数据透传模式</strong>，我这个指令后就发数据了。</p>
+<p>  AT 标准规定从数据透传模式切换到 AT 指令模式需要单独发送一包 <code>+++</code> 的数据，并在紧接着的 1s 内不发送任何内容，这样 AT 解析器就会从数据透传模式切换到 AT 指令模式</p>
+</li>
+</ul>
+<p>在多连接的时候，Wi-Fi 模块还要管理多路连接，乐鑫 提供以下指令来处理：</p>
+<ol>
+<li>使用 CIPMUX 设置是否支持多路连接</li>
+<li>使用 CIPSTART 创建 socket 连接</li>
+<li>使用 CIPSEND 发送 socket 数据（也就是我说的数传）</li>
+<li>支持主动下发数据到对端，也支持被动读取，主动下发使用 +IPD;被动读取使用 CIPRECVLEN 和 CIPRECVDATA。</li>
+<li>使用 CIPCLOSE 关闭连接</li>
+<li>使用 CIPMODE 配置数传模式是 normal 还是 passthrough（透传）模式</li>
+</ol>
+<p>在有多路 socket 链接的时候，数传变得会相对麻烦些，因为多路 socket 可能都在接收数据，每一个 sock 都需要将收到的数据通过 AT 串口传送到对端，串口端还要保证两路数据的独立完整，不能混到一起。这个时候，应该每一路连接都会有一个 receive buff 用来缓存收到的数据（乐鑫默认的 buff 大小是 5744 字节）。所有的 socket 连接可以共用一个 send buff，因为同一时刻只有一个连接使用 AT 串口。</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>简单分析了下乐鑫的 AT 指令解析器所做的事情，最近也尝试写了个 AT 指令解析器，感触是非常麻烦，关键是要做很多测试，来检查是否有逻辑问题，各种转译情况的支持问题。</p>
+<p>我看到圈里很多朋友尝试自己写了 console 命令行工具，有朋友感兴趣的话，不妨尝试实现一个 AT 解析器。</p>
+<hr>
+<blockquote>
+<p><strong>如有错误，欢迎指正！</strong></p>
+</blockquote>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/AT-%E6%8C%87%E4%BB%A4/">AT 指令</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E4%B9%90%E9%91%AB/">乐鑫</a>
+                    
+                      <a class="hover-with-bg" href="/tags/AT-%E8%A7%A3%E6%9E%90%E5%99%A8/">AT 解析器</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                
+                
+  <script defer src="https://utteranc.es/client.js"
+          repo="murphyzhao/blog"
+          issue-term="pathname"
+  
+          label="utterances"
+    
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+  </script>
+
+
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-md">
+    <div class="container custom post-content mx-auto">
+      <div style="position:relative; z-index:999; top:0;"><script type="text/javascript">document.write(unescape("%3Cdiv id='reward' %3E%3C/div%3E%3Cscript src='/site-js/reward.min.js' type='text/javascript'%3E%3C/script%3E"));</script></div><div align="center"><img src="https://zhaojuntao.gitee.io/picturebed/logo/WeChat/ErWeiMaSouYiBiaoZhunSe.png" srcset="/img/loading.gif"  alt="微信公众号：物联网学前班" height=100px /></div>
+    </div>
+  </div>
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+  <div>
+    
+      <!-- 不蒜子统计PV -->
+      
+      <span id="busuanzi_container_site_pv" style="display: none">
+      总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    
+    
+      <!-- 不蒜子统计UV -->
+      
+      <span id="busuanzi_container_site_uv" style="display: none">
+      总访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
+    
+  </div>
+
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var post = $('#post');
+      var toc = $('#toc');
+      var tocLimMax = post.offset().top + post.height() - navHeight;
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = $('#board-ctn').css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/smoothscroll/1.4.10/SmoothScroll.min.js" ></script>
+
+
+
+  <script defer src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+<!-- Plugins -->
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e26f756fa7cff496d917beccbb716890";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  ');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "解读乐鑫 AT 指令解析器，解锁你不知道的用法&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+  
+    <script>
+      !function (e, t, a) {
+        function r() {
+          for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
+          requestAnimationFrame(r)
+        }
+
+        function n() {
+          var t = "function" == typeof e.onclick && e.onclick;
+          e.onclick = function (e) {
+            t && t(), o(e)
+          }
+        }
+
+        function o(e) {
+          var a = t.createElement("div");
+          a.className = "heart", s.push({
+            el: a,
+            x: e.clientX - 5,
+            y: e.clientY - 5,
+            scale: 1,
+            alpha: 1,
+            color: c()
+          }), t.body.appendChild(a)
+        }
+
+        function i(e) {
+          var a = t.createElement("style");
+          a.type = "text/css";
+          try {
+            a.appendChild(t.createTextNode(e))
+          } catch (t) {
+            a.styleSheet.cssText = e
+          }
+          t.getElementsByTagName("head")[0].appendChild(a)
+        }
+
+        function c() {
+          return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+        }
+
+        var s = [];
+        e.requestAnimationFrame = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (e) {
+          setTimeout(e, 1e3 / 60)
+        }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
+      }(window, document);
+    </script>
+  
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://zhaojuntao.gitee.io/picturebed/logo/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://zhaojuntao.gitee.io/picturebed/logo/Murphy-logo.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="description" content="Murphy&#39;s blog | 物联网技术分享 | 物联网学前班 | 物联网教程 | iot | aiot | 物联网全栈 | 嵌入式开发 | 智能硬件 | Linux | RT-Thread | FreeRTOS | TencentOS tiny">
+  <meta name="author" content="MurphyZhao">
+  <meta name="keywords" content="Murphy, MurphyZhao, iot, aiot, Linux, rt-thread, TencentOS tiny, 物联网, 物联网学前班, 物联网教程, 嵌入式, 智能硬件">
+  <title>Murphy&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Murphy's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/links/">友链</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('https://zhaojuntao.gitee.io/picturebed/blog/IndexPicture/index-20191224-1.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="fas fa-angle-down scroll-down-arrow"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-md">
+        <div class="py-5 z-depth-3" id="board"
+          style=margin-top:0>
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/5f8936a3.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/2020-06-03-API-1.jpg" srcset="/img/loading.gif" alt="离线 API 文档查看工具"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/5f8936a3.html">
+        <p class="h4 index-header">离线 API 文档查看工具</p>
+      </a>
+
+      <a href="/posts/5f8936a3.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">写代码，API 用法记不住，那就需要一个程序员词典，推荐下两个好用的离线 API 查看工具，程序员的百科全书。
+
+DASH
+
+仅可以用于 apple 产品，IOS 系统下。
+
+zeal
+
+zeal 就很良心了，Windows 下可用，文档也不比 DASH 少，界面干净，下载速度也比较快。
+</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-09-23&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E5%B7%A5%E5%85%B7/">工具</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/DASH/">DASH</a>&nbsp;
+          
+            <a href="/tags/zeal/">zeal</a>&nbsp;
+          
+            <a href="/tags/%E7%A8%8B%E5%BA%8F%E5%91%98%E8%AF%8D%E5%85%B8/">程序员词典</a>&nbsp;
+          
+            <a href="/tags/API-%E6%96%87%E6%A1%A3%E6%9F%A5%E7%9C%8B%E5%B7%A5%E5%85%B7/">API 文档查看工具</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/25fa1dd2.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/5311_20190322171203_87234_M.png" srcset="/img/loading.gif" alt="NB-IOT 模块 MT2625 使用总结"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/25fa1dd2.html">
+        <p class="h4 index-header">NB-IOT 模块 MT2625 使用总结</p>
+      </a>
+
+      <a href="/posts/25fa1dd2.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">MT2625 NB-IOT SOC 应用
+基于中移物联网 M5311 模块。
+
+AT 建立 UDP 连接
+查询 apn：AT+CGDCONT?
+
+
+激活 apn
+ AT+EGACT=1,1,”cmnbiot6”,””,””
+ 其中 cmnbiot6 为查询到的 apn
+
+建立 socket
+ AT+ESOC=1,2,1
+
+建立连接
+ AT+ESOCON=0,PORT,”IPADDR”
+ AT+ESOCON=0,2039,”114.116.144.151” “118.31.15.152”
+
+发送数据
+ AT+ESOSEND=0,2,3132
+
+断开连接
+ AT+ESODIS=0
+
+关闭 sock</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-09-20&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/NB-IOT/">NB-IOT</a>&nbsp;
+          
+            <a href="/tags/MT2625/">MT2625</a>&nbsp;
+          
+            <a href="/tags/M5311/">M5311</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/de9ea2d9.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/2020-06-03-network1.png" srcset="/img/loading.gif" alt="C 语言内存 dump 函数"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/de9ea2d9.html">
+        <p class="h4 index-header">C 语言内存 dump 函数</p>
+      </a>
+
+      <a href="/posts/de9ea2d9.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+代码片段。
+在调试的时候经常要打印内存里的数据，来看看数据及格式是否在预期范围内；以及在调试二进制协议的时候，经常需要将协议包里的数据打印出来，这个时候就会涉及到 HEX 数据的展示问题。
+这篇文章就是展示如何优雅地打印 HEX 数据。
+按照 BeyondCompare 形式打印 HEX 数据。
+
+
+
+基础版代码如下：
+#define __is_print(ch) ((unsigned int)((ch) - &#39; &#39;) &lt; 127u - &#39; &#39;)
+void dump_hex(const uint8_t *buf, uint32_t size)
+{
+   </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-09-18&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E5%86%85%E5%AD%98%E6%95%B0%E6%8D%AE%E6%89%93%E5%8D%B0/">内存数据打印</a>&nbsp;
+          
+            <a href="/tags/%E5%86%85%E5%AD%98-dump/">内存 dump</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/c09a7f69.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/personal-computer-motherboard-4316.jpg" srcset="/img/loading.gif" alt="ARM GCC 库打桩——符号替换"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/c09a7f69.html">
+        <p class="h4 index-header">ARM GCC 库打桩——符号替换</p>
+      </a>
+
+      <a href="/posts/c09a7f69.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">开发中，难免会遇到只有库没有源码的情况，调试的时候，库里的几个函数又非常关键，那我们怎么控制里面的流程呢，并插入自己代码？
+这个时候就需要使用 GCC 工具重定义库中的符号，然后在外面包装该函数。
+举例一个库：lib_test.a
+库中的函数：void hello_test_lib(void);
+现在，我们想把库里面的 hello_test_lib 函数替换为 new_hello_test_lib，需要以下步骤：
+
+复制一份 lib_test.a 为 lib_test_bak.a
+
+arm-none-eabi-objcopy lib_test.a lib_test_bak.a
+重定义符号
+
+a</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-09-17&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/GCC-%E5%BA%93%E6%89%93%E6%A1%A9/">GCC 库打桩</a>&nbsp;
+          
+            <a href="/tags/GCC-%E7%AC%A6%E5%8F%B7%E6%9B%BF%E6%8D%A2/">GCC 符号替换</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/67f2f08.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/personal-computer-motherboard-4316.jpg" srcset="/img/loading.gif" alt="单个文件编译优化配置"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/67f2f08.html">
+        <p class="h4 index-header">单个文件编译优化配置</p>
+      </a>
+
+      <a href="/posts/67f2f08.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">单独设置一个 C 文件的优化级别，支持 MDK、IAR、GCC，代码如下：
+#if defined(__CC_ARM)
+    #pragma O1
+#elif defined(__ICCARM__)
+    #pragma optimize=none
+#elif defined(__GNUC__)
+    #pragma GCC optimize (&quot;O0&quot;)
+#endif</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-09-17&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%BC%96%E8%AF%91%E5%99%A8%E4%BC%98%E5%8C%96/">编译器优化</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/3c8114a9.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/python-logo-master-v3-TM.png" srcset="/img/loading.gif" alt="python 遍历删除指定格式文件"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/3c8114a9.html">
+        <p class="h4 index-header">python 遍历删除指定格式文件</p>
+      </a>
+
+      <a href="/posts/3c8114a9.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+代码放在自己电脑上总是找不到，那就放到博客里吧。
+
+在做嵌入式开发的时候，总是会生成很多中间文件（如 .o 文件），所有有时候需要去查找删除这样的文件，所以就写了这个一个 python 脚本。
+代码假定你将该代码命名为 rm_specifial_file.py。
+#!/user/bin/python
+#coding:utf-8
+
+import sys, os
+import time
+
+# 解决乱码问题
+reload(sys)
+sys.setdefaultencoding(&quot;utf-8&quot;)
+
+def recursive_del_files(del_path, del_fil</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-08-22&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Python/">Python</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Python-%E9%81%8D%E5%8E%86%E5%88%A0%E9%99%A4/">Python 遍历删除</a>&nbsp;
+          
+            <a href="/tags/%E5%88%A0%E9%99%A4%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6/">删除指定文件</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/e9be041d.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/personal-computer-motherboard-4316.jpg" srcset="/img/loading.gif" alt="RT-Thread DHT11 温湿度传感器驱动"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/e9be041d.html">
+        <p class="h4 index-header">RT-Thread DHT11 温湿度传感器驱动</p>
+      </a>
+
+      <a href="/posts/e9be041d.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">
+分享一个我整理的 DHT11 温湿度传感器驱动 dht11_rtt 软件包
+
+dht11_rtt 是基于 RT-Thread 物联网操作系统实现的 dht11 驱动软件包，该软件包托管在 GitHub，使用 Apache-2.0 协议许可。
+dht11_rtt 驱动使用了 RT-Thread Sensor 传感器框架和 Pin 驱动框架，因此在使用的过程中需要开启这两个功能。不过，在使用 RT-Thread 的 menuconfig 进行配置的时候会默认选中 Sensor 和 Pin 设备配置。
+简介DHT11 数字温湿度传感器是一款含有已校准数字信号输出的温湿度复合传感器。它应用专用的数字</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-08-17&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/RT-Thread/">RT-Thread</a>&nbsp;
+          
+            <a href="/tags/DHT11/">DHT11</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/cb5d44c7.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/2020-06-03-network2.png" srcset="/img/loading.gif" alt="主流嵌入式操作系统（RTOS）有哪些？看看这14种"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/cb5d44c7.html">
+        <p class="h4 index-header">主流嵌入式操作系统（RTOS）有哪些？看看这14种</p>
+      </a>
+
+      <a href="/posts/cb5d44c7.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">看到 21ic 公众号发布了一篇文章 主流嵌入式操作系统（RTOS）有哪些？看看这14种，收藏过来。
+除了上面文章总结的 RTOS 之外，我发现了一个很好的 RTOS 汇总的网站 https://www.osrtos.com/，里面汇总了市面上流行的 RTOS，并给出了使用的开源协议、支持的平台、简单的描述、开源地址，非常有用的一个汇总。另外，该网站还汇总了嵌入式开发过程中经常用到的开源软件库（软件包），避免自己重复造轮子，站在巨人的肩膀上快速开发自己的应用。
+和大家分享：
+RTOS 汇总：开源软件包汇总：
+
+</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-08-12&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">嵌入式操作系统</a>&nbsp;
+          
+            <a href="/tags/RTOS/">RTOS</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/a14c2161.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/blog.jpg" srcset="/img/loading.gif" alt="RT-Thread Pin 设备驱动框架快速对接"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/a14c2161.html">
+        <p class="h4 index-header">RT-Thread Pin 设备驱动框架快速对接</p>
+      </a>
+
+      <a href="/posts/a14c2161.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">为什么需要 Pin 设备驱动框架
+跨平台可移植应用
+操作简单
+
+试想下面这个场景：
+你基于 STM32 MCU 编写了一个包含很多 GPIO 操作的应用程序，GPIO 控制函数使用的是 HAL 库。后面，由于某种原因，MCU 需要更换，使用的是 NXP 的芯片，不支持 HAL 库，那你怎么办？
+通常，你会查找所有 GPIO 操作相关的接口，然后替换成 NXP 提供的 GPIO 驱动函数，如果 GPIO 的编排方式不一样（有的有 GPIOA 这样的分组，有的没有），那就更加的麻烦。这样，你就维护了两个版本的应用程序。
+那么，有了 Pin 驱动框架能解决这个问题吗？
+当然，Pin 只能解决应用层代</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-07-10&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/RT-Thread/">RT-Thread</a>&nbsp;
+          
+            <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">嵌入式操作系统</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/e5dfd497.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/STAndSTM32.png" srcset="/img/loading.gif" alt="Cortex-M3/4 调试技巧、STM32 调试手段"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/e5dfd497.html">
+        <p class="h4 index-header">Cortex-M3/4 调试技巧、STM32 调试手段</p>
+      </a>
+
+      <a href="/posts/e5dfd497.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">Cortex-M3/4 一些调试技巧今天主要总结下这段时间在没有 调试器 情况下，解决 bug 的一些辅助调试手段。
+在没有 调试器 的情况下，进行代码调试的手段就只有 log 大法，为了能够尽可能详细地输出有用的调试信息，往往我们需要将 调用栈 、R0- R15 寄存器、SCB、中断状态、线程状态等信息打印出来，然后配合 反汇编 进行调试跟踪代码。这会用到一些特殊的函数（内链汇编函数），下面将介绍我用到的汇编函数，这些都基于 GUN GCC 工具链。
+获取中断号获取中断号是通过系统控制块 SCB 寄存器来获取，参考如下：
+#define SCB_ICSR_VECTACTIVE_Pos    </div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-07-04&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/ARM/">ARM</a>&nbsp;
+          
+            <a href="/tags/Cortex-M3/">Cortex M3</a>&nbsp;
+          
+            <a href="/tags/Cortex-M4/">Cortex M4</a>&nbsp;
+          
+            <a href="/tags/STM32/">STM32</a>&nbsp;
+          
+            <a href="/tags/STM32-%E8%B0%83%E8%AF%95%E6%96%B9%E6%B3%95/">STM32 调试方法</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+
+
+  <nav aria-label="index posts navigation">
+    <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
+      <a class="extend prev" rel="prev" href="/page/2/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/"><i class="fas fa-angle-double-right"></i></a>
+    </span>
+  </nav>
+  
+  <script>
+    for (ele of document.getElementById("pagination").getElementsByClassName("page-number")) {
+      ele.href += '#board';
+    }
+  </script>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+  <div>
+    
+      <!-- 不蒜子统计PV -->
+      
+      <span id="busuanzi_container_site_pv" style="display: none">
+      总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    
+    
+      <!-- 不蒜子统计UV -->
+      
+      <span id="busuanzi_container_site_uv" style="display: none">
+      总访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
+    
+  </div>
+
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/smoothscroll/1.4.10/SmoothScroll.min.js" ></script>
+
+
+
+  <script defer src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+<!-- Plugins -->
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e26f756fa7cff496d917beccbb716890";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  ');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Better and Better&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+  
+    <script>
+      !function (e, t, a) {
+        function r() {
+          for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
+          requestAnimationFrame(r)
+        }
+
+        function n() {
+          var t = "function" == typeof e.onclick && e.onclick;
+          e.onclick = function (e) {
+            t && t(), o(e)
+          }
+        }
+
+        function o(e) {
+          var a = t.createElement("div");
+          a.className = "heart", s.push({
+            el: a,
+            x: e.clientX - 5,
+            y: e.clientY - 5,
+            scale: 1,
+            alpha: 1,
+            color: c()
+          }), t.body.appendChild(a)
+        }
+
+        function i(e) {
+          var a = t.createElement("style");
+          a.type = "text/css";
+          try {
+            a.appendChild(t.createTextNode(e))
+          } catch (t) {
+            a.styleSheet.cssText = e
+          }
+          t.getElementsByTagName("head")[0].appendChild(a)
+        }
+
+        function c() {
+          return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+        }
+
+        var s = [];
+        e.requestAnimationFrame = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (e) {
+          setTimeout(e, 1e3 / 60)
+        }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
+      }(window, document);
+    </script>
+  
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://zhaojuntao.gitee.io/picturebed/logo/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://zhaojuntao.gitee.io/picturebed/logo/Murphy-logo.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="description" content="Murphy&#39;s blog | 物联网技术分享 | 物联网学前班 | 物联网教程 | iot | aiot | 物联网全栈 | 嵌入式开发 | 智能硬件 | Linux | RT-Thread | FreeRTOS | TencentOS tiny">
+  <meta name="author" content="MurphyZhao">
+  <meta name="keywords" content="Murphy, MurphyZhao, iot, aiot, Linux, rt-thread, TencentOS tiny, 物联网, 物联网学前班, 物联网教程, 嵌入式, 智能硬件">
+  <title>灵活的按键处理程序 FlexibleButton ~ Murphy&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Murphy's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/links/">友链</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('https://zhaojuntao.gitee.io/picturebed/blog/IndexPicture/index-20191224-1.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期五, 十二月 14日 2018
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1.3k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      5 分钟
+                  </span>
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  <span id="busuanzi_container_page_pv" class="post-meta" style="display: none">
+                    <i class="far fa-eye" aria-hidden="true"></i>
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <blockquote>
+<p>灵活的按键处理程序 FlexibleButton，C程序编写，无缝兼容任意的处理器，支持任意 OS 和裸机编程。</p>
+</blockquote>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>正好工作中用到按键处理，需要处理单击、长按等按键事件，然后就造了这么一个轮子，为了以后更方便地加入其它的项目中使用，遂将其开源到 GitHub 中。</p>
+<p>后面发现 RT-Thread 软件包里也有一个开源的按键库 <a href="https://github.com/liu2guang/MultiButton" target="_blank" rel="noopener">MultiButton</a>，看到这个按键库的时候，心想，完了，又重复造轮子了，好伤心 :joy:。想想，既然按键处理方式不同，而且时间已经花出去了，那就把轮子圆一圆，放到 GitHub 中，给有缘人用吧，然后就有了这个不太圆的轮子 <a href="https://github.com/murphyzhao/FlexibleButton" target="_blank" rel="noopener">FlexibleButton</a>。</p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>FlexibleButton 是一个基于 C 语言的小巧灵活的按键处理库。该按键库解耦了具体的按键硬件结构，理论上支持轻触按键与自锁按键，并可以无限扩展按键数量。另外，FlexibleButton 使用扫描的方式一次性读取所有所有的按键状态，然后通过事件回调机制上报按键事件。</p>
+<p>该按键库使用 C 语言编写，驱动与应用程序解耦，便于灵活应用，比如用户可以方便地在应用层增加按键中断、处理按键功耗、定义按键事件处理方式，而无需修改 FlexibleButton 库中的代码。</p>
+<p>另外，使用 C 语言标准库 API 编写，也使得该按键库可以无缝兼容任意的处理器平台，并且支持任意 OS 和 non-OS（裸机程序）。</p>
+<p>另外，该按键库核心的按键扫描代码仅有三行，没错，就是经典的<strong>三行按键扫描算法</strong>，出自哪位大神之手就无从得知了，也欢迎知道此高人的读者文后留言哈。算法介绍可以去搜索引擎里查找，这里就不作介绍了。</p>
+<h2 id="获取"><a href="#获取" class="headerlink" title="获取"></a>获取</h2><pre><code class="SHELL">git clone https://github.com/murphyzhao/FlexibleButton.git</code></pre>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>FlexibleButton 库中提供了一个 DEMO <code>flexible_button_demo.c</code>，这里基于 RT-Thread OS 进行测试，当然你可以选择使用其他的 OS，或者使用裸机测试，只需要移除 OS 相关的特性即可。</p>
+<p>将 FlexibleButton 库放到 RT-Thread BSP 下即可使用 scons 进行编译构建。</p>
+<h2 id="DEMO-程序说明"><a href="#DEMO-程序说明" class="headerlink" title="DEMO 程序说明"></a>DEMO 程序说明</h2><h3 id="程序入口"><a href="#程序入口" class="headerlink" title="程序入口"></a>程序入口</h3><pre><code class="C">int flex_button_main(void)
+{
+    rt_thread_t tid = RT_NULL;
+    user_button_init();
+    /* Create background ticks thread */
+    tid = rt_thread_create(&quot;flex_btn&quot;, button_scan, RT_NULL, 1024, 10, 10);
+    if(tid != RT_NULL)
+    {
+        rt_thread_startup(tid);
+    }
+    return 0;
+}
+INIT_APP_EXPORT(flex_button_main);</code></pre>
+<p>如上所示，首先使用 <code>user_button_init();</code> 初始化用户按键硬件，并挂载到 FlexibleButton库。然后，使用了 RT-Thread 的 <code>INIT_APP_EXPORT</code> 接口导出为上电自动初始化，创建了一个 “flex_btn” 名字的按键扫描线程，线程里扫描检查按键事件。</p>
+<h3 id="用户初始化代码"><a href="#用户初始化代码" class="headerlink" title="用户初始化代码"></a>用户初始化代码</h3><p> <code>user_button_init();</code> 初始化代码如下所示：</p>
+<pre><code class="C">static void user_button_init(void)
+{
+    int i;
+    rt_memset(&amp;user_button[0], 0x0, sizeof(user_button));
+    user_button[USER_BUTTON_0].usr_button_read = button_key0_read;
+    user_button[USER_BUTTON_0].cb = (flex_button_response_callback)btn_0_cb;
+    user_button[USER_BUTTON_1].usr_button_read = button_key1_read;
+    user_button[USER_BUTTON_1].cb = (flex_button_response_callback)btn_1_cb;
+    user_button[USER_BUTTON_2].usr_button_read = button_key2_read;
+    user_button[USER_BUTTON_3].usr_button_read = button_keywkup_read;
+    rt_pin_mode(PIN_KEY0, PIN_MODE_INPUT); /* set KEY pin mode to input */
+    rt_pin_mode(PIN_KEY1, PIN_MODE_INPUT); /* set KEY pin mode to input */
+    rt_pin_mode(PIN_KEY2, PIN_MODE_INPUT); /* set KEY pin mode to input */
+    rt_pin_mode(PIN_WK_UP, PIN_MODE_INPUT); /* set KEY pin mode to input */
+    for (i = 0; i &lt; USER_BUTTON_MAX; i ++)
+    {
+        user_button[i].status = 0;
+        user_button[i].pressed_logic_level = 0;
+        user_button[i].click_start_tick = 20;
+        user_button[i].short_press_start_tick = 100;
+        user_button[i].long_press_start_tick = 200;
+        user_button[i].long_hold_start_tick = 300;
+        if (i == USER_BUTTON_3)
+        {
+            user_button[USER_BUTTON_3].pressed_logic_level = 1;
+        }
+        flex_button_register(&amp;user_button[i]);
+    }
+}</code></pre>
+<p> <code>user_button_init();</code> 主要用于初始化按键硬件，设置按键长按和短按的 tick 数（RT-Thread上面默认一个 tick 为 1ms），然后注册按键到 FlexibleButton 库。</p>
+<h3 id="事件处理代码"><a href="#事件处理代码" class="headerlink" title="事件处理代码"></a>事件处理代码</h3><pre><code class="C">static void btn_0_cb(flex_button_t *btn)
+{
+    rt_kprintf(&quot;btn_0_cb\n&quot;);
+    switch (btn-&gt;event)
+    {
+        case FLEX_BTN_PRESS_DOWN:
+            rt_kprintf(&quot;btn_0_cb [FLEX_BTN_PRESS_DOWN]\n&quot;);
+            break;
+        case FLEX_BTN_PRESS_CLICK:
+            rt_kprintf(&quot;btn_0_cb [FLEX_BTN_PRESS_CLICK]\n&quot;);
+            break;
+        case FLEX_BTN_PRESS_DOUBLE_CLICK:
+            rt_kprintf(&quot;btn_0_cb [FLEX_BTN_PRESS_DOUBLE_CLICK]\n&quot;);
+            break;
+        case FLEX_BTN_PRESS_SHORT_START:
+            rt_kprintf(&quot;btn_0_cb [FLEX_BTN_PRESS_SHORT_START]\n&quot;);
+            break;
+        case FLEX_BTN_PRESS_SHORT_UP:
+            rt_kprintf(&quot;btn_0_cb [FLEX_BTN_PRESS_SHORT_UP]\n&quot;);
+            break;
+        case FLEX_BTN_PRESS_LONG_START:
+            rt_kprintf(&quot;btn_0_cb [FLEX_BTN_PRESS_LONG_START]\n&quot;);
+            break;
+        case FLEX_BTN_PRESS_LONG_UP:
+            rt_kprintf(&quot;btn_0_cb [FLEX_BTN_PRESS_LONG_UP]\n&quot;);
+            break;
+        case FLEX_BTN_PRESS_LONG_HOLD:
+            rt_kprintf(&quot;btn_0_cb [FLEX_BTN_PRESS_LONG_HOLD]\n&quot;);
+            break;
+        case FLEX_BTN_PRESS_LONG_HOLD_UP:
+            rt_kprintf(&quot;btn_0_cb [FLEX_BTN_PRESS_LONG_HOLD_UP]\n&quot;);
+            break;
+    }
+}</code></pre>
+<h2 id="FlexibleButton-代码说明"><a href="#FlexibleButton-代码说明" class="headerlink" title="FlexibleButton 代码说明"></a>FlexibleButton 代码说明</h2><h3 id="按键事件定义"><a href="#按键事件定义" class="headerlink" title="按键事件定义"></a>按键事件定义</h3><p>按键事件的定义并没有使用 Windows 驱动上的定义，主要是方便嵌入式设备中的应用场景（也可能是我理解的偏差），按键事件定义如下：</p>
+<pre><code class="C">typedef enum
+{
+    FLEX_BTN_PRESS_DOWN = 0,        // 按下事件
+    FLEX_BTN_PRESS_CLICK,           // 单击事件
+    FLEX_BTN_PRESS_DOUBLE_CLICK,    // 双击事件
+    FLEX_BTN_PRESS_SHORT_START,     // 短按开始事件
+    FLEX_BTN_PRESS_SHORT_UP,        // 短按抬起事件
+    FLEX_BTN_PRESS_LONG_START,      // 长按开始事件
+    FLEX_BTN_PRESS_LONG_UP,         // 长按抬起事件
+    FLEX_BTN_PRESS_LONG_HOLD,       // 长按保持事件
+    FLEX_BTN_PRESS_LONG_HOLD_UP,    // 长按保持的抬起事件
+    FLEX_BTN_PRESS_MAX,
+    FLEX_BTN_PRESS_NONE,
+} flex_button_event_t;</code></pre>
+<h3 id="按键注册接口"><a href="#按键注册接口" class="headerlink" title="按键注册接口"></a>按键注册接口</h3><p>使用该接口注册一个用户按键，入参为一个 flex_button_t 结构体实例的地址。</p>
+<pre><code class="C">int8_t flex_button_register(flex_button_t *button);</code></pre>
+<h3 id="按键事件读取接口"><a href="#按键事件读取接口" class="headerlink" title="按键事件读取接口"></a>按键事件读取接口</h3><p>使用该接口获取指定按键的事件。</p>
+<pre><code class="C">flex_button_event_t flex_button_event_read(flex_button_t* button);</code></pre>
+<h3 id="按键扫描接口"><a href="#按键扫描接口" class="headerlink" title="按键扫描接口"></a>按键扫描接口</h3><p>按键扫描的核心函数，需要放到应用程序中定时扫描间隔 5-20ms 即可。</p>
+<pre><code class="C">void flex_button_scan(void);</code></pre>
+<h2 id="问题和建议"><a href="#问题和建议" class="headerlink" title="问题和建议"></a>问题和建议</h2><p>如果您在应用的时候遇到了问题，或者有好的想法和建议，欢迎到这个 <a href="https://github.com/murphyzhao/FlexibleButton/issues/1" target="_blank" rel="noopener">issue</a> 上讨论，谢谢。</p>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/RT-Thread/">RT-Thread</a>
+                    
+                      <a class="hover-with-bg" href="/tags/FlexibleButton/">FlexibleButton</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%8C%89%E9%94%AE%E5%A4%84%E7%90%86/">按键处理</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                
+                
+  <script defer src="https://utteranc.es/client.js"
+          repo="murphyzhao/blog"
+          issue-term="pathname"
+  
+          label="utterances"
+    
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+  </script>
+
+
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-md">
+    <div class="container custom post-content mx-auto">
+      <div style="position:relative; z-index:999; top:0;"><script type="text/javascript">document.write(unescape("%3Cdiv id='reward' %3E%3C/div%3E%3Cscript src='/site-js/reward.min.js' type='text/javascript'%3E%3C/script%3E"));</script></div><div align="center"><img src="https://zhaojuntao.gitee.io/picturebed/logo/WeChat/ErWeiMaSouYiBiaoZhunSe.png" srcset="/img/loading.gif"  alt="微信公众号：物联网学前班" height=100px /></div>
+    </div>
+  </div>
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+  <div>
+    
+      <!-- 不蒜子统计PV -->
+      
+      <span id="busuanzi_container_site_pv" style="display: none">
+      总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    
+    
+      <!-- 不蒜子统计UV -->
+      
+      <span id="busuanzi_container_site_uv" style="display: none">
+      总访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
+    
+  </div>
+
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var post = $('#post');
+      var toc = $('#toc');
+      var tocLimMax = post.offset().top + post.height() - navHeight;
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = $('#board-ctn').css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/smoothscroll/1.4.10/SmoothScroll.min.js" ></script>
+
+
+
+  <script defer src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+<!-- Plugins -->
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e26f756fa7cff496d917beccbb716890";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  ');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "灵活的按键处理程序 FlexibleButton&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+  
+    <script>
+      !function (e, t, a) {
+        function r() {
+          for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
+          requestAnimationFrame(r)
+        }
+
+        function n() {
+          var t = "function" == typeof e.onclick && e.onclick;
+          e.onclick = function (e) {
+            t && t(), o(e)
+          }
+        }
+
+        function o(e) {
+          var a = t.createElement("div");
+          a.className = "heart", s.push({
+            el: a,
+            x: e.clientX - 5,
+            y: e.clientY - 5,
+            scale: 1,
+            alpha: 1,
+            color: c()
+          }), t.body.appendChild(a)
+        }
+
+        function i(e) {
+          var a = t.createElement("style");
+          a.type = "text/css";
+          try {
+            a.appendChild(t.createTextNode(e))
+          } catch (t) {
+            a.styleSheet.cssText = e
+          }
+          t.getElementsByTagName("head")[0].appendChild(a)
+        }
+
+        function c() {
+          return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+        }
+
+        var s = [];
+        e.requestAnimationFrame = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (e) {
+          setTimeout(e, 1e3 / 60)
+        }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
+      }(window, document);
+    </script>
+  
+
+
+
+
+
+
+
+
+</body>
+</html>

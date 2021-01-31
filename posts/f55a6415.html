@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://zhaojuntao.gitee.io/picturebed/logo/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://zhaojuntao.gitee.io/picturebed/logo/Murphy-logo.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="description" content="Murphy&#39;s blog | 物联网技术分享 | 物联网学前班 | 物联网教程 | iot | aiot | 物联网全栈 | 嵌入式开发 | 智能硬件 | Linux | RT-Thread | FreeRTOS | TencentOS tiny">
+  <meta name="author" content="MurphyZhao">
+  <meta name="keywords" content="Murphy, MurphyZhao, iot, aiot, Linux, rt-thread, TencentOS tiny, 物联网, 物联网学前班, 物联网教程, 嵌入式, 智能硬件">
+  <title>C 语言编程规范 ~ Murphy&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Murphy's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/links/">友链</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('https://zhaojuntao.gitee.io/picturebed/blog/IndexPicture/index-20191224-1.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期五, 一月 1日 2021
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    2.8k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      10 分钟
+                  </span>
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  <span id="busuanzi_container_page_pv" class="post-meta" style="display: none">
+                    <i class="far fa-eye" aria-hidden="true"></i>
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <h1 id="C-语言编程约定"><a href="#C-语言编程约定" class="headerlink" title="C 语言编程约定"></a>C 语言编程约定</h1><blockquote>
+<p>此文为约定，并非完全遵守某个规范，而是由自己的编程习惯总结而来。</p>
+</blockquote>
+<h2 id="文件字符编码"><a href="#文件字符编码" class="headerlink" title="文件字符编码"></a>文件字符编码</h2><blockquote>
+<p>一切的前提。</p>
+</blockquote>
+<p>强烈建议使用 <strong>UTF-8</strong> 编码格式。UTF-8 编码已经广泛应用在 WEB 中，是首选的编码格式。</p>
+<p>UTF-8 编码是 Unicode 标准中的变长编码方式，可以表示 Unicode 中任意一个字符，使用1~4个字节表示字符，且字节顺序无关。统一使用 UTF-8 字符编码可以避免各种乱码问题的出现。</p>
+<p>但是使用 UTF-8 编码格式的目的并不是为了解决乱码问题，而是为了格式的统一，避免在国际化过程中出现乱码而已。另外，不建议在代码里使用<strong>中文</strong>（除非是协议特殊需要传输非 UTF-8 中文字符的情况）。</p>
+<p>在使用各种 IDE 或者文本编辑器的时候，请留意字符编码格式设置，修改成 UTF-8。</p>
+<h2 id="中文问题"><a href="#中文问题" class="headerlink" title="中文问题"></a>中文问题</h2><p>结论：不建议程序里使用中文，注释也不建议使用中文，独立的文档可以是中文。</p>
+<p>原因：</p>
+<ol>
+<li>文件国际化格式过程中非常容易出现乱码，将乱码转成正常的过程麻烦且耗时，无端增加工作量；</li>
+<li>IDE 支持不友好，比如 keil MDK；</li>
+<li>英文依旧是程序设计的主要语言；</li>
+</ol>
+<h2 id="缩进与-Tab-问题"><a href="#缩进与-Tab-问题" class="headerlink" title="缩进与 Tab 问题"></a>缩进与 Tab 问题</h2><p>在嵌入式 C 编程里，只用 4 个空格进行缩进，<strong>杜绝</strong>使用 <strong>Tab</strong>。</p>
+<p>由于 TAB 控制符在不同的地方其展示宽度不同，尤其是当 TAB 和空格混用的时候，导致代码乱糟糟的。</p>
+<p>建议:</p>
+<p><strong>拒绝使用 TAB，使用 4 个空格代替</strong>，并使用代码格式化工具检查。</p>
+<h2 id="文末空行"><a href="#文末空行" class="headerlink" title="文末空行"></a>文末空行</h2><p>程序文件末尾必须留一行空行。</p>
+<p>因为某些编译器会报警告（如 keil）。</p>
+<h2 id="多余空格和换行问题"><a href="#多余空格和换行问题" class="headerlink" title="多余空格和换行问题"></a>多余空格和换行问题</h2><ul>
+<li>每行末尾不留多余的空格</li>
+<li>空行里不要有空格</li>
+<li>不要留多行空行（不超过 2 行空行）</li>
+</ul>
+<p>建议每一小块代码前后空一行。</p>
+<p><strong>不建议的</strong> 示例代码：</p>
+<pre><code>void main(void)  /* 这里多留了空格 */
+{  /* 这里多留了空格 */
+    while(1)
+    {
+        /* TODO */
+    }
+
+
+
+    /* 这里空了很多行 */
+}</code></pre><h2 id="回车换行符问题"><a href="#回车换行符问题" class="headerlink" title="回车换行符问题"></a>回车换行符问题</h2><p>请使用 <code>CRLF</code> 也就是 <code>\r\n</code> 进行换行，不要使用独立的 <code>LF</code>。</p>
+<h2 id="函数、变量、文件的命名约定"><a href="#函数、变量、文件的命名约定" class="headerlink" title="函数、变量、文件的命名约定"></a>函数、变量、文件的命名约定</h2><ul>
+<li><p>命名风格</p>
+<p>  个人喜欢 Unix 风格，使用全小写字母加 <code>_</code> 命令，简单直观。</p>
+</li>
+<li><p>全局变量命名</p>
+<p>  关于全局变量，虽不建议全局变量满天飞，但偶尔还是需要定义全局变量的，我习惯将全局变量名以前缀 <code>g_</code> 开头。</p>
+<p>  <code>g_</code> 其实是匈牙利命名法里的，这里沿用的目的是更加醒目地提示变量为全局变量，用的时候需要留意。</p>
+</li>
+<li><p>枚举类型命名</p>
+<p>  枚举元素名全大写，枚举名也建议全大小，枚举元素必须显示给出明确值。</p>
+</li>
+<li><p>typedef 重命名</p>
+<p>  typedef 重命名使用全小写格式，并以 <code>_t</code> 后缀结尾。</p>
+</li>
+<li><p>宏定义全部大写</p>
+</li>
+<li><p>文件、文件夹命名请全部使用小写字母加 <code>_</code> 的方式。</p>
+</li>
+</ul>
+<h2 id="文件头注释"><a href="#文件头注释" class="headerlink" title="文件头注释"></a>文件头注释</h2><p>一个文件的文件头部应该给出文件名、许可信息、更新历史等内容。我常用的格式如下所示：</p>
+<pre><code>/*
+ * Copyright (c) 2021, &lt;这里替换你的邮箱或者公司的名称&gt;
+ *
+ * &lt;这里替换成使用的许可协议&gt;
+ *
+ * Change Logs:
+ * Date           Author       Notes
+ * 2021-01-01     xxx          first version
+ */</code></pre><h2 id="头文件基本格式"><a href="#头文件基本格式" class="headerlink" title="头文件基本格式"></a>头文件基本格式</h2><p>为了避免头文件被重复包含导致各种重定义问题或其他问题，通常头文件格式如下：</p>
+<pre><code>#ifndef __FILE_H__
+#define __FILE_H__
+
+/* 其他内容 */
+
+#endif</code></pre><p>通过定义一个宏来避免文件被重复包含。宏的名称需注意格式为全大写，并且是将文件名全大写并前后加两个 <code>_</code> 转变而来。</p>
+<h2 id="C-C-兼容"><a href="#C-C-兼容" class="headerlink" title="C/C++ 兼容"></a>C/C++ 兼容</h2><p>头文件里按照如下方式进行 C/C++ 兼容。</p>
+<pre><code>#if defined(__cplusplus)
+extern &quot;C&quot; {
+#endif /* __cplusplus */
+
+/* 这里放数据结构和函数原型 */
+
+#if defined(__cplusplus)
+}
+#endif /* __cplusplus */</code></pre><h2 id="80-线"><a href="#80-线" class="headerlink" title="80 线"></a>80 线</h2><p>可以考虑将每行的字符数量控制在 80 个字符以内。</p>
+<p>出现 80 线受限于当时的计算机技术，电脑昂贵，显示器小，代码通常要打印出来阅读（打印机仅支持 80 列）。但现在的显示器已经不是问题了，还有很多人会配置带鱼屏来阅读代码，所以这条规则可选择应用。</p>
+<p>现在使用 80 线规则有一个好处是可以方便地将两个文件横向并排显示在屏幕上，方便同一个文件前后同时阅读，或者进行文件内容比较。如果你觉得 80 个字符过少，动不动就超过的话，可以考虑 120 线。</p>
+<p>另外，如果一行过长，需要考虑是不是变量名过长、嵌套过深，如果是这样，是时候优化代码啦。如果这些都不是，那么就主动换行以便于阅读。</p>
+<h2 id="不留未用变量"><a href="#不留未用变量" class="headerlink" title="不留未用变量"></a>不留未用变量</h2><p>代码在更新迭代的过程中，难免会遗漏删除不再使用的变量，请<strong>留意编译器警告</strong>，及时清理。</p>
+<p>不留未用变量的目的：一是为了严谨可读；而是为了清除编译器警告。</p>
+<h2 id="重视编译警告"><a href="#重视编译警告" class="headerlink" title="重视编译警告"></a>重视编译警告</h2><blockquote>
+<p>并不是所有的编译器警告都是无关紧要的，<strong>有些警告关乎程序的命运！</strong></p>
+</blockquote>
+<p>示例代码：</p>
+<p><img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/20210101225243.png" srcset="/img/loading.gif" alt=""></p>
+<p>上图例子中的警告就是一个严重的错误，而且是一个典型的很难发现的一个手误。如果你没有看警告，没有察觉到这个问题，那代码跑起来，指不定会出什么幺蛾子。</p>
+<p>提示：</p>
+<p>警告，还是能修的都给修了吧，没有坏处。</p>
+<h2 id="注意数据类型的转换"><a href="#注意数据类型的转换" class="headerlink" title="注意数据类型的转换"></a>注意数据类型的转换</h2><p>不匹配的数据类型会导致编译器报警告，警告不能忽视。</p>
+<h2 id="预编译条件注意事项"><a href="#预编译条件注意事项" class="headerlink" title="预编译条件注意事项"></a>预编译条件注意事项</h2><p>预编译要处理的条件，请使用宏定义，不要在预处理条件里写枚举常量。</p>
+<p>因为预编译时，枚举值时恒定的，会导致预编译条件永远成立，参考 <a href="https://blog.csdn.net/Shayne_Lee/article/details/89408942" target="_blank" rel="noopener">CSDN</a>。</p>
+<h2 id="全局变量的使用"><a href="#全局变量的使用" class="headerlink" title="全局变量的使用"></a>全局变量的使用</h2><p>杜绝全局变量满天飞。必须用到全局变量的时候，请务必将其限定在非常小的作用域范围内，能加 static 就加 static，禁止跨文件引用全局变量。</p>
+<p>如需要使用另外一个文件里的全局变量，请在那个文件里加 set、get 接口来引用。</p>
+<h2 id="空格的使用"><a href="#空格的使用" class="headerlink" title="空格的使用"></a>空格的使用</h2><pre><code class="c">typedef struct
+{
+    void *arg;
+} test_struct_t; /* 注意这里 } 后面有一个空格 */
+
+if (1 == 1) /* 注意 if 与 &#39;(&#39; 之间有一个空格，元素 &#39;1&#39; 与操作符 &#39;==&#39; 之间有一个空格 */
+{
+    /* TODO */
+}</code></pre>
+<h2 id="花括号-的使用"><a href="#花括号-的使用" class="headerlink" title="花括号 {} 的使用"></a>花括号 <code>{}</code> 的使用</h2><p>有的人喜欢在一行代码的末尾使用 <code>{</code>，而有的人喜欢将 <code>{</code> 和 <code>}</code> 单独占一行，我喜欢后者，原因如下：</p>
+<p>可以方便地注释 <code>{</code> 前面的一行代码而不影响使用，示例如下：</p>
+<pre><code>void main(void)
+{
+    /* while (1) */
+    {
+
+    }
+}</code></pre><p>所以为了统一，也建议在定义枚举、结构体的时候也将 <code>{</code> 和 <code>}</code> 单独占一行。</p>
+<h2 id="注释问题"><a href="#注释问题" class="headerlink" title="注释问题"></a>注释问题</h2><p>单行注释请使用这样的形式，避免使用 “//” 形式的注释，因为其实 C++ 类型的注释，某些编译器不支持。</p>
+<p>注释只允许出现在语句的前面和后面。</p>
+<p>函数的注释，重在描述功能和注意事项。</p>
+<pre><code class="c">/* 注释内容与注释标记之间需要留一个空格，像这样 */
+/* API 的注释，示例如下 */
+
+/**
+* test_func
+* 
+* @brief Test function. Used to show the name and age.
+* 
+* @param name Input param, Specify user name.
+* @param age  Input param, Specify user age.
+* 
+* @return void
+* 
+*/
+void test_func(const char *name, uint8_t age);</code></pre>
+<h2 id="if-0-或-if-1-或成片的代码注释"><a href="#if-0-或-if-1-或成片的代码注释" class="headerlink" title="#if 0 或 #if 1 或成片的代码注释"></a><code>#if 0</code> 或 <code>#if 1</code> 或成片的代码注释</h2><p>结论：不建议使用。</p>
+<p>如果是测试用途或者其他用途，一定要注释说明这么写的原因，以及是否可以移除或者修改。</p>
+<p>如果是遗弃代码，请明显标识遗弃字样，并给出替代接口，或者给出遗弃原因。</p>
+<h2 id="bool-类型使用问题"><a href="#bool-类型使用问题" class="headerlink" title="bool 类型使用问题"></a>bool 类型使用问题</h2><p><del>不建议使用 bool 类型。</del></p>
+<p><strong>bool 类型的背景：</strong></p>
+<p>C89 没有定义布尔类型，如果你使用 true 和 false，会出现错误。C99 提供了一个头文件 &lt;stdbool.h&gt; 定义了 bool 代表 _Bool，true 代表 1，false 代表 0。只要导入 <code>stdbool.h</code>，就可以使用布尔类型了。</p>
+<p>由于这个历史原因，导致一些代码模块会自定义 bool 类型，也自定义类似 TRUE 和 FALSE 这样的宏。</p>
+<p>C 标准并没有定义 bool 类型的具体类型，也没有指定 bool 类型的类型大小，不同的 C 标准库对 bool 类型的大小定义不同。</p>
+<p>建议使用 &lt;stdint.h&gt; 中的数据类型，<del>同时避免使用 bool 类型</del>要注意 bool 类型的使用注意事项。</p>
+<p><strong>bool 类型使用的注意事项：</strong></p>
+<p>条件表达式里，bool 类型不能和 true 进行比较。</p>
+<p>C99 里定义了 true 和 false，但是只认 false（也就是 0）为唯一有效值，所以 true 是不确定的，不能用在条件表达式里进行比较。</p>
+<p>也就是 bool 类型只允许以下比较情况：</p>
+<pre><code>if (xxxx)
+if (!xxxxx)
+if (false == xxxxx)
+if (false != xxxxx)</code></pre><p>唯独 <code>if (true == xxxxx) 和 if (true!= xxxxx)</code> 不行。</p>
+<p>如果需要定义 bool 类型的话，如下定义：</p>
+<pre><code>typedef enum
+{
+    false = 0,
+    true  = !false
+} bool;</code></pre><h2 id="使用标准数据类型"><a href="#使用标准数据类型" class="headerlink" title="使用标准数据类型"></a>使用标准数据类型</h2><p>基本数据类型，除非设计不同平台 size 不同的情况，请直接用 C99 &lt;stdint.h&gt; 中定义的标准数据类型（int8_t、uint8_t 等）。而不是使用自行定义的 u8、u16 这些类型。</p>
+<h2 id="枚举定义问题"><a href="#枚举定义问题" class="headerlink" title="枚举定义问题"></a>枚举定义问题</h2><p>定义一定赋初值。</p>
+<p>枚举的大小也不是恒定的，根编译器有关。在配合结构体使用时请注意不要随便使用相对结构体指针的偏移量来读取数据成员的值。</p>
+<h2 id="仔细检查-return-和-goto"><a href="#仔细检查-return-和-goto" class="headerlink" title="仔细检查 return 和 goto"></a>仔细检查 <code>return</code> 和 <code>goto</code></h2><p>主要为了留意是否会有内存泄漏，或者使用了未初始化的变量。</p>
+<h2 id="引入的第三方模块带来的格式问题"><a href="#引入的第三方模块带来的格式问题" class="headerlink" title="引入的第三方模块带来的格式问题"></a>引入的第三方模块带来的格式问题</h2><p>如果你的项目里引入了第三方模块，但是第三方模块跟你项目的代码风格不一致，这个时候怎么做呢？</p>
+<p>为了方便日后更新维护，建议保留其原来的文件格式，不做任何修改（一个好的模块，也基本不需要做修改）。</p>
+<p>如果必须要修改第三方模块的代码，视情况转化为统一的风格，轻改动风格不变，重改动统一风格（既然是重改动，肯定需要自己维护这套代码）。</p>
+<p><strong>注意在版权范围内引入和修改第三方代码。</strong></p>
+<h2 id="中文文档排版规范"><a href="#中文文档排版规范" class="headerlink" title="中文文档排版规范"></a>中文文档排版规范</h2><p>参考 <a href="https://github.com/iot-preschool/chinese-copywriting-guidelines/blob/master/README.zh-CN.md" target="_blank" rel="noopener">中文文案排版指北</a>。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><blockquote>
+<p>仅站在巨人的肩膀上做了些许的总结，向他们致敬！</p>
+</blockquote>
+<ul>
+<li><p><a href="https://github.com/RT-Thread/rt-thread/blob/master/documentation/coding_style_cn.md" target="_blank" rel="noopener">RT-Thread 代码规范</a></p>
+<p>  受 RT-Thread 编程风格影响很大。</p>
+</li>
+<li><p><a href="https://www.misra.org.uk/" target="_blank" rel="noopener">MISRA-C 官网</a></p>
+</li>
+<li><p><a href="https://zhuanlan.zhihu.com/p/295299549" target="_blank" rel="noopener">知乎-szyyy-MISRA C标准</a></p>
+</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E8%A7%84%E8%8C%83/">规范</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%BC%96%E7%A8%8B%E8%A7%84%E8%8C%83/">编程规范</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                
+                
+  <script defer src="https://utteranc.es/client.js"
+          repo="murphyzhao/blog"
+          issue-term="pathname"
+  
+          label="utterances"
+    
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+  </script>
+
+
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-md">
+    <div class="container custom post-content mx-auto">
+      <div style="position:relative; z-index:999; top:0;"><script type="text/javascript">document.write(unescape("%3Cdiv id='reward' %3E%3C/div%3E%3Cscript src='/site-js/reward.min.js' type='text/javascript'%3E%3C/script%3E"));</script></div><div align="center"><img src="https://zhaojuntao.gitee.io/picturebed/logo/WeChat/ErWeiMaSouYiBiaoZhunSe.png" srcset="/img/loading.gif"  alt="微信公众号：物联网学前班" height=100px /></div>
+    </div>
+  </div>
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+  <div>
+    
+      <!-- 不蒜子统计PV -->
+      
+      <span id="busuanzi_container_site_pv" style="display: none">
+      总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    
+    
+      <!-- 不蒜子统计UV -->
+      
+      <span id="busuanzi_container_site_uv" style="display: none">
+      总访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
+    
+  </div>
+
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var post = $('#post');
+      var toc = $('#toc');
+      var tocLimMax = post.offset().top + post.height() - navHeight;
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = $('#board-ctn').css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/smoothscroll/1.4.10/SmoothScroll.min.js" ></script>
+
+
+
+  <script defer src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+<!-- Plugins -->
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e26f756fa7cff496d917beccbb716890";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  ');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "C 语言编程规范&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+  
+    <script>
+      !function (e, t, a) {
+        function r() {
+          for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
+          requestAnimationFrame(r)
+        }
+
+        function n() {
+          var t = "function" == typeof e.onclick && e.onclick;
+          e.onclick = function (e) {
+            t && t(), o(e)
+          }
+        }
+
+        function o(e) {
+          var a = t.createElement("div");
+          a.className = "heart", s.push({
+            el: a,
+            x: e.clientX - 5,
+            y: e.clientY - 5,
+            scale: 1,
+            alpha: 1,
+            color: c()
+          }), t.body.appendChild(a)
+        }
+
+        function i(e) {
+          var a = t.createElement("style");
+          a.type = "text/css";
+          try {
+            a.appendChild(t.createTextNode(e))
+          } catch (t) {
+            a.styleSheet.cssText = e
+          }
+          t.getElementsByTagName("head")[0].appendChild(a)
+        }
+
+        function c() {
+          return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+        }
+
+        var s = [];
+        e.requestAnimationFrame = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (e) {
+          setTimeout(e, 1e3 / 60)
+        }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
+      }(window, document);
+    </script>
+  
+
+
+
+
+
+
+
+
+</body>
+</html>

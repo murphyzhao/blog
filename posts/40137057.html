@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://zhaojuntao.gitee.io/picturebed/logo/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://zhaojuntao.gitee.io/picturebed/logo/Murphy-logo.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="description" content="Murphy&#39;s blog | 物联网技术分享 | 物联网学前班 | 物联网教程 | iot | aiot | 物联网全栈 | 嵌入式开发 | 智能硬件 | Linux | RT-Thread | FreeRTOS | TencentOS tiny">
+  <meta name="author" content="MurphyZhao">
+  <meta name="keywords" content="Murphy, MurphyZhao, iot, aiot, Linux, rt-thread, TencentOS tiny, 物联网, 物联网学前班, 物联网教程, 嵌入式, 智能硬件">
+  <title>C 语言 #、##、__VA_ARGS__、#__VA_ARGS__、##__VA_ARGS__ ~ Murphy&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Murphy's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/links/">友链</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('https://zhaojuntao.gitee.io/picturebed/blog/IndexPicture/index-20191224-1.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期二, 十二月 31日 2019
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    2.2k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      8 分钟
+                  </span>
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  <span id="busuanzi_container_page_pv" class="post-meta" style="display: none">
+                    <i class="far fa-eye" aria-hidden="true"></i>
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <pre><code>‘#’ 和 ‘##’ 属于预处理标记。‘#’ 和 ‘##’ 用于类似函数的宏定义中（或者简称为宏定义函数）。
+‘__VA_ARGS__’ 是 C99 引入的用于支持宏定义函数中使用可变参数。</code></pre><h2 id="操作符-‘-’"><a href="#操作符-‘-’" class="headerlink" title="操作符 ‘#’"></a>操作符 ‘#’</h2><p>在宏定义展开的时候，标记 ‘#’ 用于将 ‘#’ 后面的宏定义函数中的参数转化为对应的字符串。宏定义函数的参数与预处理标记 ‘#’ 之间出现的每一个空格都会被删除，并删除第一个预处理标记之前和最后一个预处理标记之后的空白字符，但是宏定义函数参数中的空格会保留。</p>
+<p>其中，空参数转化为为空，即宏定义函数入参为空，那么展开的时候也为空。</p>
+<p>上面的这段话比较难理解，这里为了准确地传达其意义，我们来看一个示例程序。</p>
+<blockquote>
+<p>在看到代码后，可以先猜猜可能的输出结果，如果你答对了，那就是真的会了！<br>注意，这里我基于 RT-Thread QEMU BSP 进行代码展示，代码真实编译通过，运行正常。</p>
+</blockquote>
+<h3 id="示例程序-A"><a href="#示例程序-A" class="headerlink" title="示例程序 A"></a>示例程序 A</h3><p>请看以下代码：</p>
+<pre><code>#include &lt;stdint.h&gt;
+#include &lt;rtthread.h&gt;
+
+#define mkstr(var) (#var)
+
+int main(void)
+{
+    rt_kprintf(&quot;hello rt-thread\n&quot;);
+
+    rt_kprintf(mkstr(hello rt-thread));
+
+    return 0;
+}</code></pre><p>请问：</p>
+<ul>
+<li>它能编译通过吗？</li>
+<li>它能输出什么内容？</li>
+</ul>
+<p>答案：</p>
+<ul>
+<li><p>它可以正常编译通过</p>
+</li>
+<li><p>它输出的内容</p>
+<pre><code>  hello rt-thread
+  hello rt-threadmsh /&gt;</code></pre></li>
+</ul>
+<p>从上面输出的信息可以看到，<code>hello rt-thread</code> 字符串被准确地输出到了控制台，但是没有增加回车换行。其中 <code>msh /&gt;</code> 字符串是 RT-Thread 控制台回显。</p>
+<p>如上，代码 <code>rt_kprintf(mkstr(hello rt-thread));</code> 中的 <code>hello rt-thread</code> 在没有加引号的情况下，被转化成了字符串。</p>
+<h3 id="示例程序-B"><a href="#示例程序-B" class="headerlink" title="示例程序 B"></a>示例程序 B</h3><p>为示例程序 A 打印的字符串增加回车换行。</p>
+<pre><code>#include &lt;stdint.h&gt;
+#include &lt;rtthread.h&gt;
+
+#define mkstr(var) (#var)
+
+int main(void)
+{
+    rt_kprintf(&quot;hello rt-thread\n&quot;);
+
+    rt_kprintf(mkstr(hello rt-thread\r\n));
+
+    return 0;
+}</code></pre><p>有了示例 A 的基础，示例 B 那就是 soeasy，直接在原有的基础上增加 <code>\r\n</code> 转义字符即可输出回车换行。</p>
+<p>输出结果如下：</p>
+<pre><code>hello rt-thread
+hello rt-thread
+msh /&gt;</code></pre><h3 id="示例程序-C"><a href="#示例程序-C" class="headerlink" title="示例程序 C"></a>示例程序 C</h3><p>我们在示例程序 B 中成功增加了回车换行的输出，但是你有没有想过一个问题，如果你又很多地方用到 <code>mkstr</code> 宏定义函数输出信息，那你是不是每一个地方都要增加 <code>\r\n</code>，这岂不是很累，有没有好的方法？</p>
+<p>好方法当然有，下面介绍下程序中常用的方式，利用 C 语言相邻字符串自动拼接的特性（当然，这是编译器支持的）。代码如下：</p>
+<pre><code>#include &lt;stdint.h&gt;
+#include &lt;rtthread.h&gt;
+
+#define mkstr(var) (#var&quot;\r\n&quot;)
+
+int main(void)
+{
+    rt_kprintf(&quot;hello rt-thread\n&quot;);
+
+    rt_kprintf(mkstr(hello rt-thread));
+
+    return 0;
+}</code></pre><p>以上代码在 <code>#var</code> 后面增加了一个字符串 <code>\r\n</code>，我们来看宏定义展开过程：</p>
+<pre><code>-&gt; rt_kprintf(mkstr(hello rt-thread));
+-&gt; rt_kprintf(&quot;hello rt-thread&quot;&quot;\r\n&quot;);
+-&gt; rt_kprintf(&quot;hello rt-thread\r\n&quot;);</code></pre><h3 id="示例程序-D"><a href="#示例程序-D" class="headerlink" title="示例程序 D"></a>示例程序 D</h3><p>预处理标记 <code>#</code> 的基本用法已经展示完了，但怎么理解 “宏定义函数的参数与预处理标记 ‘#’ 之间出现的每一个空格都会被删除，并删除第一个预处理标记之前和最后一个预处理标记之后的空白字符”？</p>
+<p>请看下面的代码：</p>
+<pre><code>#include &lt;stdint.h&gt;
+#include &lt;rtthread.h&gt;
+
+#define mkstr(var) (&quot;aa&quot;  #  var  &quot;bb&quot;)
+
+int main(void)
+{
+    rt_kprintf(&quot;hello rt-thread\n&quot;);
+
+    rt_kprintf(mkstr(hello rt-thread));
+
+    return 0;
+}</code></pre><p>宏定义 <code>mkstr(var) (&quot;aa&quot;  #  var  &quot;bb\r\n&quot;)</code> 中的 <code>#  var</code> 中间有两个空格，根据定义，<code>#</code> 号与宏定义函数参数 <code>var</code> 中间的两个空格会被删除，但是 <code>var</code> 参数中的 <code>hello rt-thread</code> 中的空格不会被删除。</p>
+<p>继续，根据定义，宏定义 <code>mkstr(var) (&quot;aa&quot;  #  var  &quot;bb\r\n&quot;)</code> 中只有一个预处理标记 <code>#</code>，其作为第一个和最后一个预处理标记，它前面和后面的空格都会被删除。</p>
+<p>因此，以上代码预计输出结果为:</p>
+<pre><code>hello rt-thread
+aahello rt-threadbb
+msh /&gt;</code></pre><h3 id="示例程序-E"><a href="#示例程序-E" class="headerlink" title="示例程序 E"></a>示例程序 E</h3><p>在实际操作时，操作符 <code>#</code> 被常用于枚举转字符串。以下代码截取自我的 <a href="https://github.com/murphyzhao/FlexibleButton/blob/master/flexible_button_demo.c" target="_blank" rel="noopener">FlexibleButton 按键库</a> 的示例程序。</p>
+<pre><code>#define ENUM_TO_STR(e) (#e)
+
+typedef enum
+{
+    USER_BUTTON_0 = 0,
+    USER_BUTTON_1,
+    USER_BUTTON_2,
+    USER_BUTTON_3,
+    USER_BUTTON_MAX
+} user_button_t;
+
+static char *enum_btn_id_string[] = {
+    ENUM_TO_STR(USER_BUTTON_0),
+    ENUM_TO_STR(USER_BUTTON_1),
+    ENUM_TO_STR(USER_BUTTON_2),
+    ENUM_TO_STR(USER_BUTTON_3),
+    ENUM_TO_STR(USER_BUTTON_MAX),
+};</code></pre><h2 id="操作符-‘-’-1"><a href="#操作符-‘-’-1" class="headerlink" title="操作符 ‘##’"></a>操作符 ‘##’</h2><p>‘##’ 是预处理拼接标记。在宏定义展开的时候，将 ‘##’ 左边的内容，与 ‘##’ 右边的内容拼接到一起。</p>
+<p>注意，对于任何一种形式的宏定义，‘##’ 预处理标记都不应出现在<em>替换列表</em>的开头或结尾。</p>
+<p>关于<em>替换列表</em>：</p>
+<p>例如宏定义 ‘#define aa(x, y) (x##y)’ 后面的部分 ‘x##y’ 就是替换列表。</p>
+<p>预处理拼接符 <code>##</code> 常用于使用宏定义批量生成函数或者变量。</p>
+<h3 id="示例程序-F"><a href="#示例程序-F" class="headerlink" title="示例程序 F"></a>示例程序 F</h3><pre><code>#include &lt;stdint.h&gt;
+#include &lt;rtthread.h&gt;
+
+#define my_math(x, y) (x##e##y)
+
+int main(void)
+{
+    rt_kprintf(&quot;hello rt-thread\n&quot;);
+
+    printf(&quot;%e\r\n&quot;, my_math(3, 4));
+
+    return 0;
+}
+</code></pre><p>以上代码是科学计数法的格式输出到控制台，输出内容如下：</p>
+<pre><code>hello rt-thread
+3.000000e+04
+msh /&gt;</code></pre><h3 id="示例程序-G"><a href="#示例程序-G" class="headerlink" title="示例程序 G"></a>示例程序 G</h3><p>用预处理拼接符 <code>##</code> 批量生成函数或者变量。</p>
+<p>以下代码截取自 <a href="https://github.com/RT-Thread/rt-thread/blob/master/components/finsh/finsh_api.h" target="_blank" rel="noopener">RT-Thread <code>finsh_api.h</code></a>，该段代码用于导出 Finsh 命令，代码如下所示：</p>
+<pre><code>#define FINSH_FUNCTION_EXPORT_CMD(name, cmd, desc)                      \
+    const char __fsym_##cmd##_name[] SECTION(&quot;.rodata.name&quot;) = #cmd;    \
+    const char __fsym_##cmd##_desc[] SECTION(&quot;.rodata.name&quot;) = #desc;   \
+    RT_USED const struct finsh_syscall __fsym_##cmd SECTION(&quot;FSymTab&quot;)= \
+    {                           \
+        __fsym_##cmd##_name,    \
+        __fsym_##cmd##_desc,    \
+        (syscall_func)&amp;name     \
+    };</code></pre><p>该宏定义的应用，如 <code>list_timer</code> 命令，如下所示：</p>
+<pre><code>FINSH_FUNCTION_EXPORT_CMD(list_timer, list_timer, list timer in system);</code></pre><h2 id="标识符-VA-ARGS"><a href="#标识符-VA-ARGS" class="headerlink" title="标识符 __VA_ARGS__"></a>标识符 <code>__VA_ARGS__</code></h2><p><code>__VA_ARGS__</code> 是在 C99 中增加的新特性。虽然 C89 引入了一种标准机制，允许定义具有可变数量参数的函数，但是 C89 中不允许这种定义可变数量参数的方式出现在宏定义中。C99 中加入了 <code>__VA_ARGS__</code> 关键字，用于支持在宏定义中定义可变数量参数，用于接收 <code>...</code> 传递的多个参数。<a href="#refer-anchor-1"><sup>1</sup></a></p>
+<p><code>__VA_ARGS__</code> 只能出现在使用了省略号的像函数一样的宏定义里。例如 <code>#define myprintf(...) fprintf(stderr, __VA_ARGS__)</code>。</p>
+<h3 id="解析不定参"><a href="#解析不定参" class="headerlink" title="解析不定参"></a>解析不定参</h3><p>通过宏定义，将多个参数传递给函数，那么函数是如何解析不定参的呢？</p>
+<p>这就需要使用标准库头文件 <code>&lt;stdarg.h&gt;</code> 中的三个宏，分别是 “va_start()”、“va_arg()”、“va_end()”，以及一个可变参类型 “va_list”，示例使用方式借用 RT-Thread 中的 <code>rt_sprintf</code> 的实现，代码如下所示：</p>
+<pre><code>rt_int32_t rt_sprintf(char *buf, const char *format, ...)
+{
+    rt_int32_t n;
+    va_list arg_ptr;
+
+    va_start(arg_ptr, format);
+    n = rt_vsprintf(buf, format, arg_ptr);
+    va_end(arg_ptr);
+
+    return n;
+}</code></pre><ul>
+<li>首先使用 “va_list” 类型定义一个变量 “arg_ptr”</li>
+<li>然后调用 “va_start(arg_ptr, format);” 函数，第一个入参是 “va_list” 类型，第二个参数是 “rt_sprintf” 函数参数列表中的最后一个定参 “format”</li>
+<li>然后，通过调用 “rt_vsprintf” 函数，根据 “format” 来解析不定参，并将结果存放到 “buf” 中</li>
+<li>最后，使用 “va_end(arg_ptr);” 来释放不定参列表占用的资源</li>
+</ul>
+<h2 id="带-‘-’-的标识符-VA-ARGS"><a href="#带-‘-’-的标识符-VA-ARGS" class="headerlink" title="带 ‘#’ 的标识符 #__VA_ARGS__"></a>带 ‘#’ 的标识符 <code>#__VA_ARGS__</code></h2><p>预处理标记 ‘#’ 用于将宏定义参数转化为字符串，因此 <code>#__VA_ARGS__</code> 会被展开为参数列表对应的字符串。</p>
+<p>示例：</p>
+<pre><code>#define showlist(...) put(#__VA_ARGS__)
+
+测试如下：
+showlist(The first, second, and third items.);
+showlist(arg1, arg2, arg3);
+
+输出结果分别为：
+The first, second, and third items.
+arg1, arg2, arg3</code></pre><h2 id="带-‘-’-的标识符-VA-ARGS-1"><a href="#带-‘-’-的标识符-VA-ARGS-1" class="headerlink" title="带 ‘##’ 的标识符 ##__VA_ARGS__"></a>带 ‘##’ 的标识符 <code>##__VA_ARGS__</code></h2><p><code>##__VA_ARGS__</code> 是 GNU 特性，不是 C99 标准的一部分，C 标准不建议这样使用，但目前已经被大部分编译器支持。</p>
+<p>标识符 <code>##__VA_ARGS__</code> 的意义来自 ‘##’，主要为了解决一下应用场景：</p>
+<pre><code>#define myprintf_a(fmt, ...) printf(fmt, __VA_ARGS__)
+#define myprintf_b(fmt, ...) printf(fmt, ##__VA_ARGS__)
+
+应用：
+myprintf_a(&quot;hello&quot;);
+myprintf_b(&quot;hello&quot;);
+
+myprintf_a(&quot;hello: %s&quot;, &quot;world&quot;);
+myprintf_b(&quot;hello: %s&quot;, &quot;world&quot;);</code></pre><p>这个时候，编译器会报错，如下所示：</p>
+<pre><code>applications\main.c: In function &#39;main&#39;:
+applications\main.c:26:57: error: expected expression before &#39;)&#39; token
+ #define myprintf_a(fmt, ...) printf(fmt, __VA_ARGS__)
+                                                         ^
+applications\main.c:36:5: note: in expansion of macro &#39;myprintf_a&#39;
+     myprintf_a(&quot;hello&quot;);</code></pre><p>为什么呢？</p>
+<p>我们展开 <code>myprintf_a(&quot;hello&quot;);</code> 之后为 <code>printf(&quot;hello&quot;,)</code>。因为没有不定参，所以，<code>__VA_ARGS__</code> 展开为空白字符，这个时候，printf 函数中就多了一个 ‘,’（逗号），导致编译报错。而 <code>##__VA_ARGS__</code> 在展开的时候，因为 ‘##’ 找不到连接对象，会将 ‘##’ 之前的空白字符和 ‘,’（逗号）删除，这个时候 printf 函数就没有了多余的 ‘,’（逗号）。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><div id="refer-anchor-1"></div>
+
+<ul>
+<li><p>[1] <a href="http://www.open-std.org/jtc1/sc22/wg14/www/standards.html#9899" target="_blank" rel="noopener">open-std 网站</a></p>
+<ul>
+<li><a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/C99RationaleV5.10.pdf" target="_blank" rel="noopener">C99 标准 V5.10</a></li>
+<li><a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1256.pdf" target="_blank" rel="noopener">C99 公共版本 N1256</a></li>
+<li><a href="http://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf" target="_blank" rel="noopener">C11 公共版本 N1570</a></li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Programing/">Programing</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/C%E8%AF%AD%E8%A8%80/">C语言</a>
+                    
+                      <a class="hover-with-bg" href="/tags/VA-ARGS/">__VA_ARGS__</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                
+                
+  <script defer src="https://utteranc.es/client.js"
+          repo="murphyzhao/blog"
+          issue-term="pathname"
+  
+          label="utterances"
+    
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+  </script>
+
+
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-md">
+    <div class="container custom post-content mx-auto">
+      <div style="position:relative; z-index:999; top:0;"><script type="text/javascript">document.write(unescape("%3Cdiv id='reward' %3E%3C/div%3E%3Cscript src='/site-js/reward.min.js' type='text/javascript'%3E%3C/script%3E"));</script></div><div align="center"><img src="https://zhaojuntao.gitee.io/picturebed/logo/WeChat/ErWeiMaSouYiBiaoZhunSe.png" srcset="/img/loading.gif"  alt="微信公众号：物联网学前班" height=100px /></div>
+    </div>
+  </div>
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+  <div>
+    
+      <!-- 不蒜子统计PV -->
+      
+      <span id="busuanzi_container_site_pv" style="display: none">
+      总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    
+    
+      <!-- 不蒜子统计UV -->
+      
+      <span id="busuanzi_container_site_uv" style="display: none">
+      总访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
+    
+  </div>
+
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var post = $('#post');
+      var toc = $('#toc');
+      var tocLimMax = post.offset().top + post.height() - navHeight;
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = $('#board-ctn').css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/smoothscroll/1.4.10/SmoothScroll.min.js" ></script>
+
+
+
+  <script defer src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+<!-- Plugins -->
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e26f756fa7cff496d917beccbb716890";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  ');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "C 语言 #、##、__VA_ARGS__、#__VA_ARGS__、##__VA_ARGS__&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+  
+    <script>
+      !function (e, t, a) {
+        function r() {
+          for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
+          requestAnimationFrame(r)
+        }
+
+        function n() {
+          var t = "function" == typeof e.onclick && e.onclick;
+          e.onclick = function (e) {
+            t && t(), o(e)
+          }
+        }
+
+        function o(e) {
+          var a = t.createElement("div");
+          a.className = "heart", s.push({
+            el: a,
+            x: e.clientX - 5,
+            y: e.clientY - 5,
+            scale: 1,
+            alpha: 1,
+            color: c()
+          }), t.body.appendChild(a)
+        }
+
+        function i(e) {
+          var a = t.createElement("style");
+          a.type = "text/css";
+          try {
+            a.appendChild(t.createTextNode(e))
+          } catch (t) {
+            a.styleSheet.cssText = e
+          }
+          t.getElementsByTagName("head")[0].appendChild(a)
+        }
+
+        function c() {
+          return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+        }
+
+        var s = [];
+        e.requestAnimationFrame = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (e) {
+          setTimeout(e, 1e3 / 60)
+        }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
+      }(window, document);
+    </script>
+  
+
+
+
+
+
+
+
+
+</body>
+</html>

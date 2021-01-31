@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://zhaojuntao.gitee.io/picturebed/logo/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://zhaojuntao.gitee.io/picturebed/logo/Murphy-logo.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="description" content="Murphy&#39;s blog | 物联网技术分享 | 物联网学前班 | 物联网教程 | iot | aiot | 物联网全栈 | 嵌入式开发 | 智能硬件 | Linux | RT-Thread | FreeRTOS | TencentOS tiny">
+  <meta name="author" content="MurphyZhao">
+  <meta name="keywords" content="Murphy, MurphyZhao, iot, aiot, Linux, rt-thread, TencentOS tiny, 物联网, 物联网学前班, 物联网教程, 嵌入式, 智能硬件">
+  <title>同一客户端下使用多个 Git 账户 ~ Murphy&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Murphy's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/links/">友链</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('https://zhaojuntao.gitee.io/picturebed/blog/IndexPicture/index-20191224-1.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期日, 九月 13日 2020
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1.4k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      5 分钟
+                  </span>
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  <span id="busuanzi_container_page_pv" class="post-meta" style="display: none">
+                    <i class="far fa-eye" aria-hidden="true"></i>
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <h2 id="问题由来"><a href="#问题由来" class="headerlink" title="问题由来"></a>问题由来</h2><h3 id="为什么会有多个-Git-账户"><a href="#为什么会有多个-Git-账户" class="headerlink" title="为什么会有多个 Git 账户"></a>为什么会有多个 Git 账户</h3><p>当下环境做软件开发或多或少都离不开资源丰富的 GitHub，它并誉为程序员的天堂，几乎每一个软件开发人员都会有一个自己的 GitHub 账户。</p>
+<p>另一方面，软件公司也在不断进化代码的管理方式，大多数软件公司开始独立部署私有的 Gitlab 来托管公司代码，进而进行工程管理和代码审查，以及后续的自动化部署、自动化测试、持续集成。所以，你至少还会有一个公司的 Git 账户。</p>
+<p>再者，由于 GitHub 属于外网，经常被 Q 而无法高效率地使用，所以我们还经常会用到国内越来越好的 Git 托管平台 <a href="https://gitee.com/" target="_blank" rel="noopener">码云 Gitee</a>，而且很多国内优秀的开源软件会将同步托管到 GitHub 和 Gitee，国内的开发者可以使用 Gitee 优雅地拉取和推送代码，而不用担心龟速下载的问题。另外，Gitee 还有一个非常重要的中间人的角色，当 GitHub 资源下载不动时，你可以将其导入到 Gitee，从 Gitee 上下载代码，然后再通过设置 remote 的方式回溯到 GitHub。因此，怎么样你都还得有一个 Gitee 账户。</p>
+<p>So，现在我们已经有了三个 Git 账户了（GitHub、公司 Gitlab、Gitee），需要在一台 PC 终端上使用。</p>
+<h3 id="多个账户会带来什么问题"><a href="#多个账户会带来什么问题" class="headerlink" title="多个账户会带来什么问题"></a>多个账户会带来什么问题</h3><blockquote>
+<p>既然你已经翻到了这篇文章，想必你已经遇到了问题。</p>
+<p>没遇到问题的朋友，不妨使用常用的 HTTPS 方式在同一个 PC 终端操作不同账户试试，看看会遇到哪些问题（基本上都是修改了 name 和 email 还是无法推送代码，提示禁止访问，苦笑）。</p>
+</blockquote>
+<p>如果遇到账户名密码不对的情况，也可以尝试去 Windows 的凭据中心删除对应的账户凭据，重新配置，位置 “控制面板 –&gt; 凭据管理器 –&gt; Windows 凭据”。</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><blockquote>
+<p><strong>使用 SSH</strong>。</p>
+</blockquote>
+<p>SSH 是另外一种加密传输方式，采用公钥+私钥的方式来验证用户的合法性，Git 托管平台基本都支持 SSH 方式访问，我们需要做的就是为各个平台配置对应的公钥。</p>
+<h3 id="生成公钥"><a href="#生成公钥" class="headerlink" title="生成公钥"></a>生成公钥</h3><blockquote>
+<p>前提：你的 PC 机已经安装了 <a href="https://git-scm.com/" target="_blank" rel="noopener">git-scm 工具</a>，没有安装的点击链接安装，我们需要使用其 <code>Git Bash</code>。</p>
+</blockquote>
+<ol>
+<li><p>任意目录下打开 <code>Git Bash</code> 工具</p>
+</li>
+<li><p>输入命令以下命令</p>
+<pre><code class="shell"> $ ssh-keygen -t rsa -C &#39;youremail@xxx.com&#39; -f ~/.ssh/xxx_id_rsa</code></pre>
+<p> 其中 <code>-C</code> 后面指定的邮箱是 SSHKEY 的名称，为了便于辨识建议使用个人邮箱标识；<code>-f</code> 后面的 <code>~/.ssh/xxx_id_rsa</code> 是指定生成的 SSH KEY 文件的路径名称，建议命名 xxx_id_rsa 的时候加上代码托管平台的标识，便于后续区分，比如 <code>github_id_rsa</code> 和 <code>gitee_id_rsa</code>，如果你一个平台有多个账号，那最好也把用户名指定上去，如 <code>gitee_username_id_rsa</code>。</p>
+</li>
+<li><p>输入命令后回车，然后按照默认，依次输入三次回车，既可生成 SSH KEY，如下所示：</p>
+<p> <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/20200913181049.png" srcset="/img/loading.gif" alt=""></p>
+</li>
+<li><p>安装上面相同的方式，生成其它平台的 SSH KEY，比如 gitee 和 gitlab</p>
+</li>
+<li><p>查看生成的文件</p>
+<pre><code> $ ls ~/.ssh
+ gitee_xxx_id_rsa      github_xxx_id_rsa      gitlab_work_id_rsa
+ gitee_xxx_id_rsa.pub  github_xxx_id_rsa.pub  gitlab_work_id_rsa.pub</code></pre></li>
+</ol>
+<h3 id="部署公钥"><a href="#部署公钥" class="headerlink" title="部署公钥"></a>部署公钥</h3><ol>
+<li><p>查看对应平台的公钥，<code>.pub</code> 后缀的文件为公钥，举例 github_xxx_id_rsa.pub</p>
+<p> <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/20200913181856.png" srcset="/img/loading.gif" alt=""></p>
+</li>
+<li><p>复制展示出来的公钥内容，从 ssh-rsa 开始（包括 ssh-rsa）直到末尾，包括末尾的“邮箱”或者在第二步骤中 -C 设置的其他名称。</p>
+</li>
+<li><p>浏览器打开 GitHub，添加公钥</p>
+<p> 直达链接：<a href="https://github.com/settings/keys" target="_blank" rel="noopener">https://github.com/settings/keys</a> ，然后选择 <code>New SSH key</code>。</p>
+<p> <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/20200913182423.png" srcset="/img/loading.gif" alt=""></p>
+<p> 注，这里的 Title 也是为了提示你这个 SSH key 是用来做什么的，因此要能给你提示，<strong>建议以你的 PC 机名字命名</strong>。</p>
+</li>
+<li><p>然后同样的方式，把其他平台的 <code>.pub</code> 公钥部署到对应的托管平台。</p>
+</li>
+</ol>
+<h3 id="在-ssh-目录增加配置-config-文件"><a href="#在-ssh-目录增加配置-config-文件" class="headerlink" title="在 ~/.ssh 目录增加配置 config 文件"></a>在 ~/.ssh 目录增加配置 config 文件</h3><p>在 <code>~/.ssh</code> ，内容如下：</p>
+<pre><code># gitee
+Host gitee.com
+HostName gitee.com
+PreferredAuthentications publickey
+IdentityFile ~/.ssh/gitee_xxx_id_rsa
+
+# github
+Host github.com
+HostName github.com
+PreferredAuthentications publickey
+IdentityFile ~/.ssh/github_xxx_id_rsa</code></pre><p>其中 Host 和 HostName 填写 git 服务器的域名，IdentityFile 指定私钥的路径。如果你还有其他的代码服务器，可以继续追加配置。</p>
+<p>Git bash 工具支持 vim 命令编辑文件，<code>vim ~/.ssh/config</code> 填写配置，然后保存。</p>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>使用 <code>ssh -T host</code> 命令进行分别测试</p>
+<pre><code>$ ssh -T git@github.com
+
+测试成功后，再测试其他平台：
+
+$ ssh -T git@gitee.com</code></pre><p><img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/20200913184237.png" srcset="/img/loading.gif" alt=""><br><img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/20200913193320.png" srcset="/img/loading.gif" alt=""></p>
+<p>测试通过后，您就可以愉快地使用 SSH 的方式进行 clone 和 push 了，如下所示：</p>
+<pre><code>git clone git@gitee.com:xxx/xxx.git</code></pre><h3 id="小乌龟-Git-工具适配"><a href="#小乌龟-Git-工具适配" class="headerlink" title="小乌龟 Git 工具适配"></a>小乌龟 Git 工具适配</h3><p>除了 <a href="https://git-scm.com/" target="_blank" rel="noopener">git-scm</a> 命令行工具外，我们还常用 <a href="https://tortoisegit.org/" target="_blank" rel="noopener">TortoiseGit</a> 可视化工具来配合工作，该工具乌龟 logo，故该工具俗称 <em>“小乌龟”</em>。</p>
+<p>由于 <a href="https://tortoisegit.org/" target="_blank" rel="noopener">TortoiseGit</a> 使用的 SSH 秘钥与 ssh-keygen 不同，所以使用 TortoiseGit 的时候依旧会提示 <code>NotSupport</code>。所以我们需要对 TortoiseGit 的 SSH 工具进行修改。错误提示通常如下：</p>
+<p><img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/gitee-not-supportkeys.png" srcset="/img/loading.gif" alt=""></p>
+<p>打开 TortoiseGit 配置，选择 <strong>Network</strong> –&gt; <strong>SSH</strong>，调整原来的 <code>TortoiseGitPlink.ese</code> 为 <code>git-scm</code> 工具的 <code>ssh.exe</code>，如下图所示：</p>
+<p>TortoiseGit 原来的配置：</p>
+<p><img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/20200913194401.png" srcset="/img/loading.gif" alt=""></p>
+<p>TortoiseGit 修改为 ssh.exe 后的配置：</p>
+<p><img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/20200913194452.png" srcset="/img/loading.gif" alt=""></p>
+<hr>
+<p>好了，到此为止，同一客户端下可以愉快地使用多个 Git 账户了，再也不用担心账户密码冲突的问题了，也不用担心每次都要输入密码的问题。</p>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/TortoiseGit/">TortoiseGit</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%B0%8F%E4%B9%8C%E9%BE%9F/">小乌龟</a>
+                    
+                      <a class="hover-with-bg" href="/tags/Git/">Git</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                
+                
+  <script defer src="https://utteranc.es/client.js"
+          repo="murphyzhao/blog"
+          issue-term="pathname"
+  
+          label="utterances"
+    
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+  </script>
+
+
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-md">
+    <div class="container custom post-content mx-auto">
+      <div style="position:relative; z-index:999; top:0;"><script type="text/javascript">document.write(unescape("%3Cdiv id='reward' %3E%3C/div%3E%3Cscript src='/site-js/reward.min.js' type='text/javascript'%3E%3C/script%3E"));</script></div><div align="center"><img src="https://zhaojuntao.gitee.io/picturebed/logo/WeChat/ErWeiMaSouYiBiaoZhunSe.png" srcset="/img/loading.gif"  alt="微信公众号：物联网学前班" height=100px /></div>
+    </div>
+  </div>
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+  <div>
+    
+      <!-- 不蒜子统计PV -->
+      
+      <span id="busuanzi_container_site_pv" style="display: none">
+      总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    
+    
+      <!-- 不蒜子统计UV -->
+      
+      <span id="busuanzi_container_site_uv" style="display: none">
+      总访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
+    
+  </div>
+
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var post = $('#post');
+      var toc = $('#toc');
+      var tocLimMax = post.offset().top + post.height() - navHeight;
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = $('#board-ctn').css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/smoothscroll/1.4.10/SmoothScroll.min.js" ></script>
+
+
+
+  <script defer src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+<!-- Plugins -->
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e26f756fa7cff496d917beccbb716890";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  ');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "同一客户端下使用多个 Git 账户&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+  
+    <script>
+      !function (e, t, a) {
+        function r() {
+          for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
+          requestAnimationFrame(r)
+        }
+
+        function n() {
+          var t = "function" == typeof e.onclick && e.onclick;
+          e.onclick = function (e) {
+            t && t(), o(e)
+          }
+        }
+
+        function o(e) {
+          var a = t.createElement("div");
+          a.className = "heart", s.push({
+            el: a,
+            x: e.clientX - 5,
+            y: e.clientY - 5,
+            scale: 1,
+            alpha: 1,
+            color: c()
+          }), t.body.appendChild(a)
+        }
+
+        function i(e) {
+          var a = t.createElement("style");
+          a.type = "text/css";
+          try {
+            a.appendChild(t.createTextNode(e))
+          } catch (t) {
+            a.styleSheet.cssText = e
+          }
+          t.getElementsByTagName("head")[0].appendChild(a)
+        }
+
+        function c() {
+          return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+        }
+
+        var s = [];
+        e.requestAnimationFrame = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (e) {
+          setTimeout(e, 1e3 / 60)
+        }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
+      }(window, document);
+    </script>
+  
+
+
+
+
+
+
+
+
+</body>
+</html>

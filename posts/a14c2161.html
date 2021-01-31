@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://zhaojuntao.gitee.io/picturebed/logo/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://zhaojuntao.gitee.io/picturebed/logo/Murphy-logo.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="description" content="Murphy&#39;s blog | 物联网技术分享 | 物联网学前班 | 物联网教程 | iot | aiot | 物联网全栈 | 嵌入式开发 | 智能硬件 | Linux | RT-Thread | FreeRTOS | TencentOS tiny">
+  <meta name="author" content="MurphyZhao">
+  <meta name="keywords" content="Murphy, MurphyZhao, iot, aiot, Linux, rt-thread, TencentOS tiny, 物联网, 物联网学前班, 物联网教程, 嵌入式, 智能硬件">
+  <title>RT-Thread Pin 设备驱动框架快速对接 ~ Murphy&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Murphy's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/links/">友链</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('https://zhaojuntao.gitee.io/picturebed/blog/IndexPicture/index-20191224-1.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              
+                <p class="mt-3 post-meta">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                  星期三, 七月 10日 2019
+                </p>
+              
+
+              <p class="mt-1">
+                
+                  
+                  <span class="post-meta">
+                    <i class="far fa-chart-bar"></i>
+                    1.4k 字
+                  </span>
+                
+
+                
+                  
+                  <span class="post-meta">
+                      <i class="far fa-clock"></i>
+                      5 分钟
+                  </span>
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  <span id="busuanzi_container_page_pv" class="post-meta" style="display: none">
+                    <i class="far fa-eye" aria-hidden="true"></i>
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>
+                
+              </p>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5 z-depth-3" id="board">
+          <div class="post-content mx-auto" id="post">
+            
+            <div class="markdown-body">
+              <h2 id="为什么需要-Pin-设备驱动框架"><a href="#为什么需要-Pin-设备驱动框架" class="headerlink" title="为什么需要 Pin 设备驱动框架"></a>为什么需要 Pin 设备驱动框架</h2><ul>
+<li>跨平台可移植应用</li>
+<li>操作简单</li>
+</ul>
+<p>试想下面这个场景：</p>
+<p>你基于 STM32 MCU 编写了一个包含很多 GPIO 操作的应用程序，GPIO 控制函数使用的是 HAL 库。<br>后面，由于某种原因，MCU 需要更换，使用的是 NXP 的芯片，不支持 HAL 库，那你怎么办？</p>
+<p>通常，你会查找所有 <strong>GPIO 操作相关的接口</strong>，然后替换成 NXP 提供的 GPIO 驱动函数，如果 GPIO 的编排方式不一样（有的有 GPIOA 这样的分组，有的没有），那就更加的麻烦。这样，你就维护了两个版本的应用程序。</p>
+<p>那么，有了 Pin 驱动框架能解决这个问题吗？</p>
+<p>当然，Pin 只能解决应用层代码不需要变动的问题，但需要将 GPIO 驱动对接到 Pin 驱动框架上。<br>另外，RT-Thread Pin 设备驱动框架采用了统一 GPIO 号编排的方式，从 0 开始向上计数，每一个 GPIO 对应一个 pin 号。这样做的好处是，应用程序无需关心该 GPIO 属于哪一个组（GPIOA，还是 GPIOB），也无需关心相关 GPIO 的时钟初始化、中断等。因为，Pin 设备驱动框架都帮你抽象好了。</p>
+<p><img src="https://img-blog.csdnimg.cn/20190710144526656.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTIzNDk2Nzk=,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" alt="在这里插入图片描述"></p>
+<h2 id="怎么对接到-Pin-设备框架"><a href="#怎么对接到-Pin-设备框架" class="headerlink" title="怎么对接到 Pin 设备框架"></a>怎么对接到 Pin 设备框架</h2><h3 id="首先了解下文件结构"><a href="#首先了解下文件结构" class="headerlink" title="首先了解下文件结构"></a>首先了解下文件结构</h3><p>PIN 设备框架对应文件：</p>
+<ul>
+<li>pin.h</li>
+<li>pin.c</li>
+</ul>
+<p>源文件路径： <strong>components/drivers/misc/pin.c</strong></p>
+<p>对接到 PIN 设备框架的驱动代码需要我们自行实现（如果官方没有现成的 BSP 可以使用），为了保持驱动实现的一致性，这里有一些潜在规则：</p>
+<ul>
+<li>RT-Thread 通常将对接设备框架的驱动相关文件存放在对应 bsp 的 <strong>drivers</strong> 目录下</li>
+<li>驱动程序文件命名采用 <strong>drv_</strong> 前缀加驱动名称的方式</li>
+</ul>
+<p>当然，并不是所有的 BSP 对接 rt-thread 设备框架的驱动程序文件都存放在 <strong>drivers</strong> 目录下，如 STM32 新 BSP  中的驱动实现在 rt-thread/bsp/stm32/libraries/HAL_Drivers 目录下。</p>
+<p>由此，本次我们需要实现的 GPIO 驱动如下：</p>
+<p>GPIO 驱动对应文件：</p>
+<ul>
+<li>drv_gpio.h</li>
+<li>drv_gpio.c</li>
+</ul>
+<h3 id="PIN-驱动框架和-GPIO-驱动对接"><a href="#PIN-驱动框架和-GPIO-驱动对接" class="headerlink" title="PIN 驱动框架和 GPIO 驱动对接"></a>PIN 驱动框架和 GPIO 驱动对接</h3><p><img src="https://img-blog.csdnimg.cn/20190709223437627.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3UwMTIzNDk2Nzk=,size_16,color_FFFFFF,t_70" srcset="/img/loading.gif" alt="在这里插入图片描述"></p>
+<p>从上图可以直观地看到 Pin 设备驱动框架和 GPIO 驱动是如果对接到一起的。</p>
+<p>如上图所示：</p>
+<ul>
+<li>左侧为 Pin 设备驱动框架封装的 API 接口，向上提供给应用层使用；</li>
+<li>右侧为具体芯片平台对接 Pin 设备的驱动程序，与 Pin 设备框架提供的 API 接口一一对应，通过 rt_pin_ops 结构体关联到一起，驱动框架层接口最终会回调驱动层接口；</li>
+<li>最后通过 rt_device_pin_register 函数接口，将底层驱动与 Pin 设备框架绑定到一起，注册到 RT-Thread 的设备框架中。</li>
+</ul>
+<p>在对接 RT-Thread Pin 设备框架的时候，仅需要实现上图右侧 <code>rt_pin_ops</code> 结构体中的所有 callback 回调函数即可，然后通过 <code>rt_device_pin_register</code> 注册到系统，最后使用 <code>rt_hw_pin_init</code> 调用以进行初始化。<br><code>rt_hw_pin_init</code> 在系统启动过程中被 <code>rt_hw_board_init</code> 调用。</p>
+<p><strong>注意：</strong></p>
+<p>需要注意的是 <code>rt_pin_attach_irq</code> 接口的使用，其函数原型如下：</p>
+<pre><code class="C">rt_err_t rt_pin_attach_irq(rt_int32_t pin, rt_uint32_t mode,
+                             void (*hdr)(void *args), void  *args)</code></pre>
+<p>该函数的功能是，为指定的 <code>pin</code> 脚绑定中断回调函数 <code>hdr</code>，并设置对应的中断模式 <code>mode</code> 。该函数是唯一的从应用层，通过 Pin 设备框架向下注册到 GPIO 驱动层的 API 接口。</p>
+<p>用户在实现 <code>rt_pin_attach_irq</code> 对应的 <code>pin_attach_irq</code> 回调函数时，记得将 <code>hdr</code> 回调函数应用到对应 pin 脚的外部中断 Handler 中。</p>
+<h2 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h2><p>RT-Thread 官方的文档中心中 Pin 设备给出了一个基本的测试例程，这里做引用，如下所示：</p>
+<blockquote>
+<p>以下内容引用自 RT-Thread 文档中心，地址：<a href="https://www.rt-thread.org/document/site/programming-manual/device/pin/pin/" target="_blank" rel="noopener">https://www.rt-thread.org/document/site/programming-manual/device/pin/pin/</a></p>
+</blockquote>
+<p>PIN 设备的具体使用方式可以参考如下示例代码，示例代码的主要步骤如下：</p>
+<ul>
+<li>设置蜂鸣器对应引脚为输出模式，并给一个默认的低电平状态</li>
+<li>设置按键 0 和 按键1 对应引脚为输入模式，然后绑定中断回调函数并使能中断</li>
+<li>按下按键 0 蜂鸣器开始响，按下按键 1 蜂鸣器停止响</li>
+</ul>
+<p>代码如下：</p>
+<pre><code class="C">/*
+ * 程序清单：这是一个 PIN 设备使用例程
+ * 例程导出了 pin_beep_sample 命令到控制终端
+ * 命令调用格式：pin_beep_sample
+ * 程序功能：通过按键控制蜂鸣器对应引脚的电平状态控制蜂鸣器
+*/
+
+#include &lt;rtthread.h&gt;
+#include &lt;rtdevice.h&gt;
+
+/* 引脚编号，通过查看设备驱动文件drv_gpio.c确定 */
+#ifndef BEEP_PIN_NUM
+    #define BEEP_PIN_NUM            35  /* PB0 */
+#endif
+#ifndef KEY0_PIN_NUM
+    #define KEY0_PIN_NUM            55  /* PD8 */
+#endif
+#ifndef KEY1_PIN_NUM
+    #define KEY1_PIN_NUM            56  /* PD9 */
+#endif
+
+void beep_on(void *args)
+{
+    rt_kprintf(&quot;turn on beep!\n&quot;);
+
+    rt_pin_write(BEEP_PIN_NUM, PIN_HIGH);
+}
+
+void beep_off(void *args)
+{
+    rt_kprintf(&quot;turn off beep!\n&quot;);
+
+    rt_pin_write(BEEP_PIN_NUM, PIN_LOW);
+}
+
+static void pin_beep_sample(void)
+{
+    /* 蜂鸣器引脚为输出模式 */
+    rt_pin_mode(BEEP_PIN_NUM, PIN_MODE_OUTPUT);
+    /* 默认低电平 */
+    rt_pin_write(BEEP_PIN_NUM, PIN_LOW);
+
+    /* 按键0引脚为输入模式 */
+    rt_pin_mode(KEY0_PIN_NUM, PIN_MODE_INPUT_PULLUP);
+    /* 绑定中断，下降沿模式，回调函数名为beep_on */
+    rt_pin_attach_irq(KEY0_PIN_NUM, PIN_IRQ_MODE_FALLING, beep_on, RT_NULL);
+    /* 使能中断 */
+    rt_pin_irq_enable(KEY0_PIN_NUM, PIN_IRQ_ENABLE);
+
+    /* 按键1引脚为输入模式 */
+    rt_pin_mode(KEY1_PIN_NUM, PIN_MODE_INPUT_PULLUP);
+    /* 绑定中断，下降沿模式，回调函数名为beep_off */
+    rt_pin_attach_irq(KEY1_PIN_NUM, PIN_IRQ_MODE_FALLING, beep_off, RT_NULL);
+    /* 使能中断 */
+    rt_pin_irq_enable(KEY1_PIN_NUM, PIN_IRQ_ENABLE);
+}
+/* 导出到 msh 命令列表中 */
+MSH_CMD_EXPORT(pin_beep_sample, pin beep sample);</code></pre>
+
+            </div>
+            <hr>
+            <div>
+              <p>
+                
+                  <span>
+                <i class="iconfont icon-inbox"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+                      &nbsp;
+                    
+                  </span>&nbsp;&nbsp;
+                
+                
+                  <span>
+                <i class="iconfont icon-tag"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/RT-Thread/">RT-Thread</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">嵌入式操作系统</a>
+                    
+                  </span>
+                
+              </p>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <div class="comments" id="comments">
+                
+                
+  <script defer src="https://utteranc.es/client.js"
+          repo="murphyzhao/blog"
+          issue-term="pathname"
+  
+          label="utterances"
+    
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+  </script>
+
+
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc-start"></div>
+<div id="toc">
+  <p class="h5"><i class="far fa-list-alt"></i>&nbsp;目录</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+  <div class="col-lg-7 mx-auto nopadding-md">
+    <div class="container custom post-content mx-auto">
+      <div style="position:relative; z-index:999; top:0;"><script type="text/javascript">document.write(unescape("%3Cdiv id='reward' %3E%3C/div%3E%3Cscript src='/site-js/reward.min.js' type='text/javascript'%3E%3C/script%3E"));</script></div><div align="center"><img src="https://zhaojuntao.gitee.io/picturebed/logo/WeChat/ErWeiMaSouYiBiaoZhunSe.png" srcset="/img/loading.gif"  alt="微信公众号：物联网学前班" height=100px /></div>
+    </div>
+  </div>
+
+
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+  <div>
+    
+      <!-- 不蒜子统计PV -->
+      
+      <span id="busuanzi_container_site_pv" style="display: none">
+      总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    
+    
+      <!-- 不蒜子统计UV -->
+      
+      <span id="busuanzi_container_site_uv" style="display: none">
+      总访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
+    
+  </div>
+
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+  
+  <script  src="https://cdn.staticfile.org/tocbot/4.10.0/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var navHeight = $('#navbar').height();
+      var post = $('#post');
+      var toc = $('#toc');
+      var tocLimMax = post.offset().top + post.height() - navHeight;
+
+      $(window).scroll(function () {
+        var tocLimMin = $('#toc-start').offset().top - navHeight;
+        var scroH = document.body.scrollTop + document.documentElement.scrollTop;
+
+        if (tocLimMin <= scroH && scroH <= tocLimMax) {
+          toc.css({
+            'display': 'block',
+            'position': 'fixed',
+            'top': navHeight,
+          });
+        } else if (scroH <= tocLimMin) {
+          toc.css({
+            'position': '',
+            'top': '',
+          });
+        } else if (scroH > tocLimMax) {
+          toc.css('display', 'none');
+        }
+      });
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '.post-content',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        scrollSmooth: true,
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc > p').css('visibility', 'visible');
+      }
+      var offset = $('#board-ctn').css('margin-right')
+      $('#toc-ctn').css({
+        'right': offset
+      })
+    });
+  </script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/smoothscroll/1.4.10/SmoothScroll.min.js" ></script>
+
+
+
+  <script defer src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+<!-- Plugins -->
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e26f756fa7cff496d917beccbb716890";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  ');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "RT-Thread Pin 设备驱动框架快速对接&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+  
+    <script>
+      !function (e, t, a) {
+        function r() {
+          for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
+          requestAnimationFrame(r)
+        }
+
+        function n() {
+          var t = "function" == typeof e.onclick && e.onclick;
+          e.onclick = function (e) {
+            t && t(), o(e)
+          }
+        }
+
+        function o(e) {
+          var a = t.createElement("div");
+          a.className = "heart", s.push({
+            el: a,
+            x: e.clientX - 5,
+            y: e.clientY - 5,
+            scale: 1,
+            alpha: 1,
+            color: c()
+          }), t.body.appendChild(a)
+        }
+
+        function i(e) {
+          var a = t.createElement("style");
+          a.type = "text/css";
+          try {
+            a.appendChild(t.createTextNode(e))
+          } catch (t) {
+            a.styleSheet.cssText = e
+          }
+          t.getElementsByTagName("head")[0].appendChild(a)
+        }
+
+        function c() {
+          return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+        }
+
+        var s = [];
+        e.requestAnimationFrame = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (e) {
+          setTimeout(e, 1e3 / 60)
+        }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
+      }(window, document);
+    </script>
+  
+
+
+
+
+
+
+
+
+</body>
+</html>

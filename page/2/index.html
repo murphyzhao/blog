@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://zhaojuntao.gitee.io/picturebed/logo/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="https://zhaojuntao.gitee.io/picturebed/logo/Murphy-logo.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="description" content="Murphy&#39;s blog | 物联网技术分享 | 物联网学前班 | 物联网教程 | iot | aiot | 物联网全栈 | 嵌入式开发 | 智能硬件 | Linux | RT-Thread | FreeRTOS | TencentOS tiny">
+  <meta name="author" content="MurphyZhao">
+  <meta name="keywords" content="Murphy, MurphyZhao, iot, aiot, Linux, rt-thread, TencentOS tiny, 物联网, 物联网学前班, 物联网教程, 嵌入式, 智能硬件">
+  <title>Murphy&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/5.12.1/css/all.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/mdbootstrap/4.13.0/css/mdb.min.css" />
+<link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/3.0.1/github-markdown.min.css" />
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1067060_qzomjdt8bmp.css">
+
+
+
+  <link  rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css" />
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+<!-- 自定义样式保持在最底部 -->
+
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Murphy's Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/">首页</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/archives/">归档</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/categories/">分类</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/tags/">标签</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/links/">友链</a>
+          </li>
+        
+          
+          
+          
+          
+          <li class="nav-item">
+            <a class="nav-link" href="/about/">关于</a>
+          </li>
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="view intro-2" id="background" parallax=true
+         style="background: url('https://zhaojuntao.gitee.io/picturebed/blog/IndexPicture/index-20191224-1.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask rgba-black-light flex-center">
+          <div class="container text-center white-text fadeInUp">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="fas fa-angle-down scroll-down-arrow"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-md">
+        <div class="py-5 z-depth-3" id="board"
+          style=margin-top:0>
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/4101b91c.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/blog.jpg" srcset="/img/loading.gif" alt="GitHub 仓库侵权通知的思考"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/4101b91c.html">
+        <p class="h4 index-header">GitHub 仓库侵权通知的思考</p>
+      </a>
+
+      <a href="/posts/4101b91c.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">来自 GitHub 的侵权通知[GitHub] DMCA Takedown Notice
+Murphy 
+May 12, 2020, 3:49:58 PM UTC 
+Hi Murphy,
+I&#39;m contacting you on behalf of GitHub because we&#39;ve received a DMCA takedown notice regarding the following content:
+https://github.com/xxx/book
+We&#39;re giving you 1 business day to make the chan</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-05-13&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E5%BC%80%E6%BA%90/">开源</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%89%88%E6%9D%83/">版权</a>&nbsp;
+          
+            <a href="/tags/GitHub/">GitHub</a>&nbsp;
+          
+            <a href="/tags/DMCA/">DMCA</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/353d0a89.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/blog.jpg" srcset="/img/loading.gif" alt="我的博客折腾记录"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/353d0a89.html">
+        <p class="h4 index-header">我的博客折腾记录</p>
+      </a>
+
+      <a href="/posts/353d0a89.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">我的博客折腾记录TODO
+
+国外线路走 github pages
+
+国内线路走腾讯云对象存储 COS
+
+图床使用腾讯云对象存储 COS 和 gitee
+
+基于 github travis-ci 进行自动部署
+  同时部署到 github pages 和腾讯云 COS。
+
+
+为什么一直坚持使用 github pages 和 gitee？
+因为如果出于某种原因我不再维护自己的博客了，github pages 和 gitee 也还会持续提供稳定的服务，我提交的所有资源也不会消失，这就是我为什么使用 gitee 作为图床以及为什么所有的博客都托管到 github 的原因。
+</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-03-29&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">嵌入式操作系统</a>&nbsp;
+          
+            <a href="/tags/RTOS/">RTOS</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/188732a5.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/processor-3079887_1280.jpg" srcset="/img/loading.gif" alt="国产嵌入式操作系统发展思考"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/188732a5.html">
+        <p class="h4 index-header">国产嵌入式操作系统发展思考</p>
+      </a>
+
+      <a href="/posts/188732a5.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">国产嵌入式操作系统发展思考
+偶然翻到了这篇老文章，出自何小庆（《嵌入式操作系统风云录：历史演进与物联网未来》作者），写的很好，汇总了当下国产 OS 的状态，遂分享出来。本文源自微博“麦克泰技术”，物联网学前班公众号经授权转载分享。
+
+嵌入式操作系统历史悠久、门类繁多、用途广泛，不仅包括嵌入式实时多任务操作者系统（RTOS）、开源的 Linux、机器人和路由器操作系统，还包括新型的物联网操作系统，以及边缘计算操作系统平台。笔者认为，只要是国人开发的，国人参与维护的开源项目，都是广义上的“国产嵌入式操作系统”，随着中国物联网产业迅猛发展，国产装备自主可控需求旺盛，国产嵌入式操作系统发展步入快车道。</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-11&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">嵌入式操作系统</a>&nbsp;
+          
+            <a href="/tags/RTOS/">RTOS</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/f0cde271.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/internet-screen-security-protection-60504.jpg" srcset="/img/loading.gif" alt="等保 2.0"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/f0cde271.html">
+        <p class="h4 index-header">等保 2.0</p>
+      </a>
+
+      <a href="/posts/f0cde271.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">等保 2.0这里的等保 2.0 是指网络安全等级保护制度 2.0 国家标准，该标准于 2019 年 05 月 10 日发布，并于 2019 年 12 月 01 日正式实施。那么到底什么是等级保护？等级保护 2.0 又有什么重大变化呢？
+概述等保 2.0 标准名称为《信息安全技术 网络安全等级保护基本要求》，编号为 GB/T 22239-2019，基于等保 1.0 GB/T 22239-2008 进行修订。为了适配《中华人民共和国网络安全法》的实施，同时适应云计算、移动互联、物联网、工业控制和大数据等技术、新应用情况下的网络安全等级保护工作的开展，针对公共性安全保护需求提出安全通用要求，针对云计</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-01-11&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E5%AE%89%E5%85%A8%E6%A0%87%E5%87%86/">安全标准</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E7%AD%89%E4%BF%9D-2-0/">等保 2.0</a>&nbsp;
+          
+            <a href="/tags/GB-T-22239-2019/">GB/T 22239-2019</a>&nbsp;
+          
+            <a href="/tags/%E5%AE%89%E5%85%A8%E6%A0%87%E5%87%86/">安全标准</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/7daccdaf.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/QiTa.png" srcset="/img/loading.gif" alt="其他与其它的区别"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/7daccdaf.html">
+        <p class="h4 index-header">其他与其它的区别</p>
+      </a>
+
+      <a href="/posts/7daccdaf.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">其他与其它的区别区别在于：在写文章时，不论指人还是指事物，用 “其他” 都是对的；而 “其它” 则只在指事物时才能用。
+规范的说 “其他” 用的对象是人，而 “其它” 用的对象是除人以外的任何东西（比如植物，动物，微生物，事物等） 最初只有 “其他” 这个词，“他” 意思是 “另外的”。
+
+
+以上内容来源网络，侵删。
+
+</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-01-09&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E9%80%9A%E8%AF%86/">通识</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/%E5%85%B6%E4%BB%96/">其他</a>&nbsp;
+          
+            <a href="/tags/%E5%85%B6%E5%AE%83/">其它</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/40137057.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/C-2020-01-02.png" srcset="/img/loading.gif" alt="C 语言 #、##、__VA_ARGS__、#__VA_ARGS__、##__VA_ARGS__"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/40137057.html">
+        <p class="h4 index-header">C 语言 #、##、__VA_ARGS__、#__VA_ARGS__、##__VA_ARGS__</p>
+      </a>
+
+      <a href="/posts/40137057.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">‘#’ 和 ‘##’ 属于预处理标记。‘#’ 和 ‘##’ 用于类似函数的宏定义中（或者简称为宏定义函数）。
+‘__VA_ARGS__’ 是 C99 引入的用于支持宏定义函数中使用可变参数。操作符 ‘#’在宏定义展开的时候，标记 ‘#’ 用于将 ‘#’ 后面的宏定义函数中的参数转化为对应的字符串。宏定义函数的参数与预处理标记 ‘#’ 之间出现的每一个空格都会被删除，并删除第一个预处理标记之前和最后一个预处理标记之后的空白字符，但是宏定义函数参数中的空格会保留。
+其中，空参数转化为为空，即宏定义函数入参为空，那么展开的时候也为空。
+上面的这段话比较难理解，这里为了准确地传达其意义，我们来看一个示</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-12-31&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Programing/">Programing</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/C%E8%AF%AD%E8%A8%80/">C语言</a>&nbsp;
+          
+            <a href="/tags/VA-ARGS/">__VA_ARGS__</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/49cc9dcc.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/stack-of-books-1001655_640.jpg" srcset="/img/loading.gif" alt="Markdown 添加文献引用"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/49cc9dcc.html">
+        <p class="h4 index-header">Markdown 添加文献引用</p>
+      </a>
+
+      <a href="/posts/49cc9dcc.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">增加引用的文献列表示例如下：
+## 参考
+
+- [1] [百度学术](http://xueshu.baidu.com/)
+- [2] [Wikipedia](https://en.wikipedia.org/wiki/Main_Page)增加锚点## 参考
+
+&lt;div id=&quot;refer-anchor-1&quot;&gt;&lt;/div&gt;
+- [1] [百度学术](http://xueshu.baidu.com/)
+&lt;div id=&quot;refer-anchor-2&quot;&gt;&lt;/div&gt;
+- [2] [Wikipedia](https</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-12-31&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Markdown/">Markdown</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Markdown/">Markdown</a>&nbsp;
+          
+            <a href="/tags/%E6%96%87%E7%8C%AE%E5%BC%95%E7%94%A8/">文献引用</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/4a17b156.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/pexels-photo-699122.jpeg" srcset="/img/loading.gif" alt="Hello World"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/4a17b156.html">
+        <p class="h4 index-header">Hello World</p>
+      </a>
+
+      <a href="/posts/4a17b156.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
+Quick StartCreate a new post$ hexo new &quot;My New Post&quot;
+More info: Writing
+Run server$ hexo server</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-12-20&nbsp;&nbsp;
+        
+        
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/ec31c22a.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/2020-06-03-network.png" srcset="/img/loading.gif" alt="RT-Thread TCP/UDP 客户端程序"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/ec31c22a.html">
+        <p class="h4 index-header">RT-Thread TCP/UDP 客户端程序</p>
+      </a>
+
+      <a href="/posts/ec31c22a.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">最近发现不止一个人再要基于 RT-Thread 的 TCP 和 UDP 示例代码，包括 SAL 方式的。
+这里给出一个我自己写的示例程序吧，希望可以帮到需要的人。
+代码一键下载地址，点我。
+TCP 客户端/*
+ * Copyright (c) 2006-2019, RT-Thread Development Team
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Change Logs:
+ * Date           Author            Notes
+ * 2019-07-09     MurphyZhao        f</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-11-11&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/RT-Thread/">RT-Thread</a>&nbsp;
+          
+            <a href="/tags/TCP-Client/">TCP Client</a>&nbsp;
+          
+            <a href="/tags/TCP-%E5%AE%A2%E6%88%B7%E7%AB%AF/">TCP 客户端</a>&nbsp;
+          
+            <a href="/tags/UDP-%E5%AE%A2%E6%88%B7%E7%AB%AF/">UDP 客户端</a>&nbsp;
+          
+            <a href="/tags/UDP-Client/">UDP Client</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto">
+        <a href="/posts/47feda29.html" target="_self">
+          <img src="https://gitee.com/zhaojuntao/PictureBed/raw/master/blog/ArticleImage/2020-06-03-network-test.png" srcset="/img/loading.gif" alt="Ubuntu 上安装 iperf"
+               class="index-img img-fluid rounded index-thumbnails">
+        </a>
+      </div>
+    
+    <div class="col-12 col-md-8 mx-auto index-info">
+      <a href="/posts/47feda29.html">
+        <p class="h4 index-header">Ubuntu 上安装 iperf</p>
+      </a>
+
+      <a href="/posts/47feda29.html">
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">Ubuntu 上安装 iperf
+最近 NB-IOT 项目需要进行外网测试，那么就先用 iperf 测个速度吧。
+网速不一定能够反映真实情况，跟您使用的外网服务器带宽也有关系。
+
+下载git clone https://github.com/esnet/iperf.git安装依次执行以下命令：
+$ cd iperf
+$ ./configure
+$ sudo ldconfig /usr/local/lib
+$ make
+$ make install运行
+运行 server
+  iperf3 -s
+
+运行 client
+  iperf3 -c server_addr -p server_port
+</div>
+        </div>
+      </a>
+
+      <div class="index-btm">
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2019-11-05&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/%E7%89%A9%E8%81%94%E7%BD%91/">物联网</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/iperf/">iperf</a>&nbsp;
+          
+            <a href="/tags/Ubuntu/">Ubuntu</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+
+
+  <nav aria-label="index posts navigation">
+    <span class="pagination pg-blue justify-content-center mt-5" id="pagination">
+      <a class="extend prev" rel="prev" href="/"><i class="fas fa-angle-double-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fas fa-angle-double-right"></i></a>
+    </span>
+  </nav>
+  
+  <script>
+    for (ele of document.getElementById("pagination").getElementsByClassName("page-number")) {
+      ele.href += '#board';
+    }
+  </script>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+  </main>
+
+  
+    <a class="z-depth-1" id="scroll-top-button" href="#" role="button">
+      <i class="fa fa-chevron-up scroll-top-arrow" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  
+
+  <footer class="mt-5">
+  <div class="text-center py-3">
+    <div>
+      <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><b>Hexo</b></a>
+      <i class="iconfont icon-love"></i>
+      <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"> <b>Fluid</b></a>
+    </div>
+    
+  <div>
+    
+      <!-- 不蒜子统计PV -->
+      
+      <span id="busuanzi_container_site_pv" style="display: none">
+      总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    
+    
+      <!-- 不蒜子统计UV -->
+      
+      <span id="busuanzi_container_site_uv" style="display: none">
+      总访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
+    
+  </div>
+
+
+    
+
+    
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/popper.js/1.16.1/umd/popper.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="https://cdn.staticfile.org/mdbootstrap/4.13.0/js/mdb.min.js" ></script>
+<script  src="/js/main.js" ></script>
+
+
+  <script  src="/js/lazyload.js" ></script>
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/smoothscroll/1.4.10/SmoothScroll.min.js" ></script>
+
+
+
+  <script defer src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+<!-- Plugins -->
+
+
+  
+    <!-- Baidu Analytics -->
+    <script defer>
+      var _hmt = _hmt || [];
+      (function () {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?e26f756fa7cff496d917beccbb716890";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+  
+
+  
+
+  
+
+  
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/prettify/188.0.0/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  ');
+      prettyPrint();
+    })
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Better and Better&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      getSearchFile(path);
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <script>
+    $("#post img:not(.no-zoom img, img[no-zoom])").each(
+      function () {
+        var element = document.createElement("a");
+        $(element).attr("data-fancybox", "images");
+        $(element).attr("href", $(this).attr("src"));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+  
+  
+    <script>
+      !function (e, t, a) {
+        function r() {
+          for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
+          requestAnimationFrame(r)
+        }
+
+        function n() {
+          var t = "function" == typeof e.onclick && e.onclick;
+          e.onclick = function (e) {
+            t && t(), o(e)
+          }
+        }
+
+        function o(e) {
+          var a = t.createElement("div");
+          a.className = "heart", s.push({
+            el: a,
+            x: e.clientX - 5,
+            y: e.clientY - 5,
+            scale: 1,
+            alpha: 1,
+            color: c()
+          }), t.body.appendChild(a)
+        }
+
+        function i(e) {
+          var a = t.createElement("style");
+          a.type = "text/css";
+          try {
+            a.appendChild(t.createTextNode(e))
+          } catch (t) {
+            a.styleSheet.cssText = e
+          }
+          t.getElementsByTagName("head")[0].appendChild(a)
+        }
+
+        function c() {
+          return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
+        }
+
+        var s = [];
+        e.requestAnimationFrame = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (e) {
+          setTimeout(e, 1e3 / 60)
+        }, i(".heart{width: 10px;height: 10px;position: fixed;background: #f00;transform: rotate(45deg);-webkit-transform: rotate(45deg);-moz-transform: rotate(45deg);}.heart:after,.heart:before{content: '';width: inherit;height: inherit;background: inherit;border-radius: 50%;-webkit-border-radius: 50%;-moz-border-radius: 50%;position: fixed;}.heart:after{top: -5px;}.heart:before{left: -5px;}"), n(), r()
+      }(window, document);
+    </script>
+  
+
+
+
+
+
+
+
+
+</body>
+</html>
